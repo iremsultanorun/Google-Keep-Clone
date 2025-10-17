@@ -1,0 +1,26 @@
+.trash__text-wrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 30px;
+}
+
+.trash__text {
+    font-size: 18px;
+    letter-spacing: -1px;
+    font-weight: 400;
+    font-style: italic;
+}
+.trash__btn{
+    font-size: 15px;
+    color:var(--blue);
+    font-weight: 600;
+   border: none;
+   background-color: transparent;
+}
+.trash__btn::before{
+    width: 150px;
+    height: 35px;
+}

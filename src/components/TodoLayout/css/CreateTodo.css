@@ -1,0 +1,144 @@
+.createTodo {
+    width: 100%;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.createTodo__form {
+    width: 580px;
+    box-shadow: rgba(0, 0, 0, 0.25) .5px .5px 5px, rgba(0, 0, 0, 0.172) -.3px -.1px 5px;
+    border: 1px solid var(--gray-200);
+    cursor: text;
+    border-radius: 10px;
+    padding: 14px 18px;
+    height: auto;
+    position: absolute;
+    top: 30px;
+    background-color: white;
+margin-left: -50px;
+}
+
+.createTodo__title,
+.createTodo__content {
+    width: 100%;
+    height: auto;
+    outline: none;
+    border: none;
+    color: var(--gray-900);
+    background-color: transparent;
+}
+
+.createTodo__title:focus,
+.createTodo__content:focus {
+    outline: none;
+    border: none;
+
+}
+
+.createTodo__title-wrapper {
+    position: relative;
+}
+.createTodo__content-wrapper {
+ display: flex;
+  justify-content:space-between;
+ }
+
+
+.createTodo__title {
+    font-size: 22px;
+    font-weight: 600;
+
+}
+
+.createTodo__title::placeholder {
+    font-weight: 600;
+    color: var(--gray-600);
+    font-size: 20px;
+}
+
+.createTodo__content {
+    font-size: 16px;
+    resize: none;
+    height: auto;
+    overflow: hidden;
+    width: 100%;
+    padding: 0;
+    height: 18px;
+    max-height: 500px;
+    overflow-y: scroll;
+}
+
+.createTodo__content::placeholder {
+    color: var(--gray-600);
+    font-size: 16px;
+}
+
+.createTodo__actions-wrapper {
+    width: 100%;
+    height: 30px;
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+.createTodo__actions {
+    display: flex;
+    align-items: center;
+ 
+}
+
+.createTodo__btn { 
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--gray-900);
+    margin-right: 20px;
+}
+
+
+.createTodo__btn::before{
+    width: 80px;
+    height: 35px;
+}
+
+
+.action-btn {
+    margin-right: 28px;
+}
+
+.action-btn.disabled {
+    color: var(--gray-400);
+    cursor: not-allowed;
+}
+
+
+.fixed-btn {
+    color: var(--gray-500);
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 10;
+    font-size: 18px;
+}
+.node-type-wrapper{
+    display: flex;
+    align-items: center;
+}
+.note-type-btn {
+    margin-right: 25px;
+}
+
+.note-type-btn:nth-child(3) {
+    margin-right: 0;
+}
+
+.note-type-btn:nth-child(2) {
+    font-size: 19px;
+}
+
+
+

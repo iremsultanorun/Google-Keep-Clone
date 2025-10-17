@@ -1,0 +1,90 @@
+.btn{
+    border: none;
+    outline: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    cursor: pointer;
+    transition: color 0.1s ease;
+    z-index: 10;
+    color: var(--gray-500);
+    font-size: 22px;
+}
+
+.btn[data-tooltip-text]::after{
+    content: attr(data-tooltip-text);
+    position: absolute;
+    bottom: -25px;
+    font-size: 13px;
+    color: white;
+    background-color:var(--gray-700-opacity);  
+    padding: 5px;
+    border-radius: 5px;
+    width: max-content;
+    visibility: hidden;
+    z-index: 50;
+}
+.btn:hover[data-tooltip-text]::after{
+ visibility: visible;
+}
+.btn::before{
+    content: " ";
+    position: absolute;
+    transition: background-color 0.1s ease;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.md-btn{
+    color: var(--gray-500);
+    font-size: 20px;
+}
+.md-btn::before {
+    content: "";
+    width: 50px;
+    height: 50px;
+   
+}
+.sm-btn{
+    font-size: 14px;
+    color: var(--gray-700);
+}
+.sm-btn::before {
+    content: "";
+    width: 35px;
+    height: 35px;
+}
+.btn:hover::before {
+    background-color:rgba(23, 23, 23, 0.075);
+}
+.btn:hover {
+    color: var(--gray-950);
+}
+
+.lg-btn {
+    border: none;
+    background-color: transparent;
+    outline: none;
+    position: relative;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.lg-btn::before {
+    content: "";
+  
+    position: absolute;
+    top: -8px;
+    left: -20px;
+    transition: background-color 0.1s ease;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: -1;
+}
+
+.lg-btn:hover::before {
+    background-color: var(--gray-50);
+}
+
+

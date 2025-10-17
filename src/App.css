@@ -1,0 +1,22 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+.mainSection{
+    display: flex;
+  
+}
+.slideSection{
+    margin-top:65px ;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.homeSection{
+    margin-top:    65px;
+    width: 100%;
+   height: auto;
+padding:0 30px 70px 70px;
+
+}

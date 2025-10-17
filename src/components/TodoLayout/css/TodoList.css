@@ -1,0 +1,12 @@
+ .todoList__container{
+    column-count: 5;
+    column-width: 120px;
+    column-gap: 5px;
+    width: 100%;
+ }
+
+ 
+
+
+
+

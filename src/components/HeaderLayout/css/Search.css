@@ -1,0 +1,39 @@
+.search{
+    width: 700px;
+    height: 50px;
+    background-color: var(--gray-250);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    border-radius: 10px;
+margin-left: -290px;
+}
+/* !
+js de bunu yapcaksın
+.search:focus{
+    background-color: white;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+} */
+.search__input{
+    width: 600px;
+    height: 50px;
+    border: none;
+    outline: none;
+    background: transparent;
+}
+.search__input:focus{
+    outline: none;
+    border: none;
+}
+
+.search__icon{
+    font-size: 18px;
+}
+.search__icon,.search__close-btn{
+    color:var(--gray-650);
+}
+.search__close-btn{
+    opacity: 0;
+}

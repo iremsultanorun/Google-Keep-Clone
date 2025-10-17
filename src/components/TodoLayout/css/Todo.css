@@ -1,0 +1,30 @@
+.todo__container{
+ overflow: hidden;
+ background-color: white;
+ border: 1px solid var(--gray-200);
+ border-radius: 10px;
+ padding: 14px 18px;
+ height: auto;
+ break-inside: avoid; 
+ margin-bottom: 15px;
+ width: 200px;
+}
+
+.todo__title, .todo__content{
+       display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 18;
+    autoprefixer: off;
+    overflow: hidden;
+}
+.todo__title{
+    -webkit-line-clamp: 4;
+    font-size: 20px;
+    font-weight: 600;
+}
+.todo__content{
+ -webkit-line-clamp: 18;
+ margin-top: 10px;
+ font-size: 15px;
+ 
+}

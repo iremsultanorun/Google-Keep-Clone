@@ -1,0 +1,15 @@
+.headerControls{
+    display: flex;
+    gap: 60px;
+}
+.headerControls__wrapper{
+    display: flex;
+    gap: 20px;
+}
+.account-btn{
+    background-color: var(--account-color);
+    width: 35px;
+    height: 35px;
+    font-weight: 400;
+    color: white;
+}
