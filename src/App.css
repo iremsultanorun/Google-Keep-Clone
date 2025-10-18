@@ -2,6 +2,16 @@
     padding: 0;
     margin: 0;
 }
+.create-label-modal{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #3a3a3a89;
+    z-index: 100;
+    position: fixed;
+}
 .mainSection{
     display: flex;
   
@@ -14,7 +24,7 @@
 }
 
 .homeSection{
-    margin-top:    65px;
+    margin-top:65px;
     width: 100%;
    height: auto;
 padding:0 30px 70px 70px;

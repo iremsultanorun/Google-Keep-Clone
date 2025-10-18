@@ -73,7 +73,6 @@
 
 .lg-btn::before {
     content: "";
-  
     position: absolute;
     top: -8px;
     left: -20px;

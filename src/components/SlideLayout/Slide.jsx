@@ -10,50 +10,53 @@ import editLabelsIcon from "./../../assets/slide-icon/edit-labels-icon.svg"
 import archiveIcon from "./../../assets/slide-icon/archive-icon.svg"
 import trashIcon from "./../../assets/slide-icon/trash-icon.svg"
 import "./Slide.css"
+import { setLabelModal } from '../../redux/labelModalSlice';
 
 function Slide() {
   const dispatch = useDispatch()
   const isCollapsed = useSelector((state) => state.header.isCollapsed);
   const logoNames = useSelector((state) => state.header.logoNames);
+  const labels=useSelector((state)=>state.labelModal.labelList)
   let [active, setActive] = useState("Notes");
   let [isFixed, setIsfixed] = useState(false);
   const logoNameArr = [
     {
-      img: noteIcon,
+      icon: noteIcon,
       name: "Notes",
       path: "/"
     },
     {
-      img: reminderIcon,
+      icon: reminderIcon,
       name: "Reminders",
       path: "/reminders"
     },
     {
-      img: editLabelsIcon,
+      icon: editLabelsIcon,
       name: "Edit labels",
-      labels: [
-        {
-          img: labelIcon,
-          name: "name",
-          path: "/labels"
-        }
-      ],
+
+    
     },
     {
-      img: archiveIcon,
+      icon: archiveIcon,
       name: "Archive",
       path: "/archive",
     },
     {
-      img: trashIcon,
+      icon: trashIcon,
       name: "Trash",
       path: "/trash",
     }
   ];
 
   useEffect(() => {
-    dispatch(setLogoNames(logoNameArr))
-  }, [dispatch])
+    const newLogoNameArr = logoNameArr.map(item => {
+      if (item.name === "Edit labels") {
+          return {...item,labels: labels }; 
+      }
+      return item;
+  });
+    dispatch(setLogoNames(newLogoNameArr))
+  }, [dispatch,labels])
 
   function overFunc() {
     if (isCollapsed == false) {
@@ -113,7 +116,7 @@ function Slide() {
                       >
                         <img
                           className='slideItem__icon'
-                          src={logoname.img}
+                          src={logoname.icon}
                           alt=""
                           style={{ paddingLeft: isCollapsed ? "8.5px" : "0" }}
                         />
@@ -133,12 +136,17 @@ function Slide() {
                         justifyContent: isCollapsed ? "flex-start" : "center"
                       }}
                       className={isCollapsed ? itemClass : itemAClass}
-                      onClick={() => handleClick(logoname.name)}
+                      onClick={() => {
+                        handleClick(logoname.name)
+                        dispatch(setLabelModal(true))
+                      }
+                            
+                      }
                     >
                       <img
                         style={{ paddingLeft: isCollapsed ? "8.5px" : "0px" }}
                         className='slideItem__icon'
-                        src={logoname.img}
+                        src={logoname.icon}
                         alt=""
                       />
                       <h4
@@ -159,7 +167,9 @@ function Slide() {
                     return (
                       <Link
                         key={labelId}
-                        onClick={() => handleClick(label.name)}
+                        onClick={
+                          () => handleClick(label.name)
+                          }
                         style={{ fontSize: "20px" }}
                         to={label.path}
                       >
@@ -173,7 +183,7 @@ function Slide() {
                         >
                           <img
                             className='slideItem__icon'
-                            src={label.img}
+                            src={label.labelIcon}
                             alt=""
                             style={{ paddingLeft: isCollapsed ? "8.5px" : "0" }}
                           />
