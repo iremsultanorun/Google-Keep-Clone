@@ -86,4 +86,11 @@
     background-color: var(--gray-50);
 }
 
-
+.reset-input{
+   border: none;
+   outline: none; 
+}
+.reset-input:focus{
+    border: none;
+    outline: none;
+}

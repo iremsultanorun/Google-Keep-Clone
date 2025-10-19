@@ -18,8 +18,6 @@ function Todo({ todo }) {
 
   }, [todoTitleRef, todoContentRef])
 
-
-
   return (
 
     <div className='todo__container' ref={todoContRef} >

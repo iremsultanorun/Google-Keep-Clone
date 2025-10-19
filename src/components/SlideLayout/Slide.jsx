@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 import noteIcon from "./../../assets/slide-icon/note-icon.svg"
 import reminderIcon from "./../../assets/slide-icon/reminder-icon.svg"
-import labelIcon from "./../../assets/slide-icon/label-icon.svg"
+import labelSlideIcon from "./../../assets/slide-icon/label-slide-icon.svg"
 import editLabelsIcon from "./../../assets/slide-icon/edit-labels-icon.svg"
 import archiveIcon from "./../../assets/slide-icon/archive-icon.svg"
 import trashIcon from "./../../assets/slide-icon/trash-icon.svg"
