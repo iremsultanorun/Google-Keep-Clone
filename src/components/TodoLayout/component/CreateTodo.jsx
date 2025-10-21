@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import '../css/CreateTodo.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { showCompactForm, showFullForm, updateTodoFields, addTodo, resetForm } from '../../../redux/todosSlice'
+import Pin from '../../oparations/Pin'
 function CreateTodo() {
     const dispatch = useDispatch()
 
@@ -16,7 +17,9 @@ function CreateTodo() {
     const newTodo = {
         content: content,
         title: title,
-        id: Math.random() * 999,
+        id:Date.now(),
+        selected:false,
+        pinned:false,
     }
 
     const addTodoFunc = () => {
@@ -107,9 +110,7 @@ function CreateTodo() {
                             onChange={changeTitle}
                             ref={titleRef}
                             value={title} />
-                        <button className='fixed-btn btn sm-btn' data-tooltip-text="Pin note">
-                            <i className="fa-solid fa-thumbtack"></i>
-                        </button>
+                     <Pin/>
                     </div>
                     : null}
 
