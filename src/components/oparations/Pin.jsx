@@ -1,18 +1,17 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { setPinnedTodo } from '../../redux/todosSlice'
 
-function Pin() {
-    const todos = useSelector((state) => state.todo.todos)
+function Pin({className,todoId}) {
+
+    const dispatch=useDispatch()
     return (
         <div>
-            {
-                todos.map((todo) => (
-                    <button key={todo.id} className='fixed-btn btn sm-btn' data-tooltip-text="Pin note" onClick={() => setPinnedTodo(todo.id)}>
+          
+                    <button key={todoId} className={className} data-tooltip-text="Pin note" onClick={() => dispatch(setPinnedTodo(todoId))}>
                         <i className="fa-solid fa-thumbtack"></i>
                     </button>
-                ))
-            }
+                
         </div>
     )
 }

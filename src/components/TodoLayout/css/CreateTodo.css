@@ -9,7 +9,7 @@
 
 .createTodo__form {
     width: 580px;
-    box-shadow: rgba(0, 0, 0, 0.25) .5px .5px 5px, rgba(0, 0, 0, 0.172) -.3px -.1px 5px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     border: 1px solid var(--gray-200);
     cursor: text;
     border-radius: 10px;
@@ -89,7 +89,7 @@ margin-left: -50px;
 .createTodo__actions {
     display: flex;
     align-items: center;
- 
+    gap: 28px;
 }
 
 .createTodo__btn { 
@@ -106,9 +106,7 @@ margin-left: -50px;
 }
 
 
-.action-btn {
-    margin-right: 28px;
-}
+
 
 .action-btn.disabled {
     color: var(--gray-400);
@@ -116,14 +114,7 @@ margin-left: -50px;
 }
 
 
-.fixed-btn {
-    color: var(--gray-500);
-    position: absolute;
-    top: 0;
-    right: 0;
-    z-index: 10;
-    font-size: 18px;
-}
+
 .node-type-wrapper{
     display: flex;
     align-items: center;

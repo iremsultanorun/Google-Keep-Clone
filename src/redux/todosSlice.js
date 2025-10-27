@@ -5,6 +5,7 @@ const initialState = {
     hidden: false,
     todos: [],
     selectedCurrent: 0,
+    todoLayout:false,
 }
 
 const todoSlice = createSlice({
@@ -47,12 +48,17 @@ const todoSlice = createSlice({
         setPinnedTodo: (state, action) => {
             const pinnedId = action.payload
             const todoPinned = state.todos.find((todo) => todo.id === pinnedId)
-            todoPinned.pinned = !todoPinned.pinned
+            if (todoPinned) {
+                todoPinned.pinned = !todoPinned.pinned
+            }
            
+        },
+        setTodoLayout:(state)=>{
+state.todoLayout=!state.todoLayout;
         }
     }
 })
 
-export const { updateTodoFields, showFullForm, showCompactForm, addTodo, resetForm, setSelectTodo,setPinnedTodo } = todoSlice.actions
+export const { updateTodoFields, showFullForm, showCompactForm, addTodo, resetForm, setSelectTodo,setPinnedTodo,setTodoLayout } = todoSlice.actions
 
 export default todoSlice.reducer

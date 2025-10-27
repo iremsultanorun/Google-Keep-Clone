@@ -17,9 +17,9 @@ function CreateTodo() {
     const newTodo = {
         content: content,
         title: title,
-        id:Date.now(),
-        selected:false,
-        pinned:false,
+        id: Date.now(),
+        selected: false,
+        pinned: false,
     }
 
     const addTodoFunc = () => {
@@ -103,6 +103,7 @@ function CreateTodo() {
             <div ref={createTodoContRef} className='createTodo__form'>
                 {hidden ?
                     <div className='createTodo__title-wrapper'>
+
                         <input
                             className='createTodo__title'
                             type="text"
@@ -110,7 +111,7 @@ function CreateTodo() {
                             onChange={changeTitle}
                             ref={titleRef}
                             value={title} />
-                     <Pin/>
+                        <Pin className="btn sm-btn fixed-btn" />
                     </div>
                     : null}
 
@@ -165,7 +166,7 @@ function CreateTodo() {
                         <button className='btn action-btn sm-btn disabled' disabled={true} data-tooltip-text="Undo">
                             <i className="fa-solid fa-rotate-left"></i>
                         </button>
-                        <button className='btn action-btn sm-btn disabled' disabled={true}  data-tooltip-text="Rebuild">
+                        <button className='btn action-btn sm-btn disabled' disabled={true} data-tooltip-text="Rebuild">
                             <i className="fa-solid fa-rotate-right"></i>
                         </button>
                     </div>

@@ -1,12 +1,28 @@
- .todoList__container{
+ .todoList__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+ }
+
+.todoList__type {
     column-count: 5;
-    column-width: 120px;
-    column-gap: 5px;
+    column-gap: 15px;
     width: 100%;
  }
 
- 
+ .pinned>*,
+ .others>* {
+    break-inside: avoid;
+    display: inline-block;
+    margin-bottom: 15px;
+ }
 
-
-
-
+ .todoList__title{
+   text-transform: uppercase;
+   font-size: 11px;
+  margin: 0 0 5px 10px;
+   color: var(--gray-650);
+   letter-spacing: 1px;
+ }

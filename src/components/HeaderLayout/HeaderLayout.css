@@ -50,8 +50,7 @@
   gap: 30px;
 }
 
-.header-layout__selected-todo-oparations>* {
-
+.header-layout__selected-todo-oparations>* ,.header-layout__selected-pin{
   color: var(--blue);
 }
 
