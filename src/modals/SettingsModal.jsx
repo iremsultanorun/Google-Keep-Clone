@@ -1,5 +1,5 @@
 import React from 'react'
-import './css/SettingsModal.css'
+import './css/Modals.css'
 
 function SettingsModal() {
   return (

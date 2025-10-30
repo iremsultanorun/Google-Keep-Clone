@@ -1,0 +1,114 @@
+/* settings css */
+.settings__dropdown-menu {
+  position: absolute;
+  right: 150px;
+  top: 55px;
+  z-index: 20;
+  padding: 10px 0;
+  width: 200px;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 4px;
+}
+
+.settings__dropdown-item {
+  width: 100%;
+  background-color: inherit;
+  padding: 7px 0 7px 20px;
+}
+
+.settings__dropdown-item:hover {
+  background-color: var(--gray-270);
+}
+
+.settings__dropdown-text {
+  user-select: none;
+  color: var(--gray-800);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* google apps css */
+.apps__modal {
+  position: absolute;
+  right: 25px;
+  top: 60px;
+  z-index: 21;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  width: 350px;
+ max-height:500px;
+  border-radius: 30px;
+  background-color: var(--blue-100);
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  display: flex;
+ 
+  padding: 5px;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.apps__wrapper {
+  width: 100%;
+  background-color: white;
+ display: grid;
+ grid-template-columns: auto auto auto;
+ justify-content: center;
+align-items: center;
+align-self: flex-start;
+gap: 5px;
+padding: 20px;
+}
+.apps__wrapper:nth-child(1){
+  border-radius: 30px 30px 5px 5px;
+}
+.apps__wrapper:nth-child(2){
+  border-radius: 5px 5px 30px 30px;
+}
+.app__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 90px;
+  height: 90px;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 20px;
+  text-align: center;
+  user-select: none;
+  text-decoration: none;
+}
+
+.app__container:hover {
+ background-color: var(--gray-270);
+}
+
+
+.app__img {
+  width: 35px;
+  height: auto;
+}
+.app__text{
+  font-size: 15px;
+  color: var(--gray-800);
+}
+
+.app__btn-container{
+  margin: 20px 0;
+}
+.app__btn:hover{
+  background: white;
+  border-color:var(--blue-200);
+}
+
+.app__btn:active{
+background-color: var(--blue-200);
+box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.account__container {
+  position: absolute;
+  right: 25px;
+  top: 60px;
+  z-index: 21;
+}
