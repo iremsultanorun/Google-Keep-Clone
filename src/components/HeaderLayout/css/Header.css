@@ -17,3 +17,11 @@
 .logo {
     width: 40px;
 }
+@media screen and (max-width:400px) {
+    .header__logo-wrapper {
+        gap: 10px;
+    }
+    .header__title{  
+        font-size: 18px;
+    }
+}

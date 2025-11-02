@@ -6,11 +6,9 @@
  height: auto;
  break-inside: avoid; 
 padding-bottom: 50px;
- width: 250px;
  min-height: 150px;
  position: relative;
  cursor: pointer;
- 
 }
 .todo__container:hover {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
@@ -72,4 +70,16 @@ transition: opacity .2s linear;
   align-items: center;
   justify-content: space-between;
 }
+.todo__container[data-open-modal="true"] {
+width: 100%;
+ }
 
+.todo__container[data-open-modal="false"] {
+  width: 250px;
+ }
+
+ @media screen and (min-width:600px) {
+  .todo__container[data-open-modal="true"] {
+    width:600px;
+     }
+ }

@@ -16,7 +16,7 @@ function Slide() {
   const dispatch = useDispatch()
   const isCollapsed = useSelector((state) => state.header.isCollapsed);
   const logoNames = useSelector((state) => state.header.logoNames);
-  const labels=useSelector((state)=>state.labelModal.labelList)
+  const labels = useSelector((state) => state.labelModal.labelList)
   let [active, setActive] = useState("Notes");
   let [isFixed, setIsfixed] = useState(false);
   const logoNameArr = [
@@ -34,7 +34,7 @@ function Slide() {
       icon: editLabelsIcon,
       name: "Edit labels",
 
-    
+
     },
     {
       icon: archiveIcon,
@@ -51,12 +51,12 @@ function Slide() {
   useEffect(() => {
     const newLogoNameArr = logoNameArr.map(item => {
       if (item.name === "Edit labels") {
-          return {...item,labels: labels }; 
+        return { ...item, labels: labels };
       }
       return item;
-  });
+    });
     dispatch(setLogoNames(newLogoNameArr))
-  }, [dispatch,labels])
+  }, [dispatch, labels])
 
   function overFunc() {
     if (isCollapsed == false) {
@@ -103,7 +103,6 @@ function Slide() {
                   logoname.path ?
                     <Link
                       onClick={() => handleClick(logoname.name)}
-                      style={{ fontSize: "20px" }}
                       to={logoname.path}
                     >
                       <button
@@ -132,15 +131,15 @@ function Slide() {
                     <button
                       style={{
                         borderRadius: isCollapsed ? "0 30px 30px 0" : "50%",
-                        width: isCollapsed ? "100%" : "50px",
+                        width: isCollapsed ? "100%" : "50px",marginLeft: isCollapsed ? "0" : "0px",
                         justifyContent: isCollapsed ? "flex-start" : "center"
                       }}
-                      className={isCollapsed ? itemClass : itemAClass}
+                      className= {isCollapsed ? itemClass : itemAClass}
                       onClick={() => {
                         handleClick(logoname.name)
                         dispatch(setLabelModal(true))
                       }
-                            
+
                       }
                     >
                       <img
@@ -169,8 +168,7 @@ function Slide() {
                         key={labelId}
                         onClick={
                           () => handleClick(label.name)
-                          }
-                        style={{ fontSize: "20px" }}
+                        }
                         to={label.path}
                       >
                         <button

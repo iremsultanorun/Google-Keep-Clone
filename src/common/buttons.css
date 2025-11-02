@@ -40,6 +40,7 @@
     color: var(--gray-500);
     font-size: 20px;
 }
+
 .md-btn::before {
     content: "";
     width: 50px;
@@ -122,4 +123,20 @@
     font-size: 15px;
     color: var(--blue);
    text-decoration: none;
+}
+
+@media screen and (max-width:760px) {
+    .md-btn{
+        font-size: 18px;
+    }
+}
+@media screen and (max-width:500px) {
+    .md-btn{
+        font-size: 16px;
+    }
+}
+@media screen and (max-width:360px) {
+    .md-btn{
+        font-size: 15px;
+    }
 }

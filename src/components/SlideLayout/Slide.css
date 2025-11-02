@@ -1,40 +1,45 @@
-.slide{
+.slide {
     height: 100%;
     overflow: hidden;
-display: flex;
-flex-direction: column;
-justify-content: space-between;
-width: 280px;
-transition: width .1s linear;
-height: 90vh;
-background-color: white;
-
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 280px;
+    transition: width .1s linear;
+    height: 90vh;
+    background-color: white;
 }
-.slide a{
+
+.slide a {
     text-decoration: none;
 }
-.slide__item{
-    display: flex;
-    padding:13px 15px;
-    align-items: center;
 
+.slide__item {
+    display: flex;
+    padding: 13px 15px;
+    align-items: center;
     gap: 20px;
     border: none;
     outline: none;
     background: transparent;
     cursor: pointer;
 }
-.slide__item:hover{
+
+.slide__item:hover {
     background-color: var(--gray-250);
 }
-.active{
+
+
+
+.active {
     background-color: var(--yellow);
     cursor: pointer;
-    border-top-right-radius:30px ;
-    border-bottom-right-radius:30px ;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
     color: var(--gray-900);
 }
-.sm-active{
+
+.sm-active {
     background-color: var(--yellow);
     width: 50px;
     height: 50px;
@@ -44,27 +49,38 @@ background-color: white;
     justify-content: center;
     padding: 10px;
 }
-.slide__item.active:hover{
+
+.slide__item.active:hover {
     background-color: var(--yellow);
 }
-.slide__item.sm-active:hover{
+
+.slide__item.sm-active:hover {
     background-color: var(--yellow);
 }
-.slide__footer{
+
+.slide__footer {
     margin-left: 35px;
     margin-bottom: 15px;
     width: max-content;
 }
-.slide__footer-text{
+
+.slide__footer-text {
     font-size: 13px;
-    color:var(--gray-500);
+    color: var(--gray-500);
     font-weight: 500;
-}
-.slide__title{
-    font-size: 16px;
-    font-weight: 500;
-  text-decoration: none;
-  
-  
 }
 
+.slide__title {
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+
+
+}
+
+@media screen and (max-width:400px) {
+    .slideItem__icon {
+        width:28px;
+        height: auto;
+    }
+}

@@ -100,10 +100,10 @@ function CreateTodo() {
 
     return (
         <div className='createTodo'>
-            <div ref={createTodoContRef} className='createTodo__form'>
+            <div ref={createTodoContRef} className='createTodo__form'
+            data-open-modal={hidden}           >
                 {hidden ?
                     <div className='createTodo__title-wrapper'>
-
                         <input
                             className='createTodo__title'
                             type="text"
@@ -147,10 +147,10 @@ function CreateTodo() {
                         <button className='btn action-btn sm-btn' data-tooltip-text="Background options">
                             <i className="fa-solid fa-palette"></i>
                         </button>
-                        <button className='btn action-btn sm-btn' data-tooltip-text="Remind me">
+                        <button className='btn action-btn sm-btn actionBtn-remind' data-tooltip-text="Remind me">
                             <i className="fa-regular fa-bell"></i>
                         </button>
-                        <button className='btn action-btn sm-btn' data-tooltip-text="Collaborator">
+                        <button className='btn action-btn sm-btn actionBtn-collaborator' data-tooltip-text="Collaborator">
                             <i className="fa-solid fa-user-plus"></i>
                         </button>
                         <button className='btn action-btn sm-btn' data-tooltip-text="Add image">
@@ -170,7 +170,7 @@ function CreateTodo() {
                             <i className="fa-solid fa-rotate-right"></i>
                         </button>
                     </div>
-                    <button className='createTodo__btn lg-btn' onClick={closeFunc}>Close</button>
+                   <div className='createTodo__btn-container'> <button className='createTodo__btn lg-btn' onClick={closeFunc}>Close</button></div>
                 </div> : null}
 
             </div>

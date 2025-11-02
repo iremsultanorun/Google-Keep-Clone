@@ -1,22 +1,20 @@
  .todoList__container {
+   width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-
+    align-items: center;;
  }
 
 .todoList__type {
-    column-count: 5;
-    column-gap: 15px;
-    width: 100%;
+column-count: 5;
  }
 
  .pinned>*,
  .others>* {
     break-inside: avoid;
     display: inline-block;
-    margin-bottom: 15px;
+   margin-bottom:15px ;
  }
 
  .todoList__title{
@@ -26,3 +24,31 @@
    color: var(--gray-650);
    letter-spacing: 1px;
  }
+ .todoList__type[data-open-modal="false"] {     
+  column-width:200px;
+   }
+   .todoList__type[data-open-modal="true"] {
+    width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+ }
+ @media screen and (max-width:1390px) {
+   .todoList__type[data-open-modal="false"] {     
+      column-width:250px;
+       }
+}
+
+
+ @media screen and (max-width:600px) {
+
+  .todoList__type[data-open-modal="false"] {
+   width: 100%;
+  }
+
+  .todoList__container {
+      align-items: normal;
+      width: 100%;
+  }
+
+}

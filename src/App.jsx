@@ -13,6 +13,7 @@ import { useSelector } from 'react-redux'
 
 function App() {
   const labelModal=useSelector((state)=>state.labelModal.isLabelModal)
+  const isSlideModal=useSelector((state)=>state.header.isSlideModal);
 console.log(labelModal);
   return (
     <div>
@@ -27,7 +28,7 @@ console.log(labelModal);
       </div>
 
       <div className='mainSection'>
-        <div className='slideSection'>
+        <div className='slideSection' data-menu-open={isSlideModal}>
           <Slide />
         </div>
         <div className='homeSection'>

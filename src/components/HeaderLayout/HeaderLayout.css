@@ -33,10 +33,7 @@
 .selected-num-wrapper {
   display: flex;
   gap: 40px;
-
-
 }
-
 
 .selected-num {
   font-size: 22px;
@@ -56,4 +53,43 @@
 
 .header-layout__selected-todo-oparations>*:hover {
   color: var(--blue);
+}
+ 
+@media screen and (max-width:550px) {
+  .selected-num{
+    font-size: 20px;
+  }
+  .selected-num-wrapper {
+    gap: 30px;
+  }
+}
+
+@media screen and (max-width:450px) {
+  .selected-num{
+    font-size: 18px;
+  }
+  .selected-num-wrapper {
+    gap: 20px;
+  }
+
+.header-layout__selected-todo-oparations {
+  gap: 20px;
+}
+}
+@media screen and (max-width:400px) {
+  .header-layout{
+    padding: 0 10px;
+  }
+  .selected-num{
+    font-size: 16px;
+  }
+  .selected-num-wrapper {
+    gap: 15px;
+  }
+  .header-layout__selected{
+    padding: 0 10px;
+  }
+  .header-layout__selected-todo-oparations {
+    gap: 15px;
+  }
 }

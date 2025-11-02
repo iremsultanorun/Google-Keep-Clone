@@ -30,10 +30,97 @@ js de bunu yapcaksın
 
 .search__icon{
     font-size: 18px;
+margin-right: 10px;
 }
 .search__icon,.search__close-btn{
     color:var(--gray-650);
 }
 .search__close-btn{
     opacity: 0;
+}
+
+@media screen and (max-width: 1300px) {
+    .search{
+    margin-left: -190px;
+    }
+}
+@media screen and (max-width: 1200px) {
+    .search{
+        width: 600px;
+    margin-left: -160px;
+    }
+}
+@media screen and (max-width: 1100px) {
+    .search{
+        width: 500px;
+    }
+}
+@media screen and (max-width: 1000px) {
+    .search{
+        width: 400px;
+    }
+}
+@media screen and (max-width: 880px) {
+    .search{
+        margin-left: -120px;
+        width: 350px;
+    }
+}
+@media screen and (max-width: 800px) {
+    .search{
+        width: 300px;
+    }
+}
+@media screen and (max-width: 750px) {
+    .search[data-open-modal="true"]{
+     position: fixed;
+     top: 7px;
+     right: 32vw;
+width: 65vw;
+     z-index: 10;
+     display: flex;
+    }
+    .search[data-open-modal="false"]{
+   display: none;
+    }
+
+}
+@media screen and (max-width: 720px) {
+    .search[data-open-modal="true"]{
+     right: 34vw;
+    }
+}
+@media screen and (max-width: 670px) {
+    .search[data-open-modal="true"]{
+     right: 36vw;
+    }
+}
+@media screen and (max-width: 620px) {
+    .search[data-open-modal="true"]{
+     right: 38vw;
+     width: 60vw;
+    }
+}
+@media screen and (max-width: 600px) {
+    .search[data-open-modal="true"]{
+     right: 33vw;
+     width: 65vw;
+    }
+}
+@media screen and (max-width: 550px) {
+    .search[data-open-modal="true"]{
+     right: 35vw;
+    }
+}
+@media screen and (max-width: 510px) {
+    .search[data-open-modal="true"]{
+     right: 37vw;
+     width: 60vw;
+    }
+}
+@media screen and (max-width: 450px) {
+    .search[data-open-modal="true"]{
+     right: 34vw;
+     width: 63vw;
+    }
 }

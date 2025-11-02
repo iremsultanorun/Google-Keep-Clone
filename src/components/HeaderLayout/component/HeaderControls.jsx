@@ -4,21 +4,28 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setTodoLayout } from '../../../redux/todosSlice'
 import SettingModal from '../../../modals/SettingsModal'
 import GoogleAppsModal from '../../../modals/GoogleAppsModal'
-import GoogleAccountModal from '../../../modals/GoogleAccountModal'
-import { setIsAccountModal, setIsAppsModal, setIsSettingsModal } from '../../../redux/headerSlice'
+
+import { setIsAppsModal, setIsSearchModal, setIsSettingsModal } from '../../../redux/headerSlice'
 function HeaderControls() {
   const dispatch = useDispatch()
   const todoLayout = useSelector((state) => state.todo.todoLayout)
   const isSettingsModal=useSelector((state)=>state.header.isSettingsModal)
   const  isAppsModal=useSelector((state)=>state.header. isAppsModal)
-  const  isAccountModal=useSelector((state)=>state.header. isAccountModal)
+  const isSearchModal=useSelector((state)=>state.header.isSearchModal)
+ 
   return (
     <div className='headerControls'>
       <div className='headerControls__wrapper'>
-        <button style={{ fontSize: "18px" }} data-tooltip-text="Refresh" className='btn md-btn'>
+      <button className='btn md-btn search-btn' data-tooltip-text={isSearchModal?" ":"Search"} onClick={()=>dispatch(setIsSearchModal())}>
+        {
+          isSearchModal? <i className="fa-solid fa-xmark"></i>:<i className="fa-solid fa-magnifying-glass"></i>
+        }
+     
+      </button>
+        <button data-tooltip-text="Refresh" className='btn md-btn controlBtn__reflesh'>
           <i className="fa-solid fa-rotate-right"></i>
         </button>
-        <button className='btn md-btn' data-tooltip-text="List view" onClick={() => dispatch(setTodoLayout())}>
+        <button className='btn md-btn controlBtn__list-view' data-tooltip-text="List view"  onClick={() => dispatch(setTodoLayout())}>
           {
             todoLayout ?<i className="fa-solid fa-table-cells-large"></i> : <i class="fa-solid fa-table-list"></i> 
           }
@@ -33,19 +40,17 @@ function HeaderControls() {
     }
       </div>
       <div className='headerControls__wrapper'>
-        <button className='btn md-btn' data-tooltip-text="Google apps" onClick={()=>dispatch(setIsAppsModal())}>
+        <button className='btn md-btn controlBtn__apps' data-tooltip-text="Google apps" onClick={()=>dispatch(setIsAppsModal())}>
           <i className="fa-solid fa-grip"></i>
         </button>
        {
          isAppsModal?<GoogleAppsModal/>:null
        }
     
-        <button className='btn md-btn account-btn' data-tooltip-text="Google account" onClick={()=>dispatch(setIsAccountModal())}>
+        <button className='btn md-btn account-btn' data-tooltip-text="Google account" >
           <p>i</p>
         </button>
-        {
-         isAccountModal?<GoogleAccountModal/>:null
-       }
+       
         
       </div>
     </div>

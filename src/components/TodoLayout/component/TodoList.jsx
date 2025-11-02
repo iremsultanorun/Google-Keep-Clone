@@ -20,7 +20,7 @@ function TodoList() {
       {pinnedTodos.length > 0 &&
         <div>
           <h5 className='todoList__title'>pinned</h5>
-          <div className="pinned todoList__type" style={{columnCount:todoLayout?"1":"5",width:todoLayout?"600px":"100%"}} >
+          <div className="pinned todoList__type" data-open-modal={todoLayout} >
             {
               pinnedTodos.map((todo) => (
                 <Todo key={todo.id} todo={todo} />
@@ -35,7 +35,8 @@ function TodoList() {
           {
           pinnedTodos.length > 0 && <h5 className='todoList__title'>others</h5>
         }
-        < div className="others todoList__type"  style={{columnCount:todoLayout?"1":"5",width:todoLayout?"600px":"100%"}} >
+         {/* style={{columnCount:todoLayout?"1":"5",width:todoLayout?"600px":"100%"}}*/}
+        < div className="others todoList__type"  data-open-modal={todoLayout} >
       {
         othersTodos.map((todo) => (
           <Todo key={todo.id} todo={todo} />

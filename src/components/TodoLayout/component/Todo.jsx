@@ -28,7 +28,8 @@ const todoLayout=useSelector((state)=>state.todo.todoLayout)
   return (
 
     <div className='todo__container' ref={todoContRef}
-      style={{ border: todo.selected ? "2px solid black" : "1px solid var(--gray-200)",width:todoLayout?"600px":"250px" }}
+      style={{ border: todo.selected ? "2px solid black" : "1px solid var(--gray-200)"}}
+      data-open-modal={todoLayout}
     >
 
       <h2 className='todo__title' ref={todoTitleRef}>{baslik}</h2>

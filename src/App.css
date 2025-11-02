@@ -27,6 +27,26 @@
     margin-top:65px;
     width: 100%;
    height: auto;
-padding:0 30px 70px 70px;
-
+padding:0 70px 70px 70px;
+overflow-x: hidden;
 }
+@media screen and (max-width:700px) {
+    .homeSection{
+  padding:10px;
+    }
+}
+
+
+@media screen and (max-width:400px) {
+    .slideSection{
+      z-index: 90;
+      transform: translateX(-500px);
+      position: fixed;
+    }
+    .slideSection[data-menu-open="true"]{
+        z-index: 90;
+        transform: translateX(0);
+        position: fixed;
+        box-shadow: .5px 0px 10px gray;
+    }
+    }

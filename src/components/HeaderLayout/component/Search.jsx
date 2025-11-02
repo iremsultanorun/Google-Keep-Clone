@@ -1,8 +1,12 @@
 import React from 'react'
 import "../css/Search.css"
+import { useSelector } from 'react-redux'
 function Search() {
+  const isSearchModal=useSelector((state)=>state.header.isSearchModal)
+
+  console.log("search",isSearchModal);
   return (
-    <div className='search'>
+<div className='search' data-open-modal={isSearchModal}>
       <button className='btn md-btn search__icon' data-tooltip-text="Search">
         <i className="fa-solid fa-magnifying-glass"></i>
       </button>

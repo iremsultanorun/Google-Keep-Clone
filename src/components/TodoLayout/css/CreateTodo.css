@@ -1,6 +1,6 @@
 .createTodo {
     width: 100%;
-    height: 200px;
+    height: 150px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -19,6 +19,7 @@
     top: 30px;
     background-color: white;
 margin-left: -50px;
+z-index: 5;
 }
 
 .createTodo__title,
@@ -83,7 +84,6 @@ margin-left: -50px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-
 }
 
 .createTodo__actions {
@@ -131,5 +131,59 @@ margin-left: -50px;
     font-size: 19px;
 }
 
+@media screen and (max-width:800px) {
+    .createTodo__form {
+        width: 500px;
+    }
+}
 
+@media screen and (max-width:600px) {
+    .createTodo__form {
+    width: 100%;
+    margin-left: 0px;
+    }
 
+.note-type-btn:nth-child(2) {
+    font-size: 16px;
+}
+.createTodo__actions-wrapper{
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+.createTodo__actions {
+    gap: 20px;
+}
+
+.createTodo__btn { 
+    margin-right: 15px;
+}
+.createTodo__btn-container{
+    margin: 15px 0;
+    display: flex;
+    justify-content: end;
+    width: 100%;
+}
+
+.createTodo__form[ data-open-modal="true"] {
+    padding:14px 18px 30px 18px;
+}
+
+}
+
+@media screen and (max-width:450px) {
+    .createTodo__actions {
+        gap: 15px;
+    }
+    
+}
+@media screen and (max-width:400px) {
+  .actionBtn-remind{
+    display: none;
+  } 
+}
+@media screen and (max-width:350px) {
+    .actionBtn-collaborator{
+    display: none;
+  } 
+}
