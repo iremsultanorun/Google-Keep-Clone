@@ -27,7 +27,7 @@ function HeaderControls() {
         </button>
         <button className='btn md-btn controlBtn__list-view' data-tooltip-text="List view"  onClick={() => dispatch(setTodoLayout())}>
           {
-            todoLayout ?<i className="fa-solid fa-table-cells-large"></i> : <i class="fa-solid fa-table-list"></i> 
+            todoLayout ?<i className="fa-solid fa-table-cells-large"></i> : <i className="fa-solid fa-table-list"></i> 
           }
 
 

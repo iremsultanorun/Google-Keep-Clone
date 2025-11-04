@@ -9,20 +9,28 @@ import TrashPage from './pages/TrashPage'
 import LabelPage from './pages/LabelPage'
 import EditLabel from './components/SlideLayout/component/EditLabelModal'
 import { useSelector } from 'react-redux'
+import SearchPage from './pages/SearchPage'
+import Note from './pages/Note'
 
 
 function App() {
-  const labelModal=useSelector((state)=>state.labelModal.isLabelModal)
-  const isSlideModal=useSelector((state)=>state.header.isSlideModal);
-console.log(labelModal);
+  const labelModal = useSelector((state) => state.labelModal.isLabelModal)
+  const isSlideModal = useSelector((state) => state.header.isSlideModal);
+  const selectedTodoId = useSelector((state) => state.todo.selectedTodoId)
+  const todos = useSelector((state) => state.todo.todos)
+  const selectedTodo=todos.find((todo)=>todo.id===selectedTodoId)
+const isOpenTodoModal=selectedTodoId!==null 
   return (
     <div>
+   {
+    isOpenTodoModal?<Note todo={selectedTodo} />:null
+   }
       {
-  labelModal?
-<div className='create-label-modal'>
-<EditLabel/>
-</div>:null
-}
+        labelModal ?
+          <div className='create-label-modal'>
+            <EditLabel />
+          </div> : null
+      }
       <div className='headerSection'>
         <HeaderLayout />
       </div>
@@ -31,15 +39,20 @@ console.log(labelModal);
         <div className='slideSection' data-menu-open={isSlideModal}>
           <Slide />
         </div>
-        <div className='homeSection'>
-          <Routes>
+        
+          <div className='homeSection'>
+           <Routes>
             <Route path='/' element={<HomePage />} />
+            <Route path='/search' element={<SearchPage />} />
             <Route path='/reminders' element={<RemindersPage />} />
             <Route path='/label' element={<LabelPage />} />
             <Route path='/archive' element={<ArchivePage />} />
             <Route path='/trash' element={<TrashPage />} />
           </Routes>
-        </div>
+            
+              
+            </div>
+        
       </div>
     </div>
 

@@ -35,9 +35,6 @@ margin-right: 10px;
 .search__icon,.search__close-btn{
     color:var(--gray-650);
 }
-.search__close-btn{
-    opacity: 0;
-}
 
 @media screen and (max-width: 1300px) {
     .search{

@@ -18,8 +18,8 @@
     position: absolute;
     top: 30px;
     background-color: white;
-margin-left: -50px;
-z-index: 5;
+    margin-left: -50px;
+    z-index: 5;
 }
 
 .createTodo__title,
@@ -42,10 +42,11 @@ z-index: 5;
 .createTodo__title-wrapper {
     position: relative;
 }
+
 .createTodo__content-wrapper {
- display: flex;
-  justify-content:space-between;
- }
+    display: flex;
+    justify-content: space-between;
+}
 
 
 .createTodo__title {
@@ -92,7 +93,7 @@ z-index: 5;
     gap: 28px;
 }
 
-.createTodo__btn { 
+.createTodo__btn {
     font-size: 14px;
     font-weight: 700;
     color: var(--gray-900);
@@ -100,7 +101,7 @@ z-index: 5;
 }
 
 
-.createTodo__btn::before{
+.createTodo__btn::before {
     width: 80px;
     height: 35px;
 }
@@ -115,10 +116,11 @@ z-index: 5;
 
 
 
-.node-type-wrapper{
+.node-type-wrapper {
     display: flex;
     align-items: center;
 }
+
 .note-type-btn {
     margin-right: 25px;
 }
@@ -139,35 +141,38 @@ z-index: 5;
 
 @media screen and (max-width:600px) {
     .createTodo__form {
-    width: 100%;
-    margin-left: 0px;
+        width: 100%;
+        margin-left: 0px;
     }
 
-.note-type-btn:nth-child(2) {
-    font-size: 16px;
-}
-.createTodo__actions-wrapper{
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-}
-.createTodo__actions {
-    gap: 20px;
-}
+    .note-type-btn:nth-child(2) {
+        font-size: 16px;
+    }
 
-.createTodo__btn { 
-    margin-right: 15px;
-}
-.createTodo__btn-container{
-    margin: 15px 0;
-    display: flex;
-    justify-content: end;
-    width: 100%;
-}
+    .createTodo__actions-wrapper {
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
 
-.createTodo__form[ data-open-modal="true"] {
-    padding:14px 18px 30px 18px;
-}
+    .createTodo__actions {
+        gap: 20px;
+    }
+
+    .createTodo__btn {
+        margin-right: 15px;
+    }
+
+    .createTodo__btn-container {
+        margin: 15px 0;
+        display: flex;
+        justify-content: end;
+        width: 100%;
+    }
+
+    .createTodo__form[ data-open-modal="true"] {
+        padding: 14px 18px 30px 18px;
+    }
 
 }
 
@@ -175,15 +180,17 @@ z-index: 5;
     .createTodo__actions {
         gap: 15px;
     }
-    
+
 }
+
 @media screen and (max-width:400px) {
-  .actionBtn-remind{
-    display: none;
-  } 
+    .actionBtn-remind {
+        display: none;
+    }
 }
+
 @media screen and (max-width:350px) {
-    .actionBtn-collaborator{
-    display: none;
-  } 
+    .actionBtn-collaborator {
+        display: none;
+    }
 }

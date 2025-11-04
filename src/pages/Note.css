@@ -1,0 +1,45 @@
+.note{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #3a3a3a89;
+    z-index: 100;
+    position: fixed;
+}
+.note__wrapper{
+    width: 600px;
+    height: 600px;
+    border-radius: 10px;
+    overflow-y:scroll;
+    background-color: white;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    cursor: text;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.note__info-container{
+    padding: 14px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.note__actions-wrapper{
+    box-shadow: rgba(0, 0, 0, 0.15) 0 -3px 3.2px;
+    padding: 10px 20px;
+}
+
+@media screen and (max-height:613px) {
+    .note__wrapper{
+        height: 400px;
+    }
+}
+@media screen and (max-height:500px) {
+    .note__wrapper{
+        height: 300px;
+    }
+}
+

@@ -10,25 +10,30 @@ padding-bottom: 50px;
  position: relative;
  cursor: pointer;
 }
+.todo__container .fixed-btn{
+  opacity: 0;
+  transition: opacity .2s linear;
+}
 .todo__container:hover {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
-.todo__container:hover .deneme{
-opacity: 1;
+.todo__wrapper{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-right: 24px;
 }
-.deneme{
-position: absolute;
-width: 100%;
-height: 100%;
-top: 0;
-left: 0;
-display: flex;
-justify-content: space-between;
-flex-direction: column;
-border-radius: inherit;
-padding: 10px;
-opacity: 0;
-transition: opacity .2s linear;
+
+
+.todo__container:hover .todo__choose-btn{
+  opacity: 1;
+}
+.todo__container:hover  .fixed-btn{
+  opacity: 1;
+}
+.todo__container:hover .todo__actions-wrapper{
+  opacity: 1;
+
 }
 .todo__container:hover .todo__choose-btn{
   opacity: 1;
@@ -43,6 +48,7 @@ transition: opacity .2s linear;
   opacity: 0;
   transition: opacity .2s linear;
 }
+
 
 .todo__title, .todo__content{
        display: -webkit-box;
@@ -69,6 +75,12 @@ transition: opacity .2s linear;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  padding: 0 10px;
+  opacity: 0;
+  transition: opacity .2s linear;
 }
 .todo__container[data-open-modal="true"] {
 width: 100%;
@@ -78,8 +90,13 @@ width: 100%;
   width: 250px;
  }
 
- @media screen and (min-width:600px) {
+ @media screen and (min-width:601px) {
   .todo__container[data-open-modal="true"] {
     width:600px;
+     }
+ }
+ @media screen and (max-width:600px) {
+  .todo__container[data-open-modal="false"] {
+   width: 100%;
      }
  }

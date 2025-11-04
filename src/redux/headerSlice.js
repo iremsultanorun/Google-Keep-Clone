@@ -9,6 +9,7 @@ const initialState = {
     isAccountModal: false,
 isSlideModal:false,
 isSearchModal:false,
+isSearchPage:false,
 }
 
 const headerSlice = createSlice({
@@ -24,11 +25,14 @@ const headerSlice = createSlice({
         setIsCollapsed: (state) => {
             state.isCollapsed = !state.isCollapsed 
         },
-        setSlideModal: (state) => {
+        setIsSlideModal: (state) => {
             state.isSlideModal = !state.isSlideModal
         },
         setIsSearchModal: (state) => {
             state.isSearchModal = !state.isSearchModal
+        },
+        setIsSearchPage: (state,action) => {
+            state.isSearchPage = action.payload
         },
         setIsSettingsModal: (state) => {
             state.isSettingsModal = !state.isSettingsModal
@@ -41,5 +45,5 @@ const headerSlice = createSlice({
     }
 })
 
-export const { setLogoNames, setActiveLogo, setIsCollapsed, setIsSettingsModal, setIsAppsModal, setIsAccountModal,setSlideModal,setIsSearchModal } = headerSlice.actions
+export const { setLogoNames, setActiveLogo, setIsCollapsed, setIsSettingsModal, setIsAppsModal, setIsAccountModal,setIsSlideModal,setIsSearchModal,setIsSearchPage } = headerSlice.actions
 export default headerSlice.reducer

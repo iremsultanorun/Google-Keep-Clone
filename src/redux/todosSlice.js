@@ -6,6 +6,7 @@ const initialState = {
     todos: [],
     selectedCurrent: 0,
     todoLayout:false,
+    selectedTodoId:null,
 }
 
 const todoSlice = createSlice({
@@ -23,6 +24,19 @@ const todoSlice = createSlice({
             if (action.payload.dateHours !== undefined)
                 state.dateHours = action.payload.dateHours
         },
+        updateSpecificTodo: (state, action) => {
+           const {id,field,value}=action.payload
+          const todoIndex=state.todos.findIndex((todo)=>id===todo.id)
+          if(todoIndex!==-1){
+           state.todos[todoIndex][field]=value
+          }
+        },
+        setSelectedTodoById:(state,action)=>{
+state.selectedTodoId=action.payload
+        },
+        clearSelectedTodo: (state) => {
+            state.selectedTodoId = null;
+          },
         showFullForm: (state) => {
             state.hidden = false
         },
@@ -33,7 +47,7 @@ const todoSlice = createSlice({
             state.content = ""
             state.title = ""
         },
-        setSelectTodo: (state, action) => {
+        setSelectedTodo: (state, action) => {
             const selectId = action.payload
             const todoSelected = state.todos.find((todo) => todo.id === selectId)
 
@@ -59,6 +73,6 @@ state.todoLayout=!state.todoLayout;
     }
 })
 
-export const { updateTodoFields, showFullForm, showCompactForm, addTodo, resetForm, setSelectTodo,setPinnedTodo,setTodoLayout } = todoSlice.actions
+export const { updateTodoFields, showFullForm, showCompactForm, addTodo, resetForm, setSelectedTodo,setPinnedTodo,setTodoLayout,updateSpecificTodo,setSelectedTodoById,clearSelectedTodo } = todoSlice.actions
 
 export default todoSlice.reducer
