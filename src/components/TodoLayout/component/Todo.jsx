@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setSelectedTodo, setSelectedTodoById } from '../../../redux/todosSlice';
 import Pin from '../../oparations/Pin';
 import Note from '../../../pages/Note';
+import Others from '../../oparations/Others';
+import Archive from '../../oparations/Archive';
 
 
 function Todo({ todo }) {
@@ -44,9 +46,6 @@ function Todo({ todo }) {
       </div>
 
         <div className='todo__actions-wrapper'>
-          <button className='btn action-btn sm-btn' data-tooltip-text="Formatting options">
-            <i className="fa-solid fa-underline"></i>
-          </button>
           <button className='btn action-btn sm-btn' data-tooltip-text="Background options">
             <i className="fa-solid fa-palette"></i>
           </button>
@@ -59,14 +58,9 @@ function Todo({ todo }) {
           <button className='btn action-btn sm-btn' data-tooltip-text="Add image">
             <i className="fa-regular fa-image"></i>
           </button>
-          <button className='btn action-btn sm-btn' data-tooltip-text="Archive">
-            <i className="fa-solid fa-inbox"></i>
-          </button>
-          <button className='btn action-btn sm-btn' data-tooltip-text="Other">
-            <i className="fa-solid fa-ellipsis-vertical"></i>
-          </button>
-
-     
+        
+       <Archive todoId={todo.id} />
+       <Others todoId={todo.id} />
       </div>
       <button ref={chooseBtnRef} className="btn todo__choose-btn" onClick={selecetedTodoById}
         style={{ color: todo.selected ? "black" : "var(--gray-700)", }}

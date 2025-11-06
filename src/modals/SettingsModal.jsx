@@ -1,15 +1,17 @@
 import React from 'react'
-import './css/Modals.css'
+import UserOptionsModal from './UserOptionsModal'
+import { useSelector } from 'react-redux'
 
 function SettingsModal() {
+  const settingsDropdownText=["Settings","Enable dark theme","Send feedback","Help","Application downloads","Keyboard shortcuts"]
+  const isSettingsModal = useSelector((state) => state.header.isSettingsModal)
+
   return (
-    <div className='settings__dropdown-menu'>
-        <div className='settings__dropdown-item'><p className='settings__dropdown-text'>Settings</p></div>
-        <div className='settings__dropdown-item'><p className='settings__dropdown-text'>Enable dark theme</p></div>
-        <div className='settings__dropdown-item'><p className='settings__dropdown-text'>Send feedback</p></div>
-        <div className='settings__dropdown-item'><p className='settings__dropdown-text'>Help</p></div>
-        <div className='settings__dropdown-item'><p className='settings__dropdown-text'>Application downloads</p></div>
-        <div className='settings__dropdown-item'><p className='settings__dropdown-text'>Keyboard shortcuts</p></div>
+    <div className='settings__dropdown-menu '>
+      {
+        isSettingsModal &&   <UserOptionsModal items={settingsDropdownText} />
+      }
+          
     </div>
   )
 }
