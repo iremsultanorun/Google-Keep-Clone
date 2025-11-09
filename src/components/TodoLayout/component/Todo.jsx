@@ -3,13 +3,13 @@ import "../css/Todo.css"
 import { useDispatch, useSelector } from 'react-redux'
 import { setSelectedTodo, setSelectedTodoById } from '../../../redux/todosSlice';
 import Pin from '../../oparations/Pin';
-import Note from '../../../pages/Note';
-import Others from '../../oparations/Others';
-import Archive from '../../oparations/Archive';
+import TodoActions from './TodoActions';
+
 
 
 function Todo({ todo }) {
   const todoLayout = useSelector((state) => state.todo.todoLayout)
+  const isPinned = todo.pinned
 
   const dispatch = useDispatch();
   const baslik = todo.title
@@ -38,30 +38,31 @@ function Todo({ todo }) {
       data-open-modal={todoLayout}
 
     >
-      <Pin todoId={todo.id} className="btn sm-btn fixed-btn" />
+      <Pin todoId={todo.id} className= {"btn sm-btn "+(isPinned?"black-fixed-btn":"fixed-btn")}/>
 
       <div className="todo__wrapper" onClick={() => dispatch(setSelectedTodoById(todo.id))} >
         <h2 className='todo__title' ref={todoTitleRef}>{baslik}</h2>
         <pre className='todo__content' ref={todoContentRef}>{content} </pre>
       </div>
+{/* 
+      <div className='todo__actions-wrapper'>
+        <button className='btn action-btn sm-btn' data-tooltip-text="Background options">
+          <i className="fa-solid fa-palette"></i>
+        </button>
+        <button className='btn action-btn sm-btn disabled' data-tooltip-text="Remind me">
+          <i className="fa-regular fa-bell"></i>
+        </button>
+        <button className='btn action-btn sm-btn disabled' data-tooltip-text="Collaborator">
+          <i className="fa-solid fa-user-plus"></i>
+        </button>
+        <button className='btn action-btn sm-btn' data-tooltip-text="Add image">
+          <i className="fa-regular fa-image"></i>
+        </button>
 
-        <div className='todo__actions-wrapper'>
-          <button className='btn action-btn sm-btn' data-tooltip-text="Background options">
-            <i className="fa-solid fa-palette"></i>
-          </button>
-          <button className='btn action-btn sm-btn' data-tooltip-text="Remind me">
-            <i className="fa-regular fa-bell"></i>
-          </button>
-          <button className='btn action-btn sm-btn' data-tooltip-text="Collaborator">
-            <i className="fa-solid fa-user-plus"></i>
-          </button>
-          <button className='btn action-btn sm-btn' data-tooltip-text="Add image">
-            <i className="fa-regular fa-image"></i>
-          </button>
-        
-       <Archive todoId={todo.id} />
-       <Others todoId={todo.id} />
-      </div>
+        <Archive todoId={todo.id} />
+        <Others todoId={todo.id} />
+      </div> */}
+      <TodoActions todoId={todo.id} status={"todo"} className={"todo__actions-wrapper"} />
       <button ref={chooseBtnRef} className="btn todo__choose-btn" onClick={selecetedTodoById}
         style={{ color: todo.selected ? "black" : "var(--gray-700)", }}
       > <i className="fa-solid fa-circle-check "></i></button>

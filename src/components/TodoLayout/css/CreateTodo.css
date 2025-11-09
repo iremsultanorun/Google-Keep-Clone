@@ -109,9 +109,12 @@
 
 
 
-.action-btn.disabled {
-    color: var(--gray-400);
-    cursor: not-allowed;
+create-todo__others-btn.userOptions__dropdown-menu { /* Hem özel sınıfı hem de ana sınıfı hedefleyin */
+    /* position zaten others__dropdown-menu'de tanımlı. */
+    top: 300px;   /* Konumlandırmayı temizleyin */
+    ; /* Örneğin, formun altından yukarı doğru çıksın */
+    right: 100px; /* Veya formun sağından içeri doğru konumlansın */
+    /* z-index zaten tanımlı */
 }
 
 

@@ -10,9 +10,9 @@
 }
 .note__wrapper{
     width: 600px;
-    height: 600px;
+    max-height: 600px;
+    min-width: max-content;
     border-radius: 10px;
-    overflow-y:scroll;
     background-color: white;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     cursor: text;
@@ -21,16 +21,22 @@
     justify-content: space-between;
 }
 .note__info-container{
-    padding: 14px 18px;
+   
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
-
+.note__scroll-area {
+    overflow-y: auto;
+    flex-grow: 1; 
+    padding: 14px 18px; 
+}
 .note__actions-wrapper{
     box-shadow: rgba(0, 0, 0, 0.15) 0 -3px 3.2px;
     padding: 10px 20px;
+    flex-shrink: 0;
 }
+
 
 @media screen and (max-height:613px) {
     .note__wrapper{

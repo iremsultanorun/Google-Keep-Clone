@@ -10,6 +10,9 @@ const initialState = {
     todoLayout: false,
     selectedTodoId: null,
     isOthersModal:false,
+    isPinned:false,
+    todoDetailHeight:{},
+    createTodoHeight:{},
 }
 
 const todoSlice = createSlice({
@@ -40,6 +43,14 @@ const todoSlice = createSlice({
         clearSelectedTodo: (state) => {
             state.selectedTodoId = null;
         },
+        clearSelectedTodos: (state) => {
+            state.todos.forEach(todo => {
+                if (todo.selected) {
+                    todo.selected = false;
+                }
+            });
+            state.selectedCurrent = 0;
+        },
         showFullForm: (state) => {
             state.hidden = false
         },
@@ -69,12 +80,25 @@ const todoSlice = createSlice({
                 todoPinned.pinned = !todoPinned.pinned
             }
         },
+        setAllPinnedTodo: (state) => {
+          state.todos.forEach((todo)=>{
+            if(todo.selected==true){
+                todo.pinned=!todo.pinned
+                todo.selected=false
+                state.selectedCurrent=0
+            }
+          })
+        },
+        setNewPinnedTodo: (state,action) => {
+                state.isPinned = action.payload
+        },
         setTodoLayout: (state) => {
             state.todoLayout = !state.todoLayout;
         },
         setIsOthersModal: (state) => {
             state.isOthersModal = !state.isOthersModal;
         },
+      
         setDeleteTodo: (state, action) => {
             const deleteNoteId = action.payload
             const deleteNote = state.todos.find((todo) => todo.id === deleteNoteId)
@@ -90,10 +114,18 @@ const todoSlice = createSlice({
                 state.archiveNotes.push(archiveTodo)
             }
             state.todos=state.todos.filter((todo)=>todo.id!==archiveTodoId)
+        },
+        setTodoDetailHeight:(state,action)=>{
+            const {todoId, height}=action.payload
+            state.todoDetailHeight[todoId]=height
+        },
+        setCreateTodoHeight:(state,action)=>{
+            const {height}=action.payload
+            state.createTodoHeight=height
         }
     }
 })
 
-export const { updateTodoFields, showFullForm, showCompactForm, addTodo, resetForm, setSelectedTodo, setPinnedTodo, setTodoLayout, updateSpecificTodo, setSelectedTodoById, clearSelectedTodo,setIsOthersModal,setDeleteTodo,setArchiveTodo } = todoSlice.actions
+export const { updateTodoFields, showFullForm, showCompactForm, addTodo, resetForm, setSelectedTodo, setPinnedTodo, setTodoLayout, updateSpecificTodo, setSelectedTodoById, clearSelectedTodo,setIsOthersModal,setDeleteTodo,setArchiveTodo,setNewPinnedTodo,  clearSelectedTodos,    setAllPinnedTodo,setTodoDetailHeight,setCreateTodoHeight } = todoSlice.actions
 
 export default todoSlice.reducer

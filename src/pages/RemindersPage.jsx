@@ -1,10 +1,14 @@
 import React from 'react'
-import TodoLayout from '../components/TodoLayout/TodoLayout'
+import CreateTodo from '../components/TodoLayout/component/CreateTodo'
+import TodoList from '../components/TodoLayout/component/TodoList'
 
 function Reminders() {
   return (
     <div>
-      <TodoLayout/>
+    <div>
+    <CreateTodo/>
+    <TodoList notes={null} status={"reminders"} />
+        </div>
     </div>
   )
 }

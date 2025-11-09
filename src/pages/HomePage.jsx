@@ -1,14 +1,17 @@
 import React from 'react'
-import TodoLayout from './../components/TodoLayout/TodoLayout'
+import { useSelector } from 'react-redux'
+import CreateTodo from '../components/TodoLayout/component/CreateTodo'
+import TodoList from '../components/TodoLayout/component/TodoList'
 
 function HomePage() {
+    const todos = useSelector((state) => state.todo.todos)
     return (
         <div>
-           <TodoLayout/>
+            <CreateTodo />
+            <TodoList notes={todos} status={"home"} />
         </div>
     )
 }
-
 export default HomePage
 
 

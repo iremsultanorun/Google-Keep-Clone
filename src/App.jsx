@@ -18,13 +18,13 @@ function App() {
   const isSlideModal = useSelector((state) => state.header.isSlideModal);
   const selectedTodoId = useSelector((state) => state.todo.selectedTodoId)
   const todos = useSelector((state) => state.todo.todos)
-  const selectedTodo=todos.find((todo)=>todo.id===selectedTodoId)
-const isOpenTodoModal=selectedTodoId!==null 
+  const selectedTodo = todos.find((todo) => todo.id === selectedTodoId)
+  const isOpenTodoModal = selectedTodoId !== null
   return (
     <div>
-   {
-    isOpenTodoModal?<Note todo={selectedTodo} />:null
-   }
+      {
+        isOpenTodoModal ? <Note todo={selectedTodo} /> : null
+      }
       {
         labelModal ?
           <div className='create-label-modal'>
@@ -39,9 +39,9 @@ const isOpenTodoModal=selectedTodoId!==null
         <div className='slideSection' data-menu-open={isSlideModal}>
           <Slide />
         </div>
-        
-          <div className='homeSection'>
-           <Routes>
+
+        <div className='homeSection'>
+          <Routes>
             <Route path='/' element={<HomePage />} />
             <Route path='/search' element={<SearchPage />} />
             <Route path='/reminders' element={<RemindersPage />} />
@@ -49,10 +49,10 @@ const isOpenTodoModal=selectedTodoId!==null
             <Route path='/archive' element={<ArchivePage />} />
             <Route path='/trash' element={<TrashPage />} />
           </Routes>
-            
-              
-            </div>
-        
+
+
+        </div>
+
       </div>
     </div>
 

@@ -24,7 +24,7 @@
     border-radius: 5px;
     width: max-content;
     visibility: hidden;
-    z-index: 50;
+    z-index: 20;
 }
 .btn:hover[data-tooltip-text]::after{
  visibility: visible;
@@ -103,7 +103,22 @@
     z-index: 10;
     font-size: 18px;
 }
-
+.black-fixed-btn {
+    color: var(--gray-950);
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+    font-size: 18px;
+}
+.disabled {
+    color: var(--gray-400);
+    cursor: not-allowed;
+}
+.disabled:hover {
+    color: var(--gray-400);
+    cursor: not-allowed;
+}
 .border-btn-container{
     width: 100%;
     height: auto;

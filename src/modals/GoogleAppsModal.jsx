@@ -5,12 +5,12 @@ function GoogleAppsModal() {
   return (
     <div className='apps__modal'>
       <div className='apps__wrapper'>
-    
-          <a href="#" className='app__container'> 
-            <img className='app__img' src={googleSearch} alt="" />
-            <p className='app__text'>Search</p>
-            </a>
-     
+
+        <a href="#" className='app__container'>
+          <img className='app__img' src={googleSearch} alt="" />
+          <p className='app__text'>Search</p>
+        </a>
+
         <div className='app__container'>
           <img className='app__img' src={googleSearch} alt="" />
           <p className='app__text'>Search</p>

@@ -1,14 +1,17 @@
 import React, { useEffect, useRef } from 'react'
 import '../css/CreateTodo.css'
 import { useDispatch, useSelector } from 'react-redux'
-import { showCompactForm, showFullForm, updateTodoFields, addTodo, resetForm } from '../../../redux/todosSlice'
-import Pin from '../../oparations/Pin'
+import { showCompactForm, showFullForm, updateTodoFields, addTodo, resetForm, setNewPinnedTodo, setCreateTodoHeight } from '../../../redux/todosSlice'
+
+import TodoActions from './TodoActions'
+
 function CreateTodo() {
     const dispatch = useDispatch()
 
     const title = useSelector((state) => state.todo.title)
     const content = useSelector((state) => state.todo.content)
     const hidden = useSelector((state) => state.todo.hidden)
+    const isPinned = useSelector((state) => state.todo.isPinned)
 
     const createTodoContRef = useRef()
     const contentRef = useRef()
@@ -19,8 +22,19 @@ function CreateTodo() {
         title: title,
         id: Date.now(),
         selected: false,
-        pinned: false,
+        pinned: isPinned,
     }
+    useEffect(()=>{
+        if(createTodoContRef.current){
+            const createTodoHeight=createTodoContRef.current.offsetHeight
+           dispatch(
+            setCreateTodoHeight({
+               
+                height:createTodoHeight
+            })
+           )
+        }
+        },[newTodo.content, dispatch])
 
     const addTodoFunc = () => {
         if (title.trim() || content.trim()) {
@@ -28,6 +42,7 @@ function CreateTodo() {
             dispatch(resetForm())
             contentRef.current.style.height = "20px";
         }
+        dispatch(setNewPinnedTodo(false))
     }
     const closeFunc = () => {
         addTodoFunc()
@@ -101,7 +116,7 @@ function CreateTodo() {
     return (
         <div className='createTodo'>
             <div ref={createTodoContRef} className='createTodo__form'
-            data-open-modal={hidden}           >
+                data-open-modal={hidden}           >
                 {hidden ?
                     <div className='createTodo__title-wrapper'>
                         <input
@@ -111,7 +126,10 @@ function CreateTodo() {
                             onChange={changeTitle}
                             ref={titleRef}
                             value={title} />
-                        <Pin className="btn sm-btn fixed-btn" />
+                        <button data-tooltip-text="Pin note" className= {"btn sm-btn "+(isPinned?"black-fixed-btn":"fixed-btn")}  onClick={() => dispatch(setNewPinnedTodo(true))}>
+                <i className="fa-solid fa-thumbtack"></i>
+            </button>
+
                     </div>
                     : null}
 
@@ -140,37 +158,8 @@ function CreateTodo() {
 
                 </div>
                 {hidden ? <div className='createTodo__actions-wrapper'>
-                    <div className='createTodo__actions'>
-                        <button className='btn action-btn sm-btn' data-tooltip-text="Formatting options">
-                            <i className="fa-solid fa-underline"></i>
-                        </button>
-                        <button className='btn action-btn sm-btn' data-tooltip-text="Background options">
-                            <i className="fa-solid fa-palette"></i>
-                        </button>
-                        <button className='btn action-btn sm-btn actionBtn-remind' data-tooltip-text="Remind me">
-                            <i className="fa-regular fa-bell"></i>
-                        </button>
-                        <button className='btn action-btn sm-btn actionBtn-collaborator' data-tooltip-text="Collaborator">
-                            <i className="fa-solid fa-user-plus"></i>
-                        </button>
-                        <button className='btn action-btn sm-btn' data-tooltip-text="Add image">
-                            <i className="fa-regular fa-image"></i>
-                        </button>
-                        <button className='btn action-btn sm-btn' data-tooltip-text="Archive">
-                            <i className="fa-solid fa-inbox"></i>
-                        </button>
-                        <button className='btn action-btn sm-btn' data-tooltip-text="Other">
-                            <i className="fa-solid fa-ellipsis-vertical"></i>
-                        </button>
-
-                        <button className='btn action-btn sm-btn disabled' disabled={true} data-tooltip-text="Undo">
-                            <i className="fa-solid fa-rotate-left"></i>
-                        </button>
-                        <button className='btn action-btn sm-btn disabled' disabled={true} data-tooltip-text="Rebuild">
-                            <i className="fa-solid fa-rotate-right"></i>
-                        </button>
-                    </div>
-                   <div className='createTodo__btn-container'> <button className='createTodo__btn lg-btn' onClick={closeFunc}>Close</button></div>
+                   <TodoActions todoId={null} status={"create"} className={"createTodo__actions"} />
+                    <div className='createTodo__btn-container'> <button className='createTodo__btn lg-btn' onClick={closeFunc}>Close</button></div>
                 </div> : null}
 
             </div>

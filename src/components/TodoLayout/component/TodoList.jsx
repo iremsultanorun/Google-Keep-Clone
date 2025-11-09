@@ -4,9 +4,9 @@ import Todo from './Todo'
 import "../css/TodoList.css"
 
 
-function TodoList() {
+function TodoList({ notes, status }) {
 
-  const todos = useSelector((state) => state.todo.todos)
+  const todos = notes
 
   const pinnedTodos = todos.filter((todo) => todo.pinned == true)
   const othersTodos = todos.filter((todo) => todo.pinned == false)
@@ -15,17 +15,19 @@ function TodoList() {
 
   return (
     <div className='todoList__container'>
-      {pinnedTodos.length > 0 &&
-        <div>
-          <h5 className='todoList__title'>pinned</h5>
-          <div className="pinned todoList__type" data-open-modal={todoLayout} >
-            {
-              pinnedTodos.map((todo) => (
-                <Todo key={todo.id} todo={todo} />
-              ))
-            }
+      {
+        status == "trash" ? null :
+          pinnedTodos.length > 0 &&
+          <div>
+            <h5 className='todoList__title'>pinned</h5>
+            <div className="pinned todoList__type" data-open-modal={todoLayout} >
+              {
+                pinnedTodos.map((todo) => (
+                  <Todo key={todo.id} todo={todo} />
+                ))
+              }
+            </div>
           </div>
-        </div>
       }
       {
         othersTodos.length > 0 &&

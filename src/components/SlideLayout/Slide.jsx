@@ -19,7 +19,7 @@ function Slide() {
   const labels = useSelector((state) => state.labelModal.labelList)
   let [active, setActive] = useState("Notes");
   let [isFixed, setIsfixed] = useState(false);
-  const logoNameArr = [
+  const SLIDE_MENU_LINKS = [
     {
       icon: noteIcon,
       name: "Notes",
@@ -49,13 +49,13 @@ function Slide() {
   ];
 
   useEffect(() => {
-    const newLogoNameArr = logoNameArr.map(item => {
+    const NEW_SLIDE_MENU_LINKS  = SLIDE_MENU_LINKS .map(item => {
       if (item.name === "Edit labels") {
         return { ...item, labels: labels };
       }
       return item;
     });
-    dispatch(setLogoNames(newLogoNameArr))
+    dispatch(setLogoNames(NEW_SLIDE_MENU_LINKS))
   }, [dispatch, labels])
 
   function overFunc() {

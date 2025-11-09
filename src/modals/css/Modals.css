@@ -1,34 +1,42 @@
-/* userOptions css */
-.userOptions__dropdown-menu {
+.modalClassName {
   padding: 10px;
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   border-radius: 4px;
-}
-.settings__dropdown-menu{
   position: absolute;
-  z-index: 20;
-  right: 150px;
-  top: 60px;
+  z-index: 110;
 }
-@media screen and (max-width:900px) {
-  .settings__dropdown-menu{
-    right: 110px;
-  }
+.modalClassName__todo {
+  right: -60px;
+  top: 30px;
 }
-@media screen and (max-width:450px) {
-  .settings__dropdown-menu{
-    right: 60px;
-  }
+.modalClassName__setting{
+right: 140px;
+top: 50px;
 }
-.others__dropdown-menu{
-  position: absolute;
-  z-index: 20;
-top: 30px;
-right: -170px;
+.modalClassName__create{
+  right: -40px;
+  top: 30px;
 }
-.userOptions__dropdown-item {
-  width: 100%;
+.modalClassName__create-top{
+top: -260px;
+right: -40px;
+}
+.modalClassName__create-bottom{
+  right: -40px;
+  top: 30px;
+}
+.modalClassName__note-top{
+ right: -20px;
+ bottom: 30px;
+}
+.modalClassName__note-bottom{
+  top: 18px;
+  right: 60px;
+}
+
+.dropdownModal__item {
+  min-width: max-content;
   background-color: inherit;
   padding: 7px 0 7px 7px;
   display: flex;
@@ -37,18 +45,33 @@ right: -170px;
   border: none;
   outline: none;
   cursor: pointer;
+  width: 100%;
 }
 
-.userOptions__dropdown-item:hover {
+.dropdownModal__item:hover {
   background-color: var(--gray-270);
 }
-
-.userOptions__dropdown-text {
+.dropdownModal__text {
   user-select: none;
   color: var(--gray-800);
   font-size: 14px;
   font-weight: 500;
 }
+
+/* @media screen and (max-width:900px) {
+  .settings__dropdown-menu{
+    right: 110px;
+  }
+}
+@media screen and (max-width:450px) {
+  .settings__dropdown-menu{
+    right: 60px;
+  }
+} */
+
+
+
+
 
 /* google apps css */
 .apps__modal {

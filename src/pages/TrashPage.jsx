@@ -1,16 +1,12 @@
 import React from 'react'
 import "./../css/TrashPage.css"
+import TodoList from '../components/TodoLayout/component/TodoList'
+import { useSelector } from 'react-redux'
 function TrashPage() {
+  const trashNotes=useSelector((state)=>state.todo.trashNotes)
   return (
     <div>
-  <div className='trash__text-wrapper'>
-  <p className='trash__text'>Notes in the Trash are deleted after 7 days.</p>
-  <button className='trash__btn lg-btn'>Empty the Trash</button>
-  </div>
-  {/* silinen notları tutacak kısım */}
-  <div>
-
-  </div>
+<TodoList notes={trashNotes} status={"trash"} />
     </div>
   )
 }

@@ -2,10 +2,10 @@ import React from 'react'
 import "../css/HeaderControls.css"
 import { useDispatch, useSelector } from 'react-redux'
 import { setTodoLayout } from '../../../redux/todosSlice'
-import SettingModal from '../../../modals/SettingsModal'
 import GoogleAppsModal from '../../../modals/GoogleAppsModal'
 
 import { setIsAppsModal, setIsSearchModal, setIsSettingsModal } from '../../../redux/headerSlice'
+import DropdownModal from '../../../modals/DropdownModal'
 function HeaderControls() {
   const dispatch = useDispatch()
   const todoLayout = useSelector((state) => state.todo.todoLayout)
@@ -36,7 +36,7 @@ function HeaderControls() {
           <i className="fa-solid fa-gear"></i>
         </button>
     {
-      isSettingsModal?<SettingModal/>:null
+      isSettingsModal&& <DropdownModal todoId={null} status={"setting"} />
     }
       </div>
       <div className='headerControls__wrapper'>
