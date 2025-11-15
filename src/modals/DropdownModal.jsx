@@ -16,7 +16,7 @@ console.log(createTodoHeight);
   const HEIGHT_THRESHOLD = 400
   switch (status) {
     case "create":
-      dropdownText = ["Delete note", "Add label", "Add drawing", "Make a copy", "Show checkboxes", "Copy to Google Docs", "Version history"]
+      dropdownText = COMMON_DROPDOWN_TEXT
       modalClassName += " modalClassName__create"
       if(createTodoHeight>HEIGHT_THRESHOLD){
         modalClassName += " modalClassName__create-top"
@@ -25,7 +25,7 @@ console.log(createTodoHeight);
       }
       break
     case "note":
-      dropdownText = COMMON_DROPDOWN_TEXT
+      dropdownText = ["Delete note", "Add label", "Add drawing", "Make a copy", "Show checkboxes", "Copy to Google Docs", "Version history"]
       if(todoDetailHeight>HEIGHT_THRESHOLD){
         modalClassName += " modalClassName__note-top"
       }else{
@@ -33,7 +33,7 @@ console.log(createTodoHeight);
       }
       break
     case "todo":
-      dropdownText = COMMON_DROPDOWN_TEXT
+      dropdownText =["Delete note", "Add label", "Add drawing", "Make a copy", "Show checkboxes", "Copy to Google Docs", "Version history"]
       modalClassName += " modalClassName__todo"
       break
     case "setting":
@@ -49,7 +49,6 @@ console.log(createTodoHeight);
         break;
     }
   }
-
 
   return (
     <div className={modalClassName}>

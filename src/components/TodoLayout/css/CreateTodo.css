@@ -20,6 +20,7 @@
     background-color: white;
     margin-left: -50px;
     z-index: 5;
+    transition: background-color .2s ease;
 }
 
 .createTodo__title,

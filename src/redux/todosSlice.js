@@ -9,16 +9,19 @@ const initialState = {
     selectedCurrent: 0,
     todoLayout: false,
     selectedTodoId: null,
-    isOthersModal:false,
-    isPinned:false,
-    todoDetailHeight:{},
-    createTodoHeight:{},
+    isOthersModal: false,
+    isPinned: false,
+    isBgPaletteModal: false,
+    todoDetailHeight: {},
+    createTodoHeight: {},
+    todoBgColor: " ",
 }
 
 const todoSlice = createSlice({
     name: "todo",
     initialState,
     reducers: {
+
         addTodo: (state, action) => {
             state.todos.push(action.payload)
         },
@@ -81,16 +84,16 @@ const todoSlice = createSlice({
             }
         },
         setAllPinnedTodo: (state) => {
-          state.todos.forEach((todo)=>{
-            if(todo.selected==true){
-                todo.pinned=!todo.pinned
-                todo.selected=false
-                state.selectedCurrent=0
-            }
-          })
+            state.todos.forEach((todo) => {
+                if (todo.selected == true) {
+                    todo.pinned = !todo.pinned
+                    todo.selected = false
+                    state.selectedCurrent = 0
+                }
+            })
         },
-        setNewPinnedTodo: (state,action) => {
-                state.isPinned = action.payload
+        setNewPinnedTodo: (state, action) => {
+            state.isPinned = action.payload
         },
         setTodoLayout: (state) => {
             state.todoLayout = !state.todoLayout;
@@ -98,34 +101,67 @@ const todoSlice = createSlice({
         setIsOthersModal: (state) => {
             state.isOthersModal = !state.isOthersModal;
         },
-      
+
         setDeleteTodo: (state, action) => {
             const deleteNoteId = action.payload
             const deleteNote = state.todos.find((todo) => todo.id === deleteNoteId)
-           if(deleteNote){
-            state.deleteNotes.push(deleteNote)
-           }
-             state.todos=state.todos.filter((todo) => todo.id !== deleteNoteId)
+            if (deleteNote) {
+                state.deleteNotes.push(deleteNote)
+            }
+            state.todos = state.todos.filter((todo) => todo.id !== deleteNoteId)
         },
-        setArchiveTodo:(state,action)=>{
-            const archiveTodoId=action.payload
-            const archiveTodo=state.todos.find((todo)=>todo.id===archiveTodoId)
-            if(archiveTodo){
+        setArchiveTodo: (state, action) => {
+            const archiveTodoId = action.payload
+            const archiveTodo = state.todos.find((todo) => todo.id === archiveTodoId)
+            if (archiveTodo) {
                 state.archiveNotes.push(archiveTodo)
             }
-            state.todos=state.todos.filter((todo)=>todo.id!==archiveTodoId)
+            state.todos = state.todos.filter((todo) => todo.id !== archiveTodoId)
         },
-        setTodoDetailHeight:(state,action)=>{
-            const {todoId, height}=action.payload
-            state.todoDetailHeight[todoId]=height
+        setTodoDetailHeight: (state, action) => {
+            const { todoId, height } = action.payload
+            state.todoDetailHeight[todoId] = height
         },
-        setCreateTodoHeight:(state,action)=>{
-            const {height}=action.payload
-            state.createTodoHeight=height
+        setCreateTodoHeight: (state, action) => {
+            const { height } = action.payload
+            state.createTodoHeight = height
+        },
+        setIsBgPaletteModal: (state) => {
+            state.isBgPaletteModal = !state.isBgPaletteModal
+        },
+        // todosSlice.js
+        setBgColor: (state, action) => {
+            const { color, status, id } = action.payload
+            if (status == "create") { state.todoBgColor = color }
+            if (status == "todo" || status == "note") {
+                const todoIndex = state.todos.findIndex((todo) => todo.id === id)
+                state.todos[todoIndex].bgColor = color
+            }
+        },
+        setAllBgColor: (state, action) => {
+            const { color } = action.payload; 
+            state.todos.forEach((todo) => {
+                if (todo.selected === true) {
+                    todo.bgColor = color; 
+                }
+            });
+          
+            
+        },
+        resetBgColor: (state) => {
+            state.todoBgColor = "white";
+        },
+        resetAllBgColor: (state) => {
+            state.todos.forEach((todo) => {
+                if (todo.selected === true) {
+                    todo.bgColor = "white"; 
+                }
+            });
+           
         }
     }
 })
 
-export const { updateTodoFields, showFullForm, showCompactForm, addTodo, resetForm, setSelectedTodo, setPinnedTodo, setTodoLayout, updateSpecificTodo, setSelectedTodoById, clearSelectedTodo,setIsOthersModal,setDeleteTodo,setArchiveTodo,setNewPinnedTodo,  clearSelectedTodos,    setAllPinnedTodo,setTodoDetailHeight,setCreateTodoHeight } = todoSlice.actions
+export const { updateTodoFields, showFullForm, showCompactForm, addTodo, resetForm, setSelectedTodo, setPinnedTodo, setTodoLayout, updateSpecificTodo, setSelectedTodoById, clearSelectedTodo, setIsOthersModal, setDeleteTodo, setArchiveTodo, setNewPinnedTodo, clearSelectedTodos, setAllPinnedTodo, setTodoDetailHeight, setCreateTodoHeight, setIsBgPaletteModal, setBgColor, resetBgColor,setAllBgColor,resetAllBgColor } = todoSlice.actions
 
 export default todoSlice.reducer

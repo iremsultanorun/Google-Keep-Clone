@@ -3,25 +3,24 @@ import React from 'react'
 import OthersButton from '../../oparations/OthersButton'
 import { useDispatch } from 'react-redux'
 import { setArchiveTodo } from '../../../redux/todosSlice'
+import BgPaletteButton from '../../oparations/BgPaletteButton'
 
 function TodoActions({ todoId, status, className }) {
     const dispatch = useDispatch()
 
     return (
         <div className={"actions "+className} key={todoId}>
-            <button className='btn action-btn sm-btn' data-tooltip-text="Formatting options">
+            <button className='btn action-btn sm-btn disabled' data-tooltip-text="Formatting options">
                 <i className="fa-solid fa-underline"></i>
             </button>
-            <button className='btn action-btn sm-btn' data-tooltip-text="Background options">
-                <i className="fa-solid fa-palette"></i>
-            </button>
+        <BgPaletteButton todoId={todoId} status={status} className={className} />
             <button className='btn action-btn sm-btn actionBtn-remind disabled' data-tooltip-text="Remind me">
                 <i className="fa-regular fa-bell"></i>
             </button>
             <button className='btn action-btn sm-btn actionBtn-collaborator disabled' data-tooltip-text="Collaborator">
                 <i className="fa-solid fa-user-plus"></i>
             </button>
-            <button className='btn action-btn sm-btn' data-tooltip-text="Add image">
+            <button className='btn action-btn sm-btn disabled' data-tooltip-text="Add image">
                 <i className="fa-regular fa-image"></i>
             </button>
             <button className='btn action-btn sm-btn' onClick={() => dispatch(setArchiveTodo(todoId))} data-tooltip-text="Archive">

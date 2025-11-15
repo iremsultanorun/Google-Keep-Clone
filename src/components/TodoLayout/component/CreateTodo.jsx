@@ -1,9 +1,10 @@
 import React, { useEffect, useRef } from 'react'
 import '../css/CreateTodo.css'
 import { useDispatch, useSelector } from 'react-redux'
-import { showCompactForm, showFullForm, updateTodoFields, addTodo, resetForm, setNewPinnedTodo, setCreateTodoHeight } from '../../../redux/todosSlice'
+import { showCompactForm, showFullForm, updateTodoFields, addTodo, resetForm, setNewPinnedTodo, setCreateTodoHeight,  resetBgColor } from '../../../redux/todosSlice'
 
 import TodoActions from './TodoActions'
+import Pin from '../../oparations/Pin'
 
 function CreateTodo() {
     const dispatch = useDispatch()
@@ -12,6 +13,7 @@ function CreateTodo() {
     const content = useSelector((state) => state.todo.content)
     const hidden = useSelector((state) => state.todo.hidden)
     const isPinned = useSelector((state) => state.todo.isPinned)
+    const todoBgColor = useSelector((state) => state.todo.todoBgColor)
 
     const createTodoContRef = useRef()
     const contentRef = useRef()
@@ -23,13 +25,15 @@ function CreateTodo() {
         id: Date.now(),
         selected: false,
         pinned: isPinned,
+        bgColor:todoBgColor,
     }
+    console.log(newTodo.bgColor)
+
     useEffect(()=>{
         if(createTodoContRef.current){
             const createTodoHeight=createTodoContRef.current.offsetHeight
            dispatch(
             setCreateTodoHeight({
-               
                 height:createTodoHeight
             })
            )
@@ -37,12 +41,14 @@ function CreateTodo() {
         },[newTodo.content, dispatch])
 
     const addTodoFunc = () => {
+      
         if (title.trim() || content.trim()) {
             dispatch(addTodo(newTodo))
             dispatch(resetForm())
             contentRef.current.style.height = "20px";
         }
         dispatch(setNewPinnedTodo(false))
+     dispatch(resetBgColor())
     }
     const closeFunc = () => {
         addTodoFunc()
@@ -58,17 +64,14 @@ function CreateTodo() {
         dispatch(updateTodoFields({ content: e.target.value }))
     }
 
-
-
-
     useEffect(() => {
         const handleFormClick = (event) => {
             if (createTodoContRef.current.contains(event.target)) {
                 dispatch(showCompactForm(hidden));
             };
-            if (!createTodoContRef.current.contains(event.target)) {
-                closeFunc();
-            };
+            // if (!createTodoContRef.current.contains(event.target)) {
+            //     closeFunc();
+            // };
         }
         window.addEventListener("click", handleFormClick);
         return () => {
@@ -115,8 +118,7 @@ function CreateTodo() {
 
     return (
         <div className='createTodo'>
-            <div ref={createTodoContRef} className='createTodo__form'
-                data-open-modal={hidden}           >
+            <div ref={createTodoContRef} className='createTodo__form' style={{background:newTodo.bgColor}} data-open-modal={hidden}>
                 {hidden ?
                     <div className='createTodo__title-wrapper'>
                         <input
@@ -126,14 +128,10 @@ function CreateTodo() {
                             onChange={changeTitle}
                             ref={titleRef}
                             value={title} />
-                        <button data-tooltip-text="Pin note" className= {"btn sm-btn "+(isPinned?"black-fixed-btn":"fixed-btn")}  onClick={() => dispatch(setNewPinnedTodo(true))}>
-                <i className="fa-solid fa-thumbtack"></i>
-            </button>
+                            <Pin todoId={newTodo.id} status={"create"} />
 
                     </div>
                     : null}
-
-
                 <div className='createTodo__content-wrapper'>
                     <textarea
                         ref={contentRef}
@@ -158,7 +156,7 @@ function CreateTodo() {
 
                 </div>
                 {hidden ? <div className='createTodo__actions-wrapper'>
-                   <TodoActions todoId={null} status={"create"} className={"createTodo__actions"} />
+                   <TodoActions todoId={newTodo.id} status={"create"} className={"createTodo__actions"} />
                     <div className='createTodo__btn-container'> <button className='createTodo__btn lg-btn' onClick={closeFunc}>Close</button></div>
                 </div> : null}
 

@@ -6,31 +6,38 @@
   position: absolute;
   z-index: 110;
 }
+
 .modalClassName__todo {
   right: -60px;
   top: 30px;
 }
-.modalClassName__setting{
-right: 140px;
-top: 50px;
+
+.modalClassName__setting {
+  right: 140px;
+  top: 50px;
 }
-.modalClassName__create{
+
+.modalClassName__create {
   right: -40px;
   top: 30px;
 }
-.modalClassName__create-top{
-top: -260px;
-right: -40px;
+
+.modalClassName__create-top {
+  top: -260px;
+  right: -40px;
 }
-.modalClassName__create-bottom{
+
+.modalClassName__create-bottom {
   right: -40px;
   top: 30px;
 }
-.modalClassName__note-top{
- right: -20px;
- bottom: 30px;
+
+.modalClassName__note-top {
+  right: -20px;
+  bottom: 30px;
 }
-.modalClassName__note-bottom{
+
+.modalClassName__note-bottom {
   top: 18px;
   right: 60px;
 }
@@ -51,6 +58,7 @@ right: -40px;
 .dropdownModal__item:hover {
   background-color: var(--gray-270);
 }
+
 .dropdownModal__text {
   user-select: none;
   color: var(--gray-800);
@@ -82,7 +90,7 @@ right: -40px;
   overflow-x: hidden;
   overflow-y: scroll;
   width: 350px;
- max-height:500px;
+  max-height: 500px;
   border-radius: 30px;
   background-color: var(--blue-100);
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
@@ -95,20 +103,23 @@ right: -40px;
 .apps__wrapper {
   width: 100%;
   background-color: white;
- display: grid;
- grid-template-columns: auto auto auto;
- justify-content: center;
-align-items: center;
-align-self: flex-start;
-gap: 5px;
-padding: 20px;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  justify-content: center;
+  align-items: center;
+  align-self: flex-start;
+  gap: 5px;
+  padding: 20px;
 }
-.apps__wrapper:nth-child(1){
+
+.apps__wrapper:nth-child(1) {
   border-radius: 30px 30px 5px 5px;
 }
-.apps__wrapper:nth-child(2){
+
+.apps__wrapper:nth-child(2) {
   border-radius: 5px 5px 30px 30px;
 }
+
 .app__container {
   display: flex;
   flex-direction: column;
@@ -125,7 +136,7 @@ padding: 20px;
 }
 
 .app__container:hover {
- background-color: var(--gray-270);
+  background-color: var(--gray-270);
 }
 
 
@@ -133,50 +144,121 @@ padding: 20px;
   width: 35px;
   height: auto;
 }
-.app__text{
+
+.app__text {
   font-size: 15px;
   color: var(--gray-800);
 }
 
-.app__btn-container{
+.app__btn-container {
   margin: 20px 0;
 }
-.app__btn:hover{
+
+.app__btn:hover {
   background: white;
-  border-color:var(--blue-200);
+  border-color: var(--blue-200);
 }
 
-.app__btn:active{
-background-color: var(--blue-200);
-box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+.app__btn:active {
+  background-color: var(--blue-200);
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
+
 .account__container {
   position: absolute;
   right: 25px;
   top: 60px;
   z-index: 21;
 }
+
 @media screen and (max-width:500px) {
   .apps__modal {
     width: 300px;
-    max-height:300px;
+    max-height: 300px;
   }
+
   .app__img {
     width: 30px;
   }
-  .app__text{
+
+  .app__text {
     font-size: 14px;
   }
+
   .apps__wrapper {
-  gap: 0;
+    gap: 0;
   }
+
   .app__container {
     width: 80px;
     height: 80px;
   }
 }
+
 @media screen and (max-width:400px) {
-  .apps__modal{
+  .apps__modal {
     display: none;
   }
+}
+
+/* todo bg modal */
+.bg-modal {
+  position: absolute;
+  top: 25px;
+  left: 50px;
+  width: max-content;
+  background-color: rgb(142, 52, 52);
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 10px;
+  z-index: 5;
+  
+}
+
+.bg-color-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  background-color: blueviolet;
+  width: 100%;
+}
+
+.color-btn {
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  position: relative;
+}
+
+.non-selected {
+  font-size: 18px;
+  background-color: white;
+}
+
+.color-btn:hover {
+  cursor: pointer;
+}
+
+.color-btn.selected {
+ border-color: red;
+}
+
+.color-btn.selected::after {
+  content:'\2713';
+  position: absolute;
+  right: -7px;
+  top: -8px;
+  width: 18px;
+  height: 18px;
+  background-color: var(--purple);
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 13px;
 }

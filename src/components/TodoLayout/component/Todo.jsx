@@ -8,9 +8,8 @@ import TodoActions from './TodoActions';
 
 
 function Todo({ todo }) {
+  console.log(todo.bgColor)
   const todoLayout = useSelector((state) => state.todo.todoLayout)
-  const isPinned = todo.pinned
-
   const dispatch = useDispatch();
   const baslik = todo.title
   const content = todo.content
@@ -34,34 +33,17 @@ function Todo({ todo }) {
   return (
 
     <div className='todo__container' ref={todoContRef}
-      style={{ border: todo.selected ? "2px solid black" : "1px solid var(--gray-200)", opacity: den ? isOpenTodoModal ? "0" : "1" : null }}
+      style={{ border: todo.selected ? "2px solid black" : "1px solid var(--gray-200)", opacity: den ? isOpenTodoModal ? "0" : "1" : null, background:todo.bgColor }}
       data-open-modal={todoLayout}
 
     >
-      <Pin todoId={todo.id} className= {"btn sm-btn "+(isPinned?"black-fixed-btn":"fixed-btn")}/>
+      <Pin todoId={todo.id} status={"todo"}/>
 
       <div className="todo__wrapper" onClick={() => dispatch(setSelectedTodoById(todo.id))} >
         <h2 className='todo__title' ref={todoTitleRef}>{baslik}</h2>
         <pre className='todo__content' ref={todoContentRef}>{content} </pre>
       </div>
-{/* 
-      <div className='todo__actions-wrapper'>
-        <button className='btn action-btn sm-btn' data-tooltip-text="Background options">
-          <i className="fa-solid fa-palette"></i>
-        </button>
-        <button className='btn action-btn sm-btn disabled' data-tooltip-text="Remind me">
-          <i className="fa-regular fa-bell"></i>
-        </button>
-        <button className='btn action-btn sm-btn disabled' data-tooltip-text="Collaborator">
-          <i className="fa-solid fa-user-plus"></i>
-        </button>
-        <button className='btn action-btn sm-btn' data-tooltip-text="Add image">
-          <i className="fa-regular fa-image"></i>
-        </button>
 
-        <Archive todoId={todo.id} />
-        <Others todoId={todo.id} />
-      </div> */}
       <TodoActions todoId={todo.id} status={"todo"} className={"todo__actions-wrapper"} />
       <button ref={chooseBtnRef} className="btn todo__choose-btn" onClick={selecetedTodoById}
         style={{ color: todo.selected ? "black" : "var(--gray-700)", }}
