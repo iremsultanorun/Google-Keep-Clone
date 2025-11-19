@@ -12,7 +12,6 @@ function DropdownModal({ todoId, status }) {
   const todoDetailHeight = todoDetailHeights[todoId] || 0
   const createTodoHeight = useSelector((state) => state.todo.createTodoHeight)
 
-console.log(createTodoHeight);
   const HEIGHT_THRESHOLD = 400
   switch (status) {
     case "create":
@@ -39,6 +38,10 @@ console.log(createTodoHeight);
     case "setting":
       dropdownText = ["Settings", "Enable dark theme", "Send feedback", "Help", "Application downloads", "Keyboard shortcuts"]
       modalClassName += " modalClassName__setting"
+      break
+    case "selected":
+      dropdownText = ["Delete note", "Add Label", "Make a copy","Copy to Google Docs", "Version history"]
+      modalClassName += " modalClassName__selected"
       break
   }
 

@@ -1,27 +1,104 @@
-.header__logo-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    height: 100%;
-    width: 300px;
+.header-layout {
+  position: fixed;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  background-color: white;
+  border: 1px solid var(--color-gray-300);
+  z-index: 50;
+  height: 65px;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
-.header__title{
-    color: var(--gray-650);
+
+.selection-bar {
+  width: 100vw;
+  background-color: rgb(255, 255, 255);
+  border: 1px solid var(--color-gray-300);
+  height: 65px;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 80;
+  transition: all .5s ease;
+  position: fixed;
+  top: 0;
+  left: 0;
+  transform: translateY(-65px);
+}
+
+.selection-bar__count-group {
+  display: flex;
+  gap: 40px;
+}
+
+.selection-bar__count {
+  font-size: 22px;
+  color: var(--color-gray-800);
+  font-weight: 500;
+}
+
+.selection-bar__actions-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+
+
+.selection-bar__action {
+  color: var(--color-blue-main);
+}
+
+.selection-bar__action:hover {
+  color: var(--color-blue-main);
+}
+
+@media screen and (max-width:550px) {
+  .selection-bar__count {
     font-size: 20px;
-    font-weight: 400;
-    margin-left: 4px;
+  }
+
+  .selection-bar__count-group {
+    gap: 30px;
+  }
 }
-.keep-title{
-    font-size: 24px;
+
+@media screen and (max-width:450px) {
+  .selection-bar__count {
+    font-size: 18px;
+  }
+
+  .selection-bar__count-group {
+    gap: 20px;
+  }
+
+  .selection-bar__actions-wrapper {
+    gap: 20px;
+  }
 }
-.logo {
-    width: 40px;
-}
+
 @media screen and (max-width:400px) {
-    .header__logo-wrapper {
-        gap: 10px;
-    }
-    .header__title{  
-        font-size: 18px;
-    }
+  .header-layout {
+    padding: 0 10px;
+  }
+
+  .selection-bar__count {
+    font-size: 16px;
+  }
+
+  .selection-bar__count-group {
+    gap: 15px;
+  }
+
+  .header-layout__selected {
+    padding: 0 10px;
+  }
+
+  .selection-bar__actions-wrapper {
+    gap: 15px;
+  }
 }

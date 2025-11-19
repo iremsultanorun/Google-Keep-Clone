@@ -22,7 +22,7 @@
    text-transform: uppercase;
    font-size: 11px;
    margin: 0 0 5px 10px;
-   color: var(--gray-650);
+   color: var(--color-gray-650);
    letter-spacing: 1px;
  }
  .todoList__type[data-open-modal="false"] {

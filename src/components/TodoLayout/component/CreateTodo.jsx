@@ -1,10 +1,12 @@
 import React, { useEffect, useRef } from 'react'
 import '../css/CreateTodo.css'
 import { useDispatch, useSelector } from 'react-redux'
-import { showCompactForm, showFullForm, updateTodoFields, addTodo, resetForm, setNewPinnedTodo, setCreateTodoHeight,  resetBgColor } from '../../../redux/todosSlice'
-
-import TodoActions from './TodoActions'
-import Pin from '../../oparations/Pin'
+import { showCompactForm, showFullForm, updateTodoFields, addTodo, resetForm, setNewPinnedTodo, setCreateTodoHeight, resetBgColor } from '../../../redux/todosSlice'
+import Pin from '../../../common/Actions/Action-buttons/Pin'
+import Actions from '../../../common/Actions/Actions'
+import { MdOutlineImage } from 'react-icons/md'
+import { BiSolidPaint } from 'react-icons/bi'
+import { IoIosCheckboxOutline } from 'react-icons/io'
 
 function CreateTodo() {
     const dispatch = useDispatch()
@@ -25,30 +27,30 @@ function CreateTodo() {
         id: Date.now(),
         selected: false,
         pinned: isPinned,
-        bgColor:todoBgColor,
+        bgColor: todoBgColor,
     }
-    console.log(newTodo.bgColor)
 
-    useEffect(()=>{
-        if(createTodoContRef.current){
-            const createTodoHeight=createTodoContRef.current.offsetHeight
-           dispatch(
-            setCreateTodoHeight({
-                height:createTodoHeight
-            })
-           )
+
+    useEffect(() => {
+        if (createTodoContRef.current) {
+            const createTodoHeight = createTodoContRef.current.offsetHeight
+            dispatch(
+                setCreateTodoHeight({
+                    height: createTodoHeight
+                })
+            )
         }
-        },[newTodo.content, dispatch])
+    }, [newTodo.content, dispatch])
 
     const addTodoFunc = () => {
-      
+
         if (title.trim() || content.trim()) {
             dispatch(addTodo(newTodo))
             dispatch(resetForm())
             contentRef.current.style.height = "20px";
         }
         dispatch(setNewPinnedTodo(false))
-     dispatch(resetBgColor())
+        dispatch(resetBgColor())
     }
     const closeFunc = () => {
         addTodoFunc()
@@ -118,7 +120,7 @@ function CreateTodo() {
 
     return (
         <div className='createTodo'>
-            <div ref={createTodoContRef} className='createTodo__form' style={{background:newTodo.bgColor}} data-open-modal={hidden}>
+            <div ref={createTodoContRef} className='createTodo__form' style={{ background: newTodo.bgColor }} data-open-modal={hidden}>
                 {hidden ?
                     <div className='createTodo__title-wrapper'>
                         <input
@@ -128,7 +130,7 @@ function CreateTodo() {
                             onChange={changeTitle}
                             ref={titleRef}
                             value={title} />
-                            <Pin todoId={newTodo.id} status={"create"} />
+                        <Pin todoId={newTodo.id} status={"create"} />
 
                     </div>
                     : null}
@@ -141,22 +143,24 @@ function CreateTodo() {
                         onChange={changeContent}
                         value={content}
                         style={{ marginTop: hidden ? "10px" : "0" }}></textarea>
-                    {hidden ? null :
-                        <div className='node-type-wrapper'>
+                    {!hidden
+                        ? <div className='node-type-wrapper'>
                             <button className="note-type-btn btn md-btn" data-tooltip-text="New list">
-                                <i className="fa-regular fa-square-check"></i>
+                            <IoIosCheckboxOutline />
                             </button>
                             <button className="note-type-btn btn md-btn" data-tooltip-text="New note with drawing">
-                                <i className="fa-solid fa-paintbrush"></i>
+                            <BiSolidPaint />
                             </button>
                             <button className="note-type-btn btn md-btn" data-tooltip-text="New note with picture">
-                                <i className="fa-regular fa-image"></i>
+                            <MdOutlineImage />
                             </button>
-                        </div>}
+                        </div>
+                        : null
+                    }
 
                 </div>
                 {hidden ? <div className='createTodo__actions-wrapper'>
-                   <TodoActions todoId={newTodo.id} status={"create"} className={"createTodo__actions"} />
+                    <Actions todoId={newTodo.id} status={"create"} className={"createTodo__actions"} />
                     <div className='createTodo__btn-container'> <button className='createTodo__btn lg-btn' onClick={closeFunc}>Close</button></div>
                 </div> : null}
 

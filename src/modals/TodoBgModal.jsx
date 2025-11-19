@@ -7,26 +7,29 @@ function TodoBgModal({ todoId, status }) {
   const COLOR_PALAETTE = ["#FAAFA9", "#F39F76", "#FFF8B8", "#E2F6D3", "#D4E4ED", "#AECCDC", "#D3BFDB", "#F6E2DD", "#E9E3D4", "#EFEFF1"]
   const dispatch = useDispatch()
   const todos = useSelector((state) => state.todo.todos)
-
+  const createBgColor = useSelector((state) => state.todo.todoBgColor)
   let todoBgColor;
   if (status === "selected") {
     const selectedTodos = todos.filter(t => t.selected);
-    
-    if (selectedTodos.length === 0) {
-        todoBgColor = "white";
-    } else {
-        const firstColor = selectedTodos[0].bgColor;
 
-        const allSameColor = selectedTodos.every(t => t.bgColor === firstColor);
-        if (allSameColor) {
-            todoBgColor = firstColor;
-        } else {
-            todoBgColor = null; 
-        }
+    if (selectedTodos.length === 0) {
+      todoBgColor = "white";
+    } else {
+      const firstColor = selectedTodos[0].bgColor;
+
+      const allSameColor = selectedTodos.every(t => t.bgColor === firstColor);
+      if (allSameColor) {
+        todoBgColor = firstColor;
+      } else {
+        todoBgColor = null;
+      }
     }
-} else {
-    todoBgColor = todos.find((todo) => todo.id === todoId)?.bgColor || "white";
+  } else if (status === "create") {
+    todoBgColor = createBgColor || "white";
 }
+  else {
+    todoBgColor = todos.find((todo) => todo.id === todoId)?.bgColor || "white";
+  }
 
   const [hoverColor, setHoverColor] = useState(null)
 
@@ -39,27 +42,42 @@ function TodoBgModal({ todoId, status }) {
     isResetSelected
       ? selectedBorder
       : (hoverColor === "gray" ? "black" : resetDefaultColor)
-      const handleClickSetBgColor=(color)=>{
-        if(status==="selected"){
-            dispatch(setAllBgColor({color:color}))
-        }else{
-              dispatch(setBgColor({ id: todoId, color: color, status: status }))
-        }
-     }
-      const handleClickResetBgColor=()=>{
-        if(status==="selected"){
-            dispatch(resetAllBgColor())
-        }else{
-          dispatch(resetBgColor())
-        }
-     }
+      let paletteModal="bg-modal "
+      switch (status) {
+        case "create":
+          paletteModal+="bg-modal__create"
+          break;
+        case "selected":
+         paletteModal+="bg-modal__selected"
+          break;
+        case "note":
+          paletteModal+="bg-modal__note"
+          break;
+        case "todo":
+        paletteModal+="bg-modal__todo"
+          break;
+      }
+  const handleClickSetBgColor = (color) => {
+    if (status === "selected") {
+      dispatch(setAllBgColor({ color: color }))
+    } else {
+      dispatch(setBgColor({ id: todoId, color: color, status: status }))
+    }
+  }
+  const handleClickResetBgColor = () => {
+    if (status === "selected") {
+      dispatch(resetAllBgColor())
+    } else {
+      dispatch(resetBgColor())
+    }
+  }
   return (
-    <div className={'bg-modal '}>
+    <div className={paletteModal}>
       <div className="bg-color">
         <div className="bg-color-modal">
           <button
             className={'btn color-btn non-selected ' + (isResetSelected ? "selected" : "white")}
-            onClick={handleClickResetBgColor }
+            onClick={handleClickResetBgColor}
             onMouseEnter={() => handleMouseEnter("gray")}
             onMouseLeave={handleMouseLeave}
             style={{ borderColor: resetBorderColor }}
@@ -82,7 +100,7 @@ function TodoBgModal({ todoId, status }) {
               }
               return (
                 <button key={id}
-                  onClick={()=>handleClickSetBgColor(color)}
+                  onClick={() => handleClickSetBgColor(color)}
                   className={"btn color-btn " + (todoBgColor == color ? "selected" : null)}
                   style={{ background: color, borderColor: currentBorderColor }}
                   onMouseEnter={() => handleMouseEnter(color)}

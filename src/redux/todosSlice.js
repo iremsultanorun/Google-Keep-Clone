@@ -4,7 +4,8 @@ const initialState = {
     content: "",
     hidden: false,
     todos: [],
-    deleteNotes: [],
+    trashNotes: [],
+    remindersNotes: [],
     archiveNotes: [],
     selectedCurrent: 0,
     todoLayout: false,
@@ -81,6 +82,8 @@ const todoSlice = createSlice({
             const todoPinned = state.todos.find((todo) => todo.id === pinnedId)
             if (todoPinned) {
                 todoPinned.pinned = !todoPinned.pinned
+              
+                
             }
         },
         setAllPinnedTodo: (state) => {
@@ -106,9 +109,17 @@ const todoSlice = createSlice({
             const deleteNoteId = action.payload
             const deleteNote = state.todos.find((todo) => todo.id === deleteNoteId)
             if (deleteNote) {
-                state.deleteNotes.push(deleteNote)
+                state.trashNotes.push(deleteNote)
             }
             state.todos = state.todos.filter((todo) => todo.id !== deleteNoteId)
+        },
+        setAllDeleteTodo: (state) => {
+            const deleteNoteId = state.todos.filter(todo=>todo.selected===todo).map(todo=>todo.id)
+          state.todos.forEach((todo)=>{
+            if(todo.selected===true)
+                state.trashNotes.push(todo)
+          })
+            state.todos = state.todos.filter((todo) =>!deleteNoteId(todo.id))
         },
         setArchiveTodo: (state, action) => {
             const archiveTodoId = action.payload
@@ -117,6 +128,15 @@ const todoSlice = createSlice({
                 state.archiveNotes.push(archiveTodo)
             }
             state.todos = state.todos.filter((todo) => todo.id !== archiveTodoId)
+        },
+        setAllArchiveTodo: (state) => {
+            const selectedId=state.todos.filter((todo)=>todo.selected===todo).map(todo=>todo.id)
+            state.todos.forEach((todo) => {
+                if (todo.selected === true) {
+                    state.archiveNotes.push(todo)
+                }})
+        
+            state.todos = state.todos.filter((todo) => !selectedId.includes(todo.id))
         },
         setTodoDetailHeight: (state, action) => {
             const { todoId, height } = action.payload
@@ -139,14 +159,14 @@ const todoSlice = createSlice({
             }
         },
         setAllBgColor: (state, action) => {
-            const { color } = action.payload; 
+            const { color } = action.payload;
             state.todos.forEach((todo) => {
                 if (todo.selected === true) {
-                    todo.bgColor = color; 
+                    todo.bgColor = color;
                 }
             });
-          
-            
+
+
         },
         resetBgColor: (state) => {
             state.todoBgColor = "white";
@@ -154,14 +174,14 @@ const todoSlice = createSlice({
         resetAllBgColor: (state) => {
             state.todos.forEach((todo) => {
                 if (todo.selected === true) {
-                    todo.bgColor = "white"; 
+                    todo.bgColor = "white";
                 }
             });
-           
+
         }
     }
 })
 
-export const { updateTodoFields, showFullForm, showCompactForm, addTodo, resetForm, setSelectedTodo, setPinnedTodo, setTodoLayout, updateSpecificTodo, setSelectedTodoById, clearSelectedTodo, setIsOthersModal, setDeleteTodo, setArchiveTodo, setNewPinnedTodo, clearSelectedTodos, setAllPinnedTodo, setTodoDetailHeight, setCreateTodoHeight, setIsBgPaletteModal, setBgColor, resetBgColor,setAllBgColor,resetAllBgColor } = todoSlice.actions
+export const { updateTodoFields, showFullForm, showCompactForm, addTodo, resetForm, setSelectedTodo, setPinnedTodo, setTodoLayout, updateSpecificTodo, setSelectedTodoById, clearSelectedTodo, setIsOthersModal, setDeleteTodo, setArchiveTodo, setNewPinnedTodo, clearSelectedTodos, setAllPinnedTodo, setTodoDetailHeight, setCreateTodoHeight, setIsBgPaletteModal, setBgColor, resetBgColor, setAllBgColor, resetAllBgColor,setAllArchiveTodo,setAllDeleteTodo } = todoSlice.actions
 
 export default todoSlice.reducer

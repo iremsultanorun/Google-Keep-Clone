@@ -2,12 +2,15 @@
 
 import React, { useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import "./EditLabelModal.css"
+import "./../css/EditLabelModal.css"
 import labelIcon from "./../../../assets/slide-icon/label-icon.svg"
 import labelSlideIcon from "./../../../assets/slide-icon/label-slide-icon.svg"
 import labelEditorIcon from "./../../../assets/slide-icon/label-editor-icon.svg"
 import deleteLabelIcon from "./../../../assets/slide-icon/label-delete-icon.svg"
 import { addLabelList, setLabelModal, setLabelName, deleteLabel, updateLabel } from '../../../redux/labelModalSlice';
+import { IoCheckmark } from 'react-icons/io5';
+import { CgClose } from 'react-icons/cg';
+import { GoPlus } from 'react-icons/go';
 function EditLabel() {
 
   const labelName = useSelector((state) => state.labelModal.labelName)
@@ -63,8 +66,8 @@ function EditLabel() {
             <button className='label-editor__control-btn btn sm-btn' onClick={() => setIsCreateInput(!isCreateInput)}>
               {
                 isCreateInput ?
-                  <i className="fa-solid fa-xmark"></i> :
-                  <i className="fa-solid fa-plus"></i>
+                <CgClose /> :
+                <GoPlus />
               }
             </button>
             {
@@ -81,7 +84,7 @@ function EditLabel() {
             isCreateInput ? <button
               className='label-editor__add-btn btn sm-btn'
               onClick={addNewLabel}>
-              <i className="fa-solid fa-check"></i>
+            <IoCheckmark />
             </button> : null
           }
         </div>
@@ -120,7 +123,7 @@ function EditLabel() {
                   </div>
                   {isSaveIcon ? (
                     <button className='label-editor__add-btn btn sm-btn' onClick={saveEdit}>
-                      <i className="fa-solid fa-check"></i>
+                     <IoCheckmark />
                     </button>
                   ) : (
                     <button className='label-editor__add-btn btn sm-btn' onClick={() => { startEdit(label) }}>

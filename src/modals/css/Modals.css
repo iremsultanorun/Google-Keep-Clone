@@ -16,6 +16,10 @@
   right: 140px;
   top: 50px;
 }
+.modalClassName__selected{
+right: 10px;
+top: 55px;
+}
 
 .modalClassName__create {
   right: -40px;
@@ -61,7 +65,7 @@
 
 .dropdownModal__text {
   user-select: none;
-  color: var(--gray-800);
+  color: var(--color-gray-800);
   font-size: 14px;
   font-weight: 500;
 }
@@ -92,7 +96,7 @@
   width: 350px;
   max-height: 500px;
   border-radius: 30px;
-  background-color: var(--blue-100);
+  background-color: var(--color-blue-100);
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   display: flex;
   padding: 5px;
@@ -147,7 +151,7 @@
 
 .app__text {
   font-size: 15px;
-  color: var(--gray-800);
+  color: var(--color-gray-800);
 }
 
 .app__btn-container {
@@ -156,11 +160,11 @@
 
 .app__btn:hover {
   background: white;
-  border-color: var(--blue-200);
+  border-color: var(--color-blue-200);
 }
 
 .app__btn:active {
-  background-color: var(--blue-200);
+  background-color: var(--color-blue-200);
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
@@ -204,14 +208,23 @@
 /* todo bg modal */
 .bg-modal {
   position: absolute;
-  top: 25px;
-  left: 50px;
   width: max-content;
-  background-color: rgb(142, 52, 52);
+  background-color:white;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   border-radius: 10px;
-  z-index: 5;
-  
+  z-index: 15;
+}
+.bg-modal__create,.bg-modal__note{
+  top: 25px;
+  left: 50px;
+}
+.bg-modal__selected{
+  top: 55px;
+  right:190px;
+}
+.bg-modal__todo{
+  top: 28px;
+left: -70px;
 }
 
 .bg-color-modal {
@@ -219,7 +232,7 @@
   align-items: center;
   justify-content: center;
   gap: 5px;
-  background-color: blueviolet;
+  padding: 10px;
   width: 100%;
 }
 
@@ -254,7 +267,7 @@
   top: -8px;
   width: 18px;
   height: 18px;
-  background-color: var(--purple);
+  background-color: var(--color-purple-main);
   border-radius: 100%;
   display: flex;
   align-items: center;

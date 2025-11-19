@@ -9,7 +9,7 @@
     cursor: pointer;
     transition: color 0.1s ease;
     z-index: 10;
-    color: var(--gray-500);
+    color: var(--color-gray-500);
     font-size: 22px;
 }
 
@@ -19,7 +19,7 @@
     bottom: -25px;
     font-size: 13px;
     color: white;
-    background-color:var(--gray-700-opacity);  
+    background-color: rgba(var(--color-gray-700),0.82);  
     padding: 5px;
     border-radius: 5px;
     width: max-content;
@@ -37,8 +37,8 @@
     cursor: pointer;
 }
 .md-btn{
-    color: var(--gray-500);
-    font-size: 20px;
+    color: var(--color-gray-500);
+    font-size: 26px;
 }
 
 .md-btn::before {
@@ -49,7 +49,7 @@
 }
 .sm-btn{
     font-size: 14px;
-    color: var(--gray-700);
+    color: var(--color-gray-700);
 }
 .sm-btn::before {
     content: "";
@@ -60,7 +60,7 @@
     background-color:rgba(23, 23, 23, 0.075);
 }
 .btn:hover {
-    color: var(--gray-950);
+    color: var(--color-gray-950);
 }
 
 .lg-btn {
@@ -84,7 +84,7 @@
 }
 
 .lg-btn:hover::before {
-    background-color: var(--gray-50);
+    background-color: var(--color-gray-50);
 }
 
 .reset-input{
@@ -96,27 +96,20 @@
     outline: none;
 }
 .fixed-btn {
-    color: var(--gray-500);
+    color: var(--color-gray-500);
     position: absolute;
     top: 10px;
     right: 10px;
     z-index: 10;
     font-size: 18px;
 }
-.black-fixed-btn {
-    color: var(--gray-950);
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    z-index: 10;
-    font-size: 18px;
-}
+
 .disabled {
-    color: var(--gray-400);
-    cursor: not-allowed;
+    color: var(--color-gray-400) !important;
+    cursor: not-allowed !important;
 }
 .disabled:hover {
-    color: var(--gray-400);
+    color: var(--color-gray-400);
     cursor: not-allowed;
 }
 .border-btn-container{
@@ -136,7 +129,7 @@
 }
 .border-btn-link{
     font-size: 15px;
-    color: var(--blue);
+    color: var(--color-blue-main);
    text-decoration: none;
 }
 

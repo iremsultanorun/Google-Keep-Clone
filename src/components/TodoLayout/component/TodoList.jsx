@@ -23,7 +23,7 @@ function TodoList({ notes, status }) {
             <div className="pinned todoList__type" data-open-modal={todoLayout} >
               {
                 pinnedTodos.map((todo) => (
-                  <Todo key={todo.id} todo={todo} />
+                  <Todo key={todo.id} todo={todo} status={status} />
                 ))
               }
             </div>
@@ -38,7 +38,7 @@ function TodoList({ notes, status }) {
           < div className="others todoList__type" data-open-modal={todoLayout} >
             {
               othersTodos.map((todo) => (
-                <Todo key={todo.id} todo={todo} />
+                <Todo key={todo.id} todo={todo} status={status} />
               ))
             }
           </div>

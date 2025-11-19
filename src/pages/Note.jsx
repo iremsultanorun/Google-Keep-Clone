@@ -1,9 +1,11 @@
 import React, { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import Pin from '../components/oparations/Pin'
+
 import { clearSelectedTodo, setTodoDetailHeight, updateSpecificTodo } from '../redux/todosSlice'
-import "./Note.css"
-import TodoActions from '../components/TodoLayout/component/TodoActions'
+import "./css/Note.css"
+
+import Pin from '../common/Actions/Action-buttons/Pin'
+import Actions from '../common/Actions/Actions'
 function Note({ todo }) {
     const dispatch = useDispatch()
     const content = useSelector((state) => state.todo.content)
@@ -100,7 +102,7 @@ function Note({ todo }) {
                     </div>
                 </div>
                 <div className='createTodo__actions-wrapper note__actions-wrapper'>
-                    <TodoActions todoId={todo.id} status={"note"} className={"createTodo__actions"} />
+                    <Actions todoId={todo.id} status={"note"} className={"createTodo__actions"} />
                     <div className='createTodo__btn-container'> <button onClick={() => dispatch(clearSelectedTodo())} className='createTodo__btn lg-btn'>Close</button></div>
                 </div>
 

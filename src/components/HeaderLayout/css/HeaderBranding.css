@@ -1,0 +1,37 @@
+.header__logo-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    height: 100%;
+    width: 300px;
+}
+
+.header__brand-info {
+    display: flex;
+    align-items: center;
+}
+
+.header__title {
+    color: var(--color-gray-650);
+    font-size: 20px;
+    font-weight: 400;
+    margin-left: 4px;
+}
+
+.keep-title {
+    font-size: 24px;
+}
+
+.logo {
+    width: 40px;
+}
+
+@media screen and (max-width:400px) {
+    .header__logo-wrapper {
+        gap: 10px;
+    }
+
+    .header__title {
+        font-size: 18px;
+    }
+}

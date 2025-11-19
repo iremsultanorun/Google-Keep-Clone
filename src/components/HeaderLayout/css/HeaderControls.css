@@ -1,54 +1,66 @@
-.headerControls{
+.headerControls {
     display: flex;
     gap: 60px;
 }
 
-.headerControls__wrapper{
+.headerControls__wrapper {
     display: flex;
     gap: 20px;
 }
-.account-btn{
-    background-color: var(--account-color);
+
+.headerControls__account {
+    background-color: var(--color-pink-main);
     width: 35px;
     height: 35px;
     font-weight: 400;
     color: white;
 }
-.search-btn{
+
+.headerControls__search {
     visibility: hidden;
+    font-size: 22px;
 }
 
-.controlBtn__reflesh{
-    font-size: 18px;
-}
+/* .headerControls__reflesh,
+.headerControls__settings,
+.headerControls__apps {
+    font-size: 24px;
+} */
+
 @media screen and (max-width:900px) {
-    .headerControls{
+    .headerControls {
         gap: 20px;
     }
 }
+
 @media screen and (max-width:750px) {
-    .search-btn{
+    .headerControls__search {
         visibility: visible;
     }
 }
+
 @media screen and (max-width:600px) {
-    .controlBtn__list-view{
-     display: none;
+    .headerControls__list-view {
+        display: none;
     }
-    .controlBtn__reflesh{
+
+    .headerControls__reflesh {
         font-size: 16px;
     }
 }
+
 @media screen and (max-width:450px) {
-    .controlBtn__apps{
-     display: none;
+    .headerControls__apps {
+        display: none;
     }
 }
+
 @media screen and (max-width:360px) {
-    .headerControls__wrapper{
+    .headerControls__wrapper {
         gap: 13px;
     }
-    .controlBtn__reflesh{
+
+    .headerControls__reflesh {
         font-size: 14px;
     }
 }
