@@ -12,7 +12,10 @@ function Search() {
 
   const isSearchModal = useSelector((state) => state.header.isSearchModal)
   const isSearchPage = useSelector((state) => state.header.isSearchPage)
-
+const backgroundColor=isSearchPage ? "white" : "var(--color-gray-100)"
+const boxShadow=isSearchPage
+? "rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px"
+: "none"
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
@@ -29,10 +32,8 @@ function Search() {
     <div className='search'
       data-open-modal={isSearchModal}
       style={{
-        backgroundColor: isSearchPage ? "white" : "rgba(var(--color-gray-700), 0.85)",
-        boxShadow: isSearchPage
-          ? "rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px"
-          : "none"
+        backgroundColor: backgroundColor,
+        boxShadow: boxShadow,
       }}
     >
       <button

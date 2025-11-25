@@ -1,16 +1,17 @@
 import { Route, Routes } from 'react-router-dom'
 import './App.css'
-import HeaderLayout from './components/HeaderLayout/HeaderLayout'
-import Slide from './components/SlideLayout/Slide'
+
+import Slide from './components/SlideLayout/components/Slide'
 import HomePage from './pages/HomePage'
 import RemindersPage from './pages/RemindersPage'
 import ArchivePage from './pages/ArchivePage'
 import TrashPage from './pages/TrashPage'
 import LabelPage from './pages/LabelPage'
-import EditLabel from './components/SlideLayout/component/EditLabelModal'
+import EditLabel from './components/SlideLayout/components/EditLabelModal'
 import { useSelector } from 'react-redux'
 import SearchPage from './pages/SearchPage'
 import Note from './pages/Note'
+import HeaderLayout from './components/HeaderLayout/components/HeaderLayout'
 
 
 function App() {
@@ -28,11 +29,11 @@ function App() {
       {
         labelModal ?
           <div className='create-label-modal'>
-            <EditLabel />
+            <EditLabel/>
           </div> : null
       }
       <div className='headerSection'>
-        <HeaderLayout />
+        <HeaderLayout/>
       </div>
 
       <div className='mainSection'>

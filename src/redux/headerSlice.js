@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
-    isCollapsed: false,
+    isCollapsed: true,
     logoNames: [],
     activeLogo: "Notes",
     isSettingsModal: false,
@@ -17,7 +17,7 @@ const headerSlice = createSlice({
     initialState,
     reducers: {
         setLogoNames: (state, action) => {
-            state.logoNames = action.payload
+            state.logoNames=action.payload
         },
         setActiveLogo: (state, action) => {
             state.activeLogo = action.payload

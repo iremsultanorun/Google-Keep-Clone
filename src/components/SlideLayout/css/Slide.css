@@ -1,15 +1,60 @@
 .slide {
-    height: 100%;
+    height: 100dvh;
     overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: 280px;
     transition: width .1s linear;
-    height: 90vh;
     background-color: white;
+    transition: width 0.2s ease-in-out;
 }
 
+.slide__expanded {
+    width: 280px;
+    padding: 15px 0 0 0;
+}
+
+.slide__collapsed {
+    width: 70px;
+    padding: 15px 0 0 11px;
+}
+
+.slide__expanded-item {
+    border-radius: 0 30px 30px 0;
+    width: 100%;
+    justify-content: flex-start;
+}
+
+
+.slide__collapsed-item {
+    border-radius: 50%;
+    width: 50px;
+    justify-content: center;
+}
+
+.slide__expanded-item__title {
+    display: block;
+}
+
+.slide__collapsed-item__title {
+    display: none;
+}
+
+.slide__expanded-item__icon {
+    padding-left: 8.5px;
+    
+}
+
+.slide__collapsed-item__icon {
+    padding-left: 0px;
+}
+.slide__expanded-footer {
+    display: block;
+}
+
+.slide__collapsed-footer {
+    display: none;
+}
 .slide a {
     text-decoration: none;
 }
@@ -25,11 +70,14 @@
     cursor: pointer;
 }
 
-.slide__item:hover {
-    background-color: rgba(var(--color-gray-700), 0.85);
+.slide:hover {
+    box-shadow: .1px 0px 10px var(--color-gray-500);
 }
 
+.slide__item:hover {
+    background-color: var(--color-gray-100);
 
+}
 
 .active {
     background-color: var(--color-yellow-main);
@@ -47,7 +95,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 10px;
+    padding-top: 19px;
+    padding-right: 17.8px;
 }
 
 .slide__item.active:hover {
@@ -78,9 +127,35 @@
 
 }
 
+.slideItem__icon {
+    font-size: 22px;
+    color: var(--color-gray-700);
+}
+
 @media screen and (max-width:400px) {
     .slideItem__icon {
-        width:28px;
+        font-size: 16px;
         height: auto;
     }
+
+    .slide {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        z-index: 1000;
+        width: 100vw;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-out;
+        box-shadow: none;
+        background-color: white;
+    }
+
+    .slide__expanded {
+        transform: translateX(0);
+    }
+
+
+
+
 }

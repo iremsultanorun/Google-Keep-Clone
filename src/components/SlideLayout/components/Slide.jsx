@@ -1,54 +1,65 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setLogoNames, setActiveLogo, setIsCollapsed } from '../../redux/headerSlice';
 import { Link } from 'react-router-dom';
-
-import noteIcon from "./../../assets/slide-icon/note-icon.svg"
-import reminderIcon from "./../../assets/slide-icon/reminder-icon.svg"
-import editLabelsIcon from "./../../assets/slide-icon/edit-labels-icon.svg"
-import archiveIcon from "./../../assets/slide-icon/archive-icon.svg"
-import trashIcon from "./../../assets/slide-icon/trash-icon.svg"
+import { setLogoNames, setActiveLogo, setIsCollapsed } from '../../../redux/headerSlice';
+import { MdLabelOutline, MdLightbulbOutline } from "react-icons/md";
+import { AiOutlineBell } from "react-icons/ai";
+import { GoPencil } from "react-icons/go";
 import "./../css/Slide.css"
-import { setLabelModal } from '../../redux/labelModalSlice';
+import { setLabelModal } from '../../../redux/labelModalSlice';
+import { RiInboxArchiveLine } from 'react-icons/ri';
+import { IoTrashOutline } from 'react-icons/io5';
+
 
 function Slide() {
+
   const dispatch = useDispatch()
+
   const isCollapsed = useSelector((state) => state.header.isCollapsed);
   const logoNames = useSelector((state) => state.header.logoNames);
   const labels = useSelector((state) => state.labelModal.labelList)
-  let [active, setActive] = useState("Notes");
-  let [isFixed, setIsfixed] = useState(false);
+
+  const [active, setActive] = useState("Notes");
+  console.log(isCollapsed)
+
+  const ICONS = {
+    "MdLightbulbOutline": MdLightbulbOutline,
+    "AiOutlineBell": AiOutlineBell,
+    "GoPencil": GoPencil,
+    "RiInboxArchiveLine": RiInboxArchiveLine,
+    "IoTrashOutline": IoTrashOutline,
+  }
   const SLIDE_MENU_LINKS = [
     {
-      icon: noteIcon,
+      icon: "MdLightbulbOutline",
       name: "Notes",
       path: "/"
     },
     {
-      icon: reminderIcon,
+      icon: "AiOutlineBell",
       name: "Reminders",
       path: "/reminders"
     },
     {
-      icon: editLabelsIcon,
+      icon: "GoPencil",
       name: "Edit labels",
-
-
     },
     {
-      icon: archiveIcon,
+      icon: "RiInboxArchiveLine",
       name: "Archive",
       path: "/archive",
     },
     {
-      icon: trashIcon,
+      icon: "IoTrashOutline",
       name: "Trash",
       path: "/trash",
     }
   ];
 
+  const MOBILE_BREAKPOINT = 500;
+
   useEffect(() => {
-    const NEW_SLIDE_MENU_LINKS  = SLIDE_MENU_LINKS .map(item => {
+    const NEW_SLIDE_MENU_LINKS = SLIDE_MENU_LINKS.map(item => {
       if (item.name === "Edit labels") {
         return { ...item, labels: labels };
       }
@@ -57,70 +68,96 @@ function Slide() {
     dispatch(setLogoNames(NEW_SLIDE_MENU_LINKS))
   }, [dispatch, labels])
 
-  function overFunc() {
-    if (isCollapsed == false) {
-      setTimeout(() => {
-        dispatch(setIsCollapsed(true))
-        setIsfixed(true)
-      }, 1000)
+  const onMouseOver = () => {
+    if (window.innerWidth >= MOBILE_BREAKPOINT) {
+      if (isCollapsed) {
+        dispatch(setIsCollapsed(false));
+      }
     }
   }
 
-  function outFunc() {
-    if (isCollapsed == true) {
-      dispatch(setIsCollapsed(false));
-      setIsfixed(false);
+  const onMouseOut = () => {
+    if (window.innerWidth >= MOBILE_BREAKPOINT) {
+      dispatch(setIsCollapsed(true));
     }
+
   }
 
   const handleClick = (name) => {
     dispatch(setActiveLogo(name))
     setActive(name)
+    if (window.innerWidth >= 500) {
+      dispatch(setIsCollapsed());
+    }
   }
 
   return (
-    <div className='slide'
-      onMouseOver={!isCollapsed && !isFixed ? overFunc : null}
-      onMouseOut={isFixed ? outFunc : null}
-      style={{
-        width: isCollapsed ? "280px" : "70px",
-        padding: isCollapsed ? "15px 0 0 0" : "15px 0 0 11px",
-        position: isFixed ? "fixed" : "static",
-        zIndex: isFixed ? "10" : "10",
-        boxShadow: isFixed ? ".5px 0px 10px gray" : "none"
-      }}
+
+    <div
+      className=
+      {`slide 
+        ${isCollapsed
+          ? "slide__collapsed"
+          : "slide__expanded"}
+        `}
+      onMouseOver={onMouseOver}
+      onMouseOut={onMouseOut}
     >
       <div>
         {
+          logoNames &&
           logoNames.map((logoname, id) => {
-            const itemClass = active == logoname.name ? "slide__item active" : "slide__item"
-            const itemAClass = active == logoname.name ? isCollapsed ? "slide__item" : "slide__item sm-active" : "slide__item"
+
+            const IconComponent = ICONS[logoname.icon]
+
+            if (!IconComponent) {
+              return null;
+            }
+
+            const isActive = active === logoname.name;
+            let itemClasses = 'slide__item';
+
+            if (isActive && isCollapsed) {
+              itemClasses += ' sm-active';
+
+            } else if (isActive) {
+              itemClasses += ' active';
+            }
 
             return (
               <div key={id}>
+
                 {
-                  logoname.path ?
+                  logoname.path
+                    ?
                     <Link
                       onClick={() => handleClick(logoname.name)}
                       to={logoname.path}
                     >
                       <button
-                        className={isCollapsed ? itemClass : itemAClass}
-                        style={{
-                          borderRadius: isCollapsed ? "0 30px 30px 0" : "50%",
-                          width: isCollapsed ? "100%" : "50px",
-                          justifyContent: isCollapsed ? "flex-start" : "center"
-                        }}
+                        className={itemClasses +
+                          (
+                            isCollapsed
+                              ? " slide__collapsed-item"
+                              : " slide__expanded-item"
+                          )}
                       >
-                        <img
-                          className='slideItem__icon'
-                          src={logoname.icon}
-                          alt=""
-                          style={{ paddingLeft: isCollapsed ? "8.5px" : "0" }}
-                        />
+                        <div
+                          className={`slideItem__icon 
+                            ${isCollapsed
+                              ? "slide__collapsed-item__icon "
+                              : "slide__expanded-item__icon"
+                            }`}
+                        >
+                          <IconComponent />
+                        </div>
+
                         <h4
-                          style={{ display: isCollapsed ? "block" : "none" }}
-                          className='slide__title'
+                          className={`slide__title 
+                            ${isCollapsed
+                              ? "slide__collapsed-item__title"
+                              : "slide__expanded-item__title"
+                            }`}
                         >
                           {logoname.name}
                         </h4>
@@ -128,12 +165,12 @@ function Slide() {
                     </Link>
                     :
                     <button
-                      style={{
-                        borderRadius: isCollapsed ? "0 30px 30px 0" : "50%",
-                        width: isCollapsed ? "100%" : "50px",marginLeft: isCollapsed ? "0" : "0px",
-                        justifyContent: isCollapsed ? "flex-start" : "center"
-                      }}
-                      className= {isCollapsed ? itemClass : itemAClass}
+                      className={itemClasses +
+                        (
+                          isCollapsed
+                            ? " slide__collapsed-item"
+                            : " slide__expanded-item")}
+
                       onClick={() => {
                         handleClick(logoname.name)
                         dispatch(setLabelModal(true))
@@ -141,15 +178,22 @@ function Slide() {
 
                       }
                     >
-                      <img
-                        style={{ paddingLeft: isCollapsed ? "8.5px" : "0px" }}
-                        className='slideItem__icon'
-                        src={logoname.icon}
-                        alt=""
-                      />
+                      <div
+                        className={`slideItem__icon 
+                          ${isCollapsed
+                            ? "slide__collapsed-item__icon "
+                            : "slide__expanded-item__icon"
+                          }`}
+                      >
+                        <IconComponent />
+                      </div>
+
                       <h4
-                        style={{ display: isCollapsed ? "block" : "none" }}
-                        className='slide__title'
+                        className={`slide__title 
+                          ${isCollapsed
+                            ? "slide__collapsed-item__title"
+                            : "slide__expanded-item__title"}
+                           `}
                       >
                         {logoname.name}
                       </h4>
@@ -159,34 +203,46 @@ function Slide() {
                 {
                   logoname.labels &&
                   logoname.labels.map((label, labelId) => {
-                    const itemLClass = active == label.name ? "slide__item active" : "slide__item"
-                    const itemLAClass = active == label.name ? isCollapsed ? "slide__item" : "slide__item sm-active" : "slide__item"
+
+                    const isActive = active === label.name;
+                    let itemClasses = 'slide__item';
+
+                    if (isActive && isCollapsed) {
+                      itemClasses += ' active';
+                    } else if (isActive) {
+                      itemClasses += ' sm-active';
+                    }
 
                     return (
                       <Link
                         key={labelId}
-                        onClick={
-                          () => handleClick(label.name)
-                        }
+                        onClick={() => handleClick(label.name)}
                         to={label.path}
                       >
                         <button
-                          className={isCollapsed ? itemLClass : itemLAClass}
-                          style={{
-                            borderRadius: isCollapsed ? "0 30px 30px 0" : "50%",
-                            width: isCollapsed ? "100%" : "50px",
-                            justifyContent: isCollapsed ? "flex-start" : "center"
-                          }}
+                          className={itemClasses +
+                            (
+                              isCollapsed
+                                ? " slide__collapsed-item"
+                                : " slide__expanded-item"
+                            )}
                         >
-                          <img
-                            className='slideItem__icon'
-                            src={label.labelIcon}
-                            alt=""
-                            style={{ paddingLeft: isCollapsed ? "8.5px" : "0" }}
-                          />
+                          <div
+                            className={`slideItem__icon 
+                              ${isCollapsed
+                                ? "slide__collapsed-item__icon "
+                                : "slide__expanded-item__icon"}
+                              `}
+                          >
+                            <MdLabelOutline />
+                          </div>
+
                           <h4
-                            style={{ display: isCollapsed ? "block" : "none" }}
-                            className='slide__title'
+                            className={`slide__title 
+                              ${isCollapsed
+                                ? "slide__collapsed-item__title"
+                                : "slide__expanded-item__title"
+                              }`}
                           >
                             {label.name}
                           </h4>
@@ -201,10 +257,16 @@ function Slide() {
         }
       </div>
 
-      <div className='slide__footer' style={{ display: isCollapsed ? "block" : "none" }}>
-        <p className='slide__footer-text'>Open source licanses</p>
+      <div className={`slide__footer
+      ${isCollapsed
+          ? "slide__collapsed-footer"
+          : "slide__expanded-footer"
+        }`}>
+        <p className='slide__footer-text'>
+          Open source licanses
+        </p>
       </div>
-    </div>
+    </div >
   )
 }
 

@@ -11,11 +11,15 @@ import { HiBars3 } from "react-icons/hi2";
 function HeaderBranding() {
     const dispatch = useDispatch()
     const activeLogo = useSelector((state) => state.header.activeLogo)
-
+let className="header__title"
+if(activeLogo=="Notes"){
+className+=" keep-title"
+}
     const handleMenuClick = () => {
         dispatch(setIsCollapsed())
         dispatch(setIsSlideModal())
     }
+
 
     return (
         <div className='header__logo-wrapper'>
@@ -32,7 +36,7 @@ function HeaderBranding() {
                     && <img className='logo' src={keepIcon} alt="" />
                 }
 
-                <h3 className='header__title keep-title'>
+                <h3 className={className}>
                     {
                         activeLogo === "Notes"
                             ? "Keep"

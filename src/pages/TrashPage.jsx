@@ -1,5 +1,5 @@
 import React from 'react'
-import "./css/Trash.css"
+import "./css/TrashPage.css"
 import TodoList from '../components/TodoLayout/component/TodoList'
 import { useSelector } from 'react-redux'
 function TrashPage() {
