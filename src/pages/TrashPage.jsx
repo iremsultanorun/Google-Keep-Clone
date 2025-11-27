@@ -6,6 +6,9 @@ function TrashPage() {
   const trashNotes=useSelector((state)=>state.todo.trashNotes)
   return (
     <div>
+      {
+       trashNotes.length>0 && <button>hepsini sil</button>
+      }
 <TodoList notes={trashNotes} status={"trash"} />
     </div>
   )

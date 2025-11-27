@@ -30,8 +30,13 @@
     .header__logo-wrapper {
         gap: 10px;
     }
-
+    .logo {
+        width: 30px;
+    }
     .header__title {
         font-size: 18px;
+    }
+    .header__title.keep-title {
+        font-size: 20px;
     }
 }

@@ -60,7 +60,7 @@ top: 55px;
 }
 
 .dropdownModal__item:hover {
-  background-color: var(--gray-270);
+  background-color: var(--color-gray-100);
 }
 
 .dropdownModal__text {
@@ -89,7 +89,7 @@ top: 55px;
 .apps__modal {
   position: absolute;
   right: 25px;
-  top: 60px;
+  top: 65px;
   z-index: 21;
   overflow-x: hidden;
   overflow-y: scroll;
@@ -199,11 +199,7 @@ top: 55px;
   }
 }
 
-@media screen and (max-width:400px) {
-  .apps__modal {
-    display: none;
-  }
-}
+
 
 /* todo bg modal */
 .bg-modal {
@@ -274,4 +270,17 @@ left: -70px;
   justify-content: center;
   color: white;
   font-size: 13px;
+}
+
+/* backdrop modal css */
+
+.backdrop-modal{
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #3a3a3a89;
+  z-index: 100;
+  position: fixed;
 }

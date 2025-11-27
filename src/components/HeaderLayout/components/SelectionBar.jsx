@@ -1,7 +1,7 @@
 import React from 'react'
 import "./../css/Header.css"
 import { useDispatch, useSelector } from 'react-redux'
-import { clearSelectedTodos } from '../../../redux/todosSlice'
+import { clearSelectedTodos, setAllArchiveTodo } from '../../../redux/todosSlice'
 
 import Pin from '../../../common/Actions/Action-buttons/Pin'
 import BgPaletteButton from '../../../common/Actions/Action-buttons/BgPaletteButton'
@@ -42,7 +42,16 @@ function SelectionBar() {
                         <BiBellPlus />
                     </button>
 
-                    <button className='btn md-btn selection-bar__action'>
+                    <button 
+                    className='btn md-btn selection-bar__action'
+                    onClick={()=>
+                {
+                    dispatch(setAllArchiveTodo())
+                    console.log("çalıştı")
+                }
+                        
+                     }
+                    >
                         <RiInboxArchiveLine />
                     </button>
 

@@ -20,7 +20,6 @@ function Slide() {
   const labels = useSelector((state) => state.labelModal.labelList)
 
   const [active, setActive] = useState("Notes");
-  console.log(isCollapsed)
 
   const ICONS = {
     "MdLightbulbOutline": MdLightbulbOutline,

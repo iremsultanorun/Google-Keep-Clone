@@ -19,7 +19,7 @@
     top: 30px;
     background-color: white;
     margin-left: -50px;
-    z-index: 5;
+    z-index: 20;
     transition: background-color .2s ease;
 }
 

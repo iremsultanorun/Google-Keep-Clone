@@ -7,7 +7,6 @@ import "../css/TodoList.css"
 function TodoList({ notes, status }) {
 
   const todos = notes
-
   const pinnedTodos = todos.filter((todo) => todo.pinned == true)
   const othersTodos = todos.filter((todo) => todo.pinned == false)
   const todoLayout = useSelector((state) => state.todo.todoLayout)

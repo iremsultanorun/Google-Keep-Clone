@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 function Archive() {
   const archiveNotes = useSelector((state) => state.todo.archiveNotes)
   return (
-    <div>
+    <div style={{marginTop:"20px"}}>
       <TodoList notes={archiveNotes} status={"archive"} />
     </div>
   )

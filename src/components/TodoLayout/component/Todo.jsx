@@ -39,7 +39,9 @@ function Todo({ todo, status}) {
       data-open-modal={todoLayout}
 
     >
-      <Pin todoId={todo.id} status={status}/>
+ {
+  status!=="trash" && <Pin todoId={todo.id} status={status}/>
+ }
 
       <div className="todo__wrapper" onClick={() => dispatch(setSelectedTodoById(todo.id))} >
         <h2 className='todo__title' ref={todoTitleRef}>{baslik}</h2>

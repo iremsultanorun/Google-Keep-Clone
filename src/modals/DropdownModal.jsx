@@ -13,6 +13,7 @@ function DropdownModal({ todoId, status }) {
   const createTodoHeight = useSelector((state) => state.todo.createTodoHeight)
 
   const HEIGHT_THRESHOLD = 400
+
   switch (status) {
     case "create":
       dropdownText = COMMON_DROPDOWN_TEXT
@@ -31,7 +32,11 @@ function DropdownModal({ todoId, status }) {
          modalClassName += " modalClassName__note-bottom"
       }
       break
-    case "todo":
+    case "home":
+      dropdownText =["Delete note", "Add label", "Add drawing", "Make a copy", "Show checkboxes", "Copy to Google Docs", "Version history"]
+      modalClassName += " modalClassName__todo"
+      break
+    case "archive":
       dropdownText =["Delete note", "Add label", "Add drawing", "Make a copy", "Show checkboxes", "Copy to Google Docs", "Version history"]
       modalClassName += " modalClassName__todo"
       break
@@ -57,7 +62,7 @@ function DropdownModal({ todoId, status }) {
     <div className={modalClassName}>
       {
         dropdownText.map((itemText,index) => (
-          <button key={index} onClick={() => handleAction(dispatch, itemText, index)} className='dropdownModal__item'><p className='dropdownModal__text'> {itemText} </p></button>
+          <button key={index} onClick={() => handleAction(dispatch, itemText, todoId)} className='dropdownModal__item'><p className='dropdownModal__text'> {itemText} </p></button>
         ))
       }
     </div>

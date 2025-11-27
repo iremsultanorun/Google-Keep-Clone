@@ -21,11 +21,6 @@
     font-size: 22px;
 }
 
-/* .headerControls__reflesh,
-.headerControls__settings,
-.headerControls__apps {
-    font-size: 24px;
-} */
 
 @media screen and (max-width:900px) {
     .headerControls {
@@ -44,23 +39,27 @@
         display: none;
     }
 
-    .headerControls__reflesh {
+    /* .headerControls__reflesh {
         font-size: 16px;
-    }
+    } */
 }
 
 @media screen and (max-width:450px) {
-    .headerControls__apps {
+    /* .headerControls__apps {
         display: none;
+    } */
+    .headerControls__account {
+        width: 30px;
+        height: 30px;
     }
 }
 
 @media screen and (max-width:360px) {
     .headerControls__wrapper {
-        gap: 13px;
+        gap: 15px;
     }
 
-    .headerControls__reflesh {
+    /* .headerControls__reflesh {
         font-size: 14px;
-    }
+    } */
 }

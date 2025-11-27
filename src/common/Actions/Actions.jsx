@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { useDispatch } from 'react-redux'
-import { setArchiveTodo } from '../../redux/todosSlice'
+import { setAllArchiveTodo, setArchiveTodo, setNewArchiveTodo, setRestoreArchive, setRestoreTrash } from '../../redux/todosSlice'
 
 import OthersButton from './Action-buttons/OthersButton'
 import BgPaletteButton from './Action-buttons/BgPaletteButton'
@@ -24,15 +24,19 @@ function Actions({ todoId, status, className }) {
         <div className={"actions " + className} key={todoId}>
 
             {
-                status==="trash" ?
-                    <button className='btn action-btn sm-btn disabled' data-tooltip-text="Completely delete">
-                     <MdDeleteForever />
+                status === "trash" ?
+                    <button className='btn action-btn sm-btn' data-tooltip-text="Completely delete">
+                        <MdDeleteForever />
                     </button> : null
             }
             {
-                status==="trash" ?
-                    <button className='btn action-btn sm-btn disabled' data-tooltip-text="Restore">
-                      <MdRestoreFromTrash />
+                status === "trash" ?
+                    <button
+                     className='btn action-btn sm-btn' 
+                     data-tooltip-text="Restore"
+                     onClick={()=>dispatch(setRestoreTrash(todoId))}
+                     >
+                        <MdRestoreFromTrash />
                     </button> : null
             }
             {
@@ -65,7 +69,13 @@ function Actions({ todoId, status, className }) {
             }
             {
                 isEditingOrNote || status === "home" ?
-                    <button className='btn action-btn sm-btn' onClick={() => dispatch(setArchiveTodo(todoId))} data-tooltip-text="Archive">
+                    <button className='btn action-btn sm-btn' onClick={() => 
+                        {
+                        dispatch(setArchiveTodo(todoId))
+                     if(status==="create"){
+                        dispatch(setNewArchiveTodo())
+                     }
+                    }} data-tooltip-text="Archive">
                         <RiInboxArchiveLine />
                     </button> : null
             }
@@ -74,6 +84,11 @@ function Actions({ todoId, status, className }) {
                     <button
                         className='btn action-btn sm-btn'
                         data-tooltip-text="Unarchive"
+                        onClick={()=>{
+                          dispatch(setRestoreArchive(todoId))
+                            console.log("first")
+
+                        }}
                     >
                         <RiInboxUnarchiveLine />
                     </button>
