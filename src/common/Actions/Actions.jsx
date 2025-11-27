@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { useDispatch } from 'react-redux'
-import { setAllArchiveTodo, setArchiveTodo, setNewArchiveTodo, setRestoreArchive, setRestoreTrash } from '../../redux/todosSlice'
+import { setArchiveTodo, setNewArchiveTodo, setRestoreArchive, setRestoreTrash } from '../../redux/todosSlice'
 
 import OthersButton from './Action-buttons/OthersButton'
 import BgPaletteButton from './Action-buttons/BgPaletteButton'

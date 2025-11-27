@@ -1,7 +1,7 @@
 import React from 'react'
 import './css/Modals.css'
 import { useDispatch, useSelector } from 'react-redux'
-import { setDeleteTodo } from '../redux/todosSlice'
+import { setDeleteArchive, setDeleteTodo } from '../redux/todosSlice'
 
 function DropdownModal({ todoId, status }) {
   const dispatch = useDispatch()
@@ -18,26 +18,26 @@ function DropdownModal({ todoId, status }) {
     case "create":
       dropdownText = COMMON_DROPDOWN_TEXT
       modalClassName += " modalClassName__create"
-      if(createTodoHeight>HEIGHT_THRESHOLD){
+      if (createTodoHeight > HEIGHT_THRESHOLD) {
         modalClassName += " modalClassName__create-top"
-      }else{
-         modalClassName += " modalClassName__create-bottom"
+      } else {
+        modalClassName += " modalClassName__create-bottom"
       }
       break
     case "note":
       dropdownText = ["Delete note", "Add label", "Add drawing", "Make a copy", "Show checkboxes", "Copy to Google Docs", "Version history"]
-      if(todoDetailHeight>HEIGHT_THRESHOLD){
+      if (todoDetailHeight > HEIGHT_THRESHOLD) {
         modalClassName += " modalClassName__note-top"
-      }else{
-         modalClassName += " modalClassName__note-bottom"
+      } else {
+        modalClassName += " modalClassName__note-bottom"
       }
       break
     case "home":
-      dropdownText =["Delete note", "Add label", "Add drawing", "Make a copy", "Show checkboxes", "Copy to Google Docs", "Version history"]
+      dropdownText = ["Delete note", "Add label", "Add drawing", "Make a copy", "Show checkboxes", "Copy to Google Docs", "Version history"]
       modalClassName += " modalClassName__todo"
       break
     case "archive":
-      dropdownText =["Delete note", "Add label", "Add drawing", "Make a copy", "Show checkboxes", "Copy to Google Docs", "Version history"]
+      dropdownText = ["Delete note", "Add label", "Add drawing", "Make a copy", "Show checkboxes", "Copy to Google Docs", "Version history"]
       modalClassName += " modalClassName__todo"
       break
     case "setting":
@@ -45,7 +45,7 @@ function DropdownModal({ todoId, status }) {
       modalClassName += " modalClassName__setting"
       break
     case "selected":
-      dropdownText = ["Delete note", "Add Label", "Make a copy","Copy to Google Docs", "Version history"]
+      dropdownText = ["Delete note", "Add Label", "Make a copy", "Copy to Google Docs", "Version history"]
       modalClassName += " modalClassName__selected"
       break
   }
@@ -53,7 +53,14 @@ function DropdownModal({ todoId, status }) {
   const handleAction = (dispatch, itemText, todoId) => {
     switch (itemText) {
       case "Delete note":
-        dispatch(setDeleteTodo(todoId))
+        switch (status) {
+          case "home":
+            dispatch(setDeleteTodo(todoId))
+            break;
+          case "archive":
+            dispatch(setDeleteArchive(todoId))
+            break
+        }
         break;
     }
   }
@@ -61,7 +68,7 @@ function DropdownModal({ todoId, status }) {
   return (
     <div className={modalClassName}>
       {
-        dropdownText.map((itemText,index) => (
+        dropdownText.map((itemText, index) => (
           <button key={index} onClick={() => handleAction(dispatch, itemText, todoId)} className='dropdownModal__item'><p className='dropdownModal__text'> {itemText} </p></button>
         ))
       }

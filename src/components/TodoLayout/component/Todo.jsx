@@ -30,7 +30,7 @@ function Todo({ todo, status}) {
 
   }, [todoTitleRef, todoContentRef])
   const selecetedTodoById = () => {
-    dispatch(setSelectedTodo(todo.id))
+    dispatch(setSelectedTodo({selectId:todo.id,status:status}))
   }
   return (
 
@@ -43,7 +43,7 @@ function Todo({ todo, status}) {
   status!=="trash" && <Pin todoId={todo.id} status={status}/>
  }
 
-      <div className="todo__wrapper" onClick={() => dispatch(setSelectedTodoById(todo.id))} >
+      <div className="todo__wrapper" onClick={() => dispatch(setSelectedTodoById(todo.id,status))} >
         <h2 className='todo__title' ref={todoTitleRef}>{baslik}</h2>
         <pre className='todo__content' ref={todoContentRef}>{content} </pre>
       </div>

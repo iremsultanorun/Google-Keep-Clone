@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { transferNote } from "./utils"
 const initialState = {
     title: "",
     content: "",
@@ -25,6 +26,7 @@ const todoSlice = createSlice({
         addTodo: (state, action) => {
             state.todos.push(action.payload)
         },
+
         updateTodoFields: (state, action) => {
             if (action.payload.title !== undefined)
                 state.title = action.payload.title
@@ -33,6 +35,7 @@ const todoSlice = createSlice({
             if (action.payload.dateHours !== undefined)
                 state.dateHours = action.payload.dateHours
         },
+
         updateSpecificTodo: (state, action) => {
             const { id, field, value } = action.payload
             const todoIndex = state.todos.findIndex((todo) => id === todo.id)
@@ -43,6 +46,7 @@ const todoSlice = createSlice({
         setSelectedTodoById: (state, action) => {
             state.selectedTodoId = action.payload
         },
+
         clearSelectedTodo: (state) => {
             state.selectedTodoId = null;
         },
@@ -64,16 +68,30 @@ const todoSlice = createSlice({
             state.content = ""
             state.title = ""
         },
-        setSelectedTodo: (state, action) => {
-            const selectId = action.payload
-            const todoSelected = state.todos.find((todo) => todo.id === selectId)
 
-            todoSelected.selected = !todoSelected.selected
-            if (todoSelected.selected == true) {
-                state.selectedCurrent += 1
+        setSelectedTodo: (state, action) => {
+            const { selectId, status } = action.payload
+
+            let todoSelected;
+            if (status === "archive") {
+                todoSelected = state.archiveNotes.find((todo) => String(todo.id) === String(selectId))
+                console.log(todoSelected)
+            } else if (status === "home") {
+                todoSelected = state.todos.find((todo) => String(todo.id) === String(selectId))
+                console.log(todoSelected)
             }
-            if (todoSelected.selected == false) {
-                state.selectedCurrent -= 1
+            console.log(status)
+            console.log(todoSelected)
+            if (todoSelected) {
+                todoSelected.selected = !todoSelected.selected
+                if (todoSelected.selected == true) {
+                    state.selectedCurrent += 1
+                }
+                if (todoSelected.selected == false) {
+                    state.selectedCurrent -= 1
+                }
+            } else {
+                console.log("hata")
             }
         },
         setPinnedTodo: (state, action) => {
@@ -81,8 +99,6 @@ const todoSlice = createSlice({
             const todoPinned = state.todos.find((todo) => todo.id === pinnedId)
             if (todoPinned) {
                 todoPinned.pinned = !todoPinned.pinned
-
-
             }
         },
         setAllPinnedTodo: (state) => {
@@ -105,12 +121,10 @@ const todoSlice = createSlice({
         },
 
         setDeleteTodo: (state, action) => {
-            const deleteNoteId = action.payload
-            const deleteNote = state.todos.find((todo) => todo.id === deleteNoteId)
-            if (deleteNote) {
-                state.trashNotes.push(deleteNote)
-            }
-            state.todos = state.todos.filter((todo) => todo.id !== deleteNoteId)
+            transferNote(state, action, "todos", "trashNotes")
+        },
+        setDeleteArchive: (state, action) => {
+            transferNote(state, action, "archiveNotes", "trashNotes")
         },
         setAllDeleteTodo: (state) => {
             const deleteNoteId = state.todos.filter(todo => todo.selected !== todo).map(todo => todo.id)
@@ -121,28 +135,13 @@ const todoSlice = createSlice({
             state.todos = state.todos.filter((todo) => !deleteNoteId(todo.id))
         },
         setRestoreTrash: (state, action) => {
-            const restoreTodoId = action.payload
-            const restoreTodo = state.trashNotes.find((todo) => todo.id === restoreTodoId)
-            if (restoreTodo) {
-                state.todos.push(restoreTodo)
-            }
-            state.trashNotes = state.trashNotes.filter(todo => todo.id !== restoreTodoId)
+            transferNote(state, action, "trashNotes", "todos")
         },
         setRestoreArchive: (state, action) => {
-            const restoreTodoId = action.payload
-            const restoreTodo = state.archiveNotes.find((todo) => todo.id === restoreTodoId)
-            if (restoreTodo) {
-                state.todos.push(restoreTodo)
-            }
-            state.archiveNotes = state.archiveNotes.filter(todo => todo.id !== restoreTodoId)
+            transferNote(state, action, "archiveNotes", "todos")
         },
         setArchiveTodo: (state, action) => {
-            const archiveTodoId = action.payload
-            const archiveTodo = state.todos.find((todo) => todo.id === archiveTodoId)
-            if (archiveTodo) {
-                state.archiveNotes.push(archiveTodo)
-            }
-            state.todos = state.todos.filter((todo) => todo.id !== archiveTodoId)
+            transferNote(state, action, "todos", "archiveNotes")
         },
         setNewArchiveTodo: (state) => {
             const newArchiveTodo = {
@@ -186,14 +185,25 @@ const todoSlice = createSlice({
         setBgColor: (state, action) => {
             const { color, status, id } = action.payload
             if (status == "create") { state.todoBgColor = color }
-            if (status == "todo" || status == "note") {
+            if (status == "home" || status == "note") {
                 const todoIndex = state.todos.findIndex((todo) => todo.id === id)
                 state.todos[todoIndex].bgColor = color
             }
+            if (status == "archive") {
+                const todoIndex = state.archiveNotes.findIndex((todo) => todo.id === id)
+                state.archiveNotes[todoIndex].bgColor = color
+            }
         },
         setAllBgColor: (state, action) => {
-            const { color } = action.payload;
-            state.todos.forEach((todo) => {
+            const { color, status } = action.payload;
+            if (status !== "archive") {
+                state.todos.forEach((todo) => {
+                    if (todo.selected === true) {
+                        todo.bgColor = color;
+                    }
+                });
+            }
+            state.archiveNotes.forEach((todo) => {
                 if (todo.selected === true) {
                     todo.bgColor = color;
                 }
@@ -215,6 +225,6 @@ const todoSlice = createSlice({
     }
 })
 
-export const { updateTodoFields, showFullForm, showCompactForm, addTodo, resetForm, setSelectedTodo, setPinnedTodo, setTodoLayout, updateSpecificTodo, setSelectedTodoById, clearSelectedTodo, setIsOthersModal, setDeleteTodo, setArchiveTodo, setNewPinnedTodo, clearSelectedTodos, setAllPinnedTodo, setTodoDetailHeight, setCreateTodoHeight, setIsBgPaletteModal, setBgColor, resetBgColor, setAllBgColor, resetAllBgColor, setAllArchiveTodo, setAllDeleteTodo, setNewArchiveTodo, setRestoreTrash,    setRestoreArchive } = todoSlice.actions
+export const { updateTodoFields, showFullForm, showCompactForm, addTodo, resetForm, setSelectedTodo, setPinnedTodo, setTodoLayout, updateSpecificTodo, setSelectedTodoById, clearSelectedTodo, setIsOthersModal, setDeleteTodo, setArchiveTodo, setNewPinnedTodo, clearSelectedTodos, setAllPinnedTodo, setTodoDetailHeight, setCreateTodoHeight, setIsBgPaletteModal, setBgColor, resetBgColor, setAllBgColor, resetAllBgColor, setAllArchiveTodo, setAllDeleteTodo, setNewArchiveTodo, setRestoreTrash, setRestoreArchive, setDeleteArchive } = todoSlice.actions
 
 export default todoSlice.reducer
