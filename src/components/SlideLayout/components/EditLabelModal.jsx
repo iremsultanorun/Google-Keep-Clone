@@ -7,7 +7,7 @@ import labelIcon from "./../../../assets/slide-icon/label-icon.svg"
 import labelSlideIcon from "./../../../assets/slide-icon/label-slide-icon.svg"
 import labelEditorIcon from "./../../../assets/slide-icon/label-editor-icon.svg"
 import deleteLabelIcon from "./../../../assets/slide-icon/label-delete-icon.svg"
-import { addLabelList, setLabelModal, setLabelName, deleteLabel, updateLabel } from '../../../redux/labelModalSlice';
+import { addLabelList,  setEditLabelModal, setLabelName, deleteLabel, updateLabel } from '../../../redux/labelModalSlice';
 import { IoCheckmark } from 'react-icons/io5';
 import { CgClose } from 'react-icons/cg';
 import { GoPlus } from 'react-icons/go';
@@ -29,7 +29,7 @@ function EditLabel() {
     id: Date.now(),
     labelIcon: labelSlideIcon,
     name: labelName,
-    path: "/label",
+    path: `/label/${labelName}`,
   }
 
 
@@ -139,7 +139,7 @@ function EditLabel() {
       <hr />
       <div className='label-editor__comleted-btn-wrapper'>
         <button className='label-editor__comleted-btn lg-btn'
-          onClick={() => dispatch(setLabelModal(false))}
+          onClick={() => dispatch( setEditLabelModal(false))}
         >Completed</button>
       </div>
     </div >

@@ -3,7 +3,7 @@ export const transferNote = (state, action, sourceKey, destinationKey) => {
 
     const transferNote = state[sourceKey].find((todo) => todo.id === transferNoteId);
 
-    if (transferNote) {
+    if ( transferNote) {
         state[destinationKey].push(transferNote);
 
     }

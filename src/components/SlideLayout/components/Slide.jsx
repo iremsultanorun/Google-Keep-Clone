@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { setLogoNames, setActiveLogo, setIsCollapsed } from '../../../redux/headerSlice';
 import { MdLabelOutline, MdLightbulbOutline } from "react-icons/md";
 import { AiOutlineBell } from "react-icons/ai";
 import { GoPencil } from "react-icons/go";
 import "./../css/Slide.css"
-import { setLabelModal } from '../../../redux/labelModalSlice';
+import {  setEditLabelModal } from '../../../redux/labelModalSlice';
 import { RiInboxArchiveLine } from 'react-icons/ri';
 import { IoTrashOutline } from 'react-icons/io5';
 
@@ -18,7 +18,6 @@ function Slide() {
   const isCollapsed = useSelector((state) => state.header.isCollapsed);
   const logoNames = useSelector((state) => state.header.logoNames);
   const labels = useSelector((state) => state.labelModal.labelList)
-
   const [active, setActive] = useState("Notes");
 
   const ICONS = {
@@ -115,13 +114,13 @@ function Slide() {
 
             const isActive = active === logoname.name;
             let itemClasses = 'slide__item';
-
-            if (isActive && isCollapsed) {
-              itemClasses += ' sm-active';
-
-            } else if (isActive) {
-              itemClasses += ' active';
-            }
+if(isActive){
+  if(isCollapsed){
+    itemClasses += ' sm-active';
+  }else{
+    itemClasses += ' active';
+  }
+}
 
             return (
               <div key={id}>
@@ -172,7 +171,7 @@ function Slide() {
 
                       onClick={() => {
                         handleClick(logoname.name)
-                        dispatch(setLabelModal(true))
+                        dispatch( setEditLabelModal(true))
                       }
 
                       }
@@ -206,14 +205,17 @@ function Slide() {
                     const isActive = active === label.name;
                     let itemClasses = 'slide__item';
 
-                    if (isActive && isCollapsed) {
-                      itemClasses += ' active';
-                    } else if (isActive) {
-                      itemClasses += ' sm-active';
+                    if(isActive){
+                      if(isCollapsed){
+                        itemClasses += ' sm-active';
+                      }else{
+                        itemClasses += ' active';
+                      }
                     }
 
                     return (
-                      <Link
+                   
+                        <Link
                         key={labelId}
                         onClick={() => handleClick(label.name)}
                         to={label.path}
@@ -247,6 +249,7 @@ function Slide() {
                           </h4>
                         </button>
                       </Link>
+           
                     )
                   })
                 }

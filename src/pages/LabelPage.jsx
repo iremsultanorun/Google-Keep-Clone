@@ -1,9 +1,19 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 
 function LabelPage() {
+  const labelList=useSelector(state=>state.labelModal.labelList)
   return (
     <div>
-        label page
+       {/* {
+        labelList&& labelList.map((label,id)=>(
+
+        ))
+       } */}
+         <div>
+    <CreateTodo/>
+    <TodoList notes={labelList} status={"labelPage"} />
+        </div>
     </div>
   )
 }

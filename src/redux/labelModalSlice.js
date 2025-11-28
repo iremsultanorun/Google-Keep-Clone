@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
+    isEditLabelModal: false,
     isLabelModal: false,
     labelName: "",
     editingLabelId: null,
@@ -11,6 +12,9 @@ const labelModalSlice = createSlice({
     name: "labelModal",
     initialState,
     reducers: {
+        setEditLabelModal: (state, action) => {
+            state.isEditLabelModal = action.payload
+        },
         setLabelModal: (state, action) => {
             state.isLabelModal = action.payload
         },
@@ -34,5 +38,5 @@ const labelModalSlice = createSlice({
     }
 })
 
-export const { setLabelModal, setLabelName, addLabelList, deleteLabel, updateLabel } = labelModalSlice.actions
+export const {  setEditLabelModal, setLabelName, addLabelList, deleteLabel, updateLabel,setLabelModal } = labelModalSlice.actions
 export default labelModalSlice.reducer

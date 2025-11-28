@@ -15,7 +15,8 @@ import HeaderLayout from './components/HeaderLayout/components/HeaderLayout'
 
 
 function App() {
-  const labelModal = useSelector((state) => state.labelModal.isLabelModal)
+  const isEditLabelModal = useSelector((state) => state.labelModal.isEditLabelModal)
+  const labelLists = useSelector((state) => state.labelModal.labelList)
   const isSlideModal = useSelector((state) => state.header.isSlideModal);
   const selectedTodoId = useSelector((state) => state.todo.selectedTodoId)
   const todos = useSelector((state) => state.todo.todos)
@@ -27,7 +28,7 @@ function App() {
         isOpenTodoModal ? <Note todo={selectedTodo} /> : null
       }
       {
-        labelModal ?
+        isEditLabelModal ?
           <div className='create-label-modal'>
             <EditLabel/>
           </div> : null
@@ -46,7 +47,11 @@ function App() {
             <Route path='/' element={<HomePage />} />
             <Route path='/search' element={<SearchPage />} />
             <Route path='/reminders' element={<RemindersPage />} />
-            <Route path='/label' element={<LabelPage />} />
+         {
+          labelLists&&labelLists.map((label)=>(
+            <Route path={label.path} element={<LabelPage />} />
+          ))
+         }
             <Route path='/archive' element={<ArchivePage />} />
             <Route path='/trash' element={<TrashPage />} />
           </Routes>
