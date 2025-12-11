@@ -20,12 +20,22 @@ function App() {
   const isSlideModal = useSelector((state) => state.header.isSlideModal);
   const selectedTodoId = useSelector((state) => state.todo.selectedTodoId)
   const todos = useSelector((state) => state.todo.todos)
-  const selectedTodo = todos.find((todo) => todo.id === selectedTodoId)
+  const archiveNotes = useSelector((state) => state.todo.archiveNotes)
+  const trashNotes = useSelector((state) => state.todo.trashNotes)
+  const ALLNOTES=[
+    ...todos,
+    ...archiveNotes,
+    ...trashNotes
+  ]
+  const selectedTodo = ALLNOTES.find((todo) => todo.id === selectedTodoId
+    )
   const isOpenTodoModal = selectedTodoId !== null
+
+
   return (
     <div>
       {
-        isOpenTodoModal ? <Note todo={selectedTodo} /> : null
+      isOpenTodoModal && <Note todo={selectedTodo}  /> 
       }
       {
         isEditLabelModal ?

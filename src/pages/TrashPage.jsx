@@ -7,7 +7,11 @@ function TrashPage() {
   return (
     <div>
       {
-       trashNotes.length>0 && <button>hepsini sil</button>
+       trashNotes.length>0 &&
+      <div>
+        <p>Notes in trash are deleted after 7 days</p>
+        <button>Empty Trash</button>
+      </div>
       }
 <TodoList notes={trashNotes} status={"trash"} />
     </div>

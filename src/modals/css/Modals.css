@@ -16,9 +16,10 @@
   right: 140px;
   top: 50px;
 }
-.modalClassName__selected{
-right: 10px;
-top: 55px;
+
+.modalClassName__selected {
+  right: 10px;
+  top: 55px;
 }
 
 .modalClassName__create {
@@ -127,20 +128,21 @@ top: 55px;
 .app__container {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 90px;
-  height: 90px;
+align-items: center;
+  justify-content: space-between;
+  width: 98px;
+  height: 98px;
   gap: 10px;
   padding: 10px;
   border-radius: 20px;
   text-align: center;
   user-select: none;
   text-decoration: none;
+  position: relative;
 }
 
 .app__container:hover {
-  background-color: var(--gray-270);
+  background-color: var(--color-gray-300);
 }
 
 
@@ -152,6 +154,23 @@ top: 55px;
 .app__text {
   font-size: 15px;
   color: var(--color-gray-800);
+width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: center;
+  max-height: fit-content;
+  margin-top: 5px;
+  text-transform: capitalize;
+  position: absolute;
+  top: 56px;
+
+}
+.app__container:hover .app__text{
+white-space: normal;
+text-overflow: clip;
+text-wrap: wrap;
+overflow: scroll;
 }
 
 .app__btn-container {
@@ -205,22 +224,26 @@ top: 55px;
 .bg-modal {
   position: absolute;
   width: max-content;
-  background-color:white;
+  background-color: white;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   border-radius: 10px;
   z-index: 15;
 }
-.bg-modal__create,.bg-modal__note{
+
+.bg-modal__create,
+.bg-modal__note {
   top: 25px;
   left: 50px;
 }
-.bg-modal__selected{
+
+.bg-modal__selected {
   top: 55px;
-  right:190px;
+  right: 190px;
 }
-.bg-modal__todo{
+
+.bg-modal__todo {
   top: 28px;
-left: -70px;
+  left: -70px;
 }
 
 .bg-color-modal {
@@ -253,11 +276,11 @@ left: -70px;
 }
 
 .color-btn.selected {
- border-color: red;
+  border-color: red;
 }
 
 .color-btn.selected::after {
-  content:'\2713';
+  content: '\2713';
   position: absolute;
   right: -7px;
   top: -8px;
@@ -274,7 +297,7 @@ left: -70px;
 
 /* backdrop modal css */
 
-.backdrop-modal{
+.backdrop-modal {
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -283,4 +306,18 @@ left: -70px;
   background-color: #3a3a3a89;
   z-index: 100;
   position: fixed;
+}
+
+/* label modal */
+
+.search-label {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.label-lists {
+  display: flex;
+  gap: 5px;
+  align-items: center;
 }

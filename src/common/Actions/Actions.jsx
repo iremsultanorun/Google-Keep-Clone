@@ -16,7 +16,8 @@ function Actions({ todoId, status, className }) {
 
     const dispatch = useDispatch()
 
-    const isEditingOrNote = status === "create" || status === "note";
+    const isEditingOrNote = status === "create" || status === "todo";
+
     const isActiveTodo = isEditingOrNote || status === "home" || status === "archive";
 
     return (
@@ -30,7 +31,7 @@ function Actions({ todoId, status, className }) {
                     </button> : null
             }
             {
-                status === "trash" ?
+                status === "trash"?
                     <button
                      className='btn action-btn sm-btn' 
                      data-tooltip-text="Restore"
@@ -86,7 +87,6 @@ function Actions({ todoId, status, className }) {
                         data-tooltip-text="Unarchive"
                         onClick={()=>{
                           dispatch(setRestoreArchive(todoId))
-                            console.log("first")
 
                         }}
                     >

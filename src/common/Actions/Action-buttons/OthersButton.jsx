@@ -5,6 +5,7 @@ import { setIsOthersModal } from '../../../redux/todosSlice'
 import DropdownModal from '../../../modals/DropdownModal'
 
 import { LuEllipsisVertical } from 'react-icons/lu'
+import { setLabelModal } from '../../../redux/labelModalSlice'
 
 function OthersButton({ todoId, status }) {
 
@@ -25,7 +26,7 @@ function OthersButton({ todoId, status }) {
     return (
         <div>
             <button
-                onClick={() => dispatch(setIsOthersModal())}
+                onClick={() => {dispatch(setIsOthersModal()), dispatch(setLabelModal(false))}}
                 className={className}
                 data-tooltip-text="Other">
                 <LuEllipsisVertical />

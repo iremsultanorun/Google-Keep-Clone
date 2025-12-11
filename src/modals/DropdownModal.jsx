@@ -2,6 +2,8 @@ import React from 'react'
 import './css/Modals.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { setDeleteArchive, setDeleteTodo } from '../redux/todosSlice'
+import LabelModal from './LabelModal'
+import {setLabelModal } from '../redux/labelModalSlice'
 
 function DropdownModal({ todoId, status }) {
   const dispatch = useDispatch()
@@ -11,7 +13,7 @@ function DropdownModal({ todoId, status }) {
   const todoDetailHeights = useSelector((state) => state.todo.todoDetailHeight)
   const todoDetailHeight = todoDetailHeights[todoId] || 0
   const createTodoHeight = useSelector((state) => state.todo.createTodoHeight)
-
+  const isLabelModal = useSelector((state) => state.labelModal.isLabelModal)
   const HEIGHT_THRESHOLD = 400
 
   switch (status) {
@@ -45,7 +47,7 @@ function DropdownModal({ todoId, status }) {
       modalClassName += " modalClassName__setting"
       break
     case "selected":
-      dropdownText = ["Delete note", "Add Label", "Make a copy", "Copy to Google Docs", "Version history"]
+      dropdownText = ["Delete note", "Add label", "Make a copy", "Copy to Google Docs", "Version history"]
       modalClassName += " modalClassName__selected"
       break
   }
@@ -61,6 +63,9 @@ function DropdownModal({ todoId, status }) {
             dispatch(setDeleteArchive(todoId))
             break
         }
+        break
+      case "Add label":
+        dispatch(setLabelModal(true))
         break;
     }
   }
@@ -68,9 +73,11 @@ function DropdownModal({ todoId, status }) {
   return (
     <div className={modalClassName}>
       {
-        dropdownText.map((itemText, index) => (
-          <button key={index} onClick={() => handleAction(dispatch, itemText, todoId)} className='dropdownModal__item'><p className='dropdownModal__text'> {itemText} </p></button>
-        ))
+        isLabelModal
+          ? <LabelModal />
+          : dropdownText.map((itemText, index) => (
+            <button key={index} onClick={() => handleAction(dispatch, itemText, todoId)} className='dropdownModal__item'><p className='dropdownModal__text'> {itemText} </p></button>
+          ))
       }
     </div>
   )

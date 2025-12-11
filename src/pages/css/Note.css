@@ -38,6 +38,10 @@
     padding: 10px 20px;
     flex-shrink: 0;
 }
+.note__location{
+    font-size: 13px;
+    padding-right: 30px;
+}
 
 
 @media screen and (max-height:613px) {

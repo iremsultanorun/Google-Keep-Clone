@@ -47,7 +47,7 @@ function SelectionBar() {
                     onClick={()=>
                 {
                     dispatch(setAllArchiveTodo())
-                    console.log("çalıştı")
+            
                 }
                         
                      }

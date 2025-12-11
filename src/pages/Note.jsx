@@ -9,9 +9,27 @@ import Actions from '../common/Actions/Actions'
 function Note({ todo }) {
     const dispatch = useDispatch()
     const content = useSelector((state) => state.todo.content)
+    const archiveNotes = useSelector((state) => state.todo.archiveNotes)
+    const trashNotes = useSelector((state) => state.todo.trashNotes)
+    const todos = useSelector((state) => state.todo.todos)
     const createTodoContRef = useRef()
     const contentRef = useRef()
     const titleRef = useRef()
+    let actualStatus = "note";
+
+    if (trashNotes.some(t => t.id === todo.id)) {
+        actualStatus = "trash";
+    } else if (archiveNotes.some(t => t.id === todo.id)) {
+        actualStatus = "archive";
+    } else if (todos.some(t => t.id === todo.id)) {
+        actualStatus = "create";
+    }
+    const handleClick=()=>{
+if(actualStatus==="trash"){
+    alert("çöp kutusunda düzenlenemez")
+}
+   
+    }
     useEffect(() => {
         if (createTodoContRef.current) {
             const todoDetailHeight = createTodoContRef.current.offsetHeight
@@ -76,34 +94,58 @@ function Note({ todo }) {
     }, [])
 
     return (
-        <div className='note' >
-            <div ref={createTodoContRef} className='note__wrapper'  style={{background:todo.bgColor}}>
+        <div className='note' onClick={()=>dispatch(clearSelectedTodo())}  >
+            <div ref={createTodoContRef} className='note__wrapper' onClick={handleClick} style={{ background: todo.bgColor }}>
                 <div className='note__scroll-area'>
-                    <div key={todo.id} className='note__info-container'>
-                        <div className='createTodo__title-wrapper'>
-                            <input
-                                className='createTodo__title'
-                                type="text"
-                                placeholder='Title'
-                                onChange={changeTitle}
-                                ref={titleRef}
-                                value={todo.title} />
-                            <Pin todoId={todo.id}  status={"note"} />
+                    {
+
+                        <div key={todo.id} className='note__info-container'>
+                            <div className='createTodo__title-wrapper'>
+                                <input
+                                    className='createTodo__title'
+                                    type="text"
+                                    placeholder='Title'
+                                    onChange={changeTitle}
+                                    ref={titleRef}
+                                    value={todo.title}
+                                    disabled= {actualStatus === "trash"}
+                                />
+                                <Pin todoId={todo.id} status={"note"} />
+                            </div>
+                            <div className='createTodo__content-wrapper'>
+                                <textarea
+                                    ref={contentRef}
+                                    className='createTodo__content' type="text"
+                                    placeholder='Take a note...'
+                                    onChange={changeContent}
+                                    value={todo.content}
+                                   disabled= {actualStatus === "trash"}
+                                ></textarea>
+                            </div>
                         </div>
-                        <div className='createTodo__content-wrapper'>
-                            <textarea
-                                ref={contentRef}
-                                className='createTodo__content' type="text"
-                                placeholder='Take a note...'
-                                onChange={changeContent}
-                                value={todo.content}
-                            ></textarea>
-                        </div>
-                    </div>
+                    }
+                </div>
+                <div style={{
+                display:"flex",
+                alignItems:"center",
+                justifyContent:"flex-end"
+                }}>
+              
+                       {
+                        actualStatus==="trash"&& <p className='note__location'>Note is in Trash</p>
+                       }
+                       {
+                          actualStatus==="archive"&& <p className='note__location'>Note is in Archive</p>
+                       }
+                   
                 </div>
                 <div className='createTodo__actions-wrapper note__actions-wrapper'>
-                    <Actions todoId={todo.id} status={"note"} className={"createTodo__actions"} />
+                    <Actions todoId={todo.id} status={actualStatus} className={"createTodo__actions"}
+                    />
+                   {
+                    actualStatus!=="trash"&&
                     <div className='createTodo__btn-container'> <button onClick={() => dispatch(clearSelectedTodo())} className='createTodo__btn lg-btn'>Close</button></div>
+                   }
                 </div>
 
             </div>

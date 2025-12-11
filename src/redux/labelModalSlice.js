@@ -1,11 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit"
 
+
 const initialState = {
     isEditLabelModal: false,
     isLabelModal: false,
     labelName: "",
     editingLabelId: null,
     labelList: [],
+    filteredLabelList:[],
+    closeModal:null,
 }
 
 const labelModalSlice = createSlice({
@@ -34,7 +37,11 @@ const labelModalSlice = createSlice({
             if (index !== -1) {
                 state.labelList[index].name = newLabelName
             }
-        }
+        },
+        // setFilteredLabelList:(state)=>{
+            
+        // }
+       
     }
 })
 

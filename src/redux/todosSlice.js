@@ -75,13 +75,12 @@ const todoSlice = createSlice({
             let todoSelected;
             if (status === "archive") {
                 todoSelected = state.archiveNotes.find((todo) => String(todo.id) === String(selectId))
-                console.log(todoSelected)
+              
             } else if (status === "home") {
                 todoSelected = state.todos.find((todo) => String(todo.id) === String(selectId))
-                console.log(todoSelected)
+            
             }
-            console.log(status)
-            console.log(todoSelected)
+   
             if (todoSelected) {
                 todoSelected.selected = !todoSelected.selected
                 if (todoSelected.selected == true) {
@@ -90,8 +89,6 @@ const todoSlice = createSlice({
                 if (todoSelected.selected == false) {
                     state.selectedCurrent -= 1
                 }
-            } else {
-                console.log("hata")
             }
         },
         setPinnedTodo: (state, action) => {
@@ -142,6 +139,7 @@ const todoSlice = createSlice({
         },
         setArchiveTodo: (state, action) => {
             transferNote(state, action, "todos", "archiveNotes")
+            state.selectedTodoId = null;
         },
         setNewArchiveTodo: (state) => {
             const newArchiveTodo = {

@@ -160,7 +160,12 @@ function CreateTodo() {
 
                 </div>
                 {hidden ? <div className='createTodo__actions-wrapper'>
-                    <Actions todoId={newTodo.id} status={"create"} className={"createTodo__actions"} />
+                    <Actions 
+                        todoId={newTodo.id} 
+                        status={"create"} 
+                        className={"createTodo__actions"} 
+                        type={null}
+                        />
                     <div className='createTodo__btn-container'> <button className='createTodo__btn lg-btn' onClick={closeFunc}>Close</button></div>
                 </div> : null}
 

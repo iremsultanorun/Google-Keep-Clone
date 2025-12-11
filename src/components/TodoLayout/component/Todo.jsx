@@ -10,8 +10,9 @@ import { IoIosCheckmarkCircle } from 'react-icons/io';
 
 
 
-function Todo({ todo, status}) {
+function Todo({ todo, status,type}) {
   const todoLayout = useSelector((state) => state.todo.todoLayout)
+ 
   const dispatch = useDispatch();
   const baslik = todo.title
   const content = todo.content
@@ -22,7 +23,7 @@ function Todo({ todo, status}) {
   const selectedTodoId = useSelector((state) => state.todo.selectedTodoId)
   const den = selectedTodoId === todo.id
   const isOpenTodoModal = selectedTodoId !== null
-
+const labelList=useSelector(state=>state.labelModal.labelList)
   useEffect(() => {
     let a = todoTitleRef.current.clientHeight + "px"
     let b = todoContentRef.current.clientHeight + "px"
@@ -47,11 +48,17 @@ function Todo({ todo, status}) {
         <h2 className='todo__title' ref={todoTitleRef}>{baslik}</h2>
         <pre className='todo__content' ref={todoContentRef}>{content} </pre>
       </div>
-
-      <Actions todoId={todo.id} status={status} className={"todo__actions-wrapper"} />
+{
+  labelList&&labelList.map((label)=>{
+    <p> {label.name} </p>
+  })
+}
+      <Actions todoId={todo.id} status={status} type={type} className={"todo__actions-wrapper"} />
+     {  status!=="trash" &&
       <button ref={chooseBtnRef} className="btn todo__choose-btn" onClick={selecetedTodoById}
         style={{ color: todo.selected ? "black" : "var(--color-gray-700)", }}
       > <IoIosCheckmarkCircle /></button>
+      }
     </div>
 
   )
