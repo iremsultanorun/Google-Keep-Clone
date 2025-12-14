@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { setLogoNames, setActiveLogo, setIsCollapsed } from '../../../redux/headerSlice';
 import { MdLabelOutline, MdLightbulbOutline } from "react-icons/md";
 import { AiOutlineBell } from "react-icons/ai";
@@ -218,7 +218,7 @@ if(isActive){
                         <Link
                         key={labelId}
                         onClick={() => handleClick(label.name)}
-                        to={label.path}
+                        to={`/label/${label.name}`} 
                       >
                         <button
                           className={itemClasses +

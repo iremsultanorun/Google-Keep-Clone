@@ -48,8 +48,6 @@ const labelModalSlice = createSlice({
             } else {
                 state.checkedLabels.push(labelName);
             }
-
-
         },
 
         clearCheckedLabels: (state) => {

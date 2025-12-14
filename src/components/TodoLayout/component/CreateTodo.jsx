@@ -31,7 +31,6 @@ function CreateTodo() {
         bgColor: todoBgColor,
         labels: [...checkedLabels],
     }
-    console.log(newTodo.labels)
 
     useEffect(() => {
         if (createTodoContRef.current) {
@@ -60,8 +59,6 @@ function CreateTodo() {
     const closeFunc = () => {
         addTodoFunc()
         dispatch(showFullForm(hidden))
-
-
     }
 
 

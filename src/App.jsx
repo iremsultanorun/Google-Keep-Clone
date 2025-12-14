@@ -12,7 +12,6 @@ import { useSelector } from 'react-redux'
 import SearchPage from './pages/SearchPage'
 import Note from './pages/Note'
 import HeaderLayout from './components/HeaderLayout/components/HeaderLayout'
-import EmptyState from './common/components/EmptyState'
 
 
 function App() {
@@ -23,29 +22,30 @@ function App() {
   const todos = useSelector((state) => state.todo.todos)
   const archiveNotes = useSelector((state) => state.todo.archiveNotes)
   const trashNotes = useSelector((state) => state.todo.trashNotes)
-  const ALLNOTES=[
+  const ALLNOTES = [
     ...todos,
     ...archiveNotes,
     ...trashNotes
   ]
   const selectedTodo = ALLNOTES.find((todo) => todo.id === selectedTodoId
-    )
+  )
   const isOpenTodoModal = selectedTodoId !== null
+  console.log(labelLists)
 
 
   return (
     <div>
       {
-      isOpenTodoModal && <Note todo={selectedTodo}  /> 
+        isOpenTodoModal && <Note todo={selectedTodo} />
       }
       {
         isEditLabelModal ?
           <div className='create-label-modal'>
-            <EditLabel/>
+            <EditLabel />
           </div> : null
       }
       <div className='headerSection'>
-        <HeaderLayout/>
+        <HeaderLayout />
       </div>
 
       <div className='mainSection'>
@@ -58,11 +58,7 @@ function App() {
             <Route path='/' element={<HomePage />} />
             <Route path='/search' element={<SearchPage />} />
             <Route path='/reminders' element={<RemindersPage />} />
-         {
-          labelLists&&labelLists.map((label)=>(
-            <Route path={label.path} element={<LabelPage />} />
-          ))
-         }
+            <Route path="/label/:labelName" element={<LabelPage />} />
             <Route path='/archive' element={<ArchivePage />} />
             <Route path='/trash' element={<TrashPage />} />
           </Routes>

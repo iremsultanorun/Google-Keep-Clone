@@ -4,18 +4,30 @@ import EmptyState from '../common/components/EmptyState'
 import EmptyStateLabel from "./../assets/empty-state-icons/empty-state-label-icon.svg"
 import CreateTodo from '../components/TodoLayout/component/CreateTodo'
 import TodoList from '../components/TodoLayout/component/TodoList'
+import { useParams } from 'react-router-dom'
 function LabelPage() {
-  const labelList=useSelector(state=>state.labelModal.labelList)
-  console.log(labelList)
+  const {labelName}=useParams()
+
+  const checkedLabels = useSelector(state => state.labelModal.checkedLabels)
+  const todoList = useSelector(state => state.todo.todos)
+
+  const labelTodos = todoList.filter(todo => 
+    todo.labels.includes(labelName)  
+  )
+console.log(checkedLabels)
+console.log(labelName)
+
+console.log(labelTodos)
+
   return (
     <div>
-         <div>
-    <CreateTodo/>
-    <TodoList notes={labelList} status={"labelPage"} />
-        </div>
-    {
-        labelList.length!==0 && <EmptyState icon={EmptyStateLabel} message={"No notes with this label yet"}/>
-    }
+      <div>
+        <CreateTodo />
+        <TodoList notes={labelTodos} status={"labelPage"} />
+      </div>
+      {
+        labelTodos.length === 0 && <EmptyState icon={EmptyStateLabel} message={"No notes with this label yet"} />
+      }
 
     </div>
   )

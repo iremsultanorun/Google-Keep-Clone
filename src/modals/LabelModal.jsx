@@ -24,7 +24,6 @@ function LabelModal({ status, todoId }) {
         if (status === "create") return null;
         return todos?.find(t => t.id === todoId);
     }, [todos, todoId,status]);
-    console.log(currentTodo)
     const todoLabels = currentTodo?.labels || [];
     
     const filteredLabels = useMemo(() => {

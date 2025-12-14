@@ -32,7 +32,7 @@ function Todo({ todo, status, type }) {
   const selecetedTodoById = () => {
     dispatch(setSelectedTodo({ selectId: todo.id, status: status }))
   }
-  console.log(todo.labels)
+
   return (
 
     <div className='todo__container' ref={todoContRef}
