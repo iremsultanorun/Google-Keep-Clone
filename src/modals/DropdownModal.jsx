@@ -74,7 +74,7 @@ function DropdownModal({ todoId, status }) {
     <div className={modalClassName}>
       {
         isLabelModal
-          ? <LabelModal />
+          ? <LabelModal status={status} todoId={todoId} />
           : dropdownText.map((itemText, index) => (
             <button key={index} onClick={() => handleAction(dispatch, itemText, todoId)} className='dropdownModal__item'><p className='dropdownModal__text'> {itemText} </p></button>
           ))

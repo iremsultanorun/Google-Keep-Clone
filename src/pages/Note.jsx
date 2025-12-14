@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { clearSelectedTodo, setTodoDetailHeight, updateSpecificTodo } from '../redux/todosSlice'
+import { clearSelectedTodo, setIsOthersModalCreate, setTodoDetailHeight, updateSpecificTodo } from '../redux/todosSlice'
 import "./css/Note.css"
 
 import Pin from '../common/Actions/Action-buttons/Pin'
@@ -24,11 +24,11 @@ function Note({ todo }) {
     } else if (todos.some(t => t.id === todo.id)) {
         actualStatus = "create";
     }
-    const handleClick=()=>{
-if(actualStatus==="trash"){
-    alert("çöp kutusunda düzenlenemez")
-}
-   
+    const handleClick = () => {
+        if (actualStatus === "trash") {
+            alert("çöp kutusunda düzenlenemez")
+        }
+
     }
     useEffect(() => {
         if (createTodoContRef.current) {
@@ -93,9 +93,25 @@ if(actualStatus==="trash"){
         }
     }, [])
 
+   // Modal dışına tıklandığında kapat
+   useEffect(() => {
+    const handleClickOutside = (e) => {
+        if (createTodoContRef.current && !createTodoContRef.current.contains(e.target)) {
+            dispatch(clearSelectedTodo())
+            dispatch(setIsOthersModalCreate())  
+        }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+
+    return () => {
+        document.removeEventListener('mousedown', handleClickOutside)
+    }
+}, [dispatch])
+
     return (
-        <div className='note' onClick={()=>dispatch(clearSelectedTodo())}  >
-            <div ref={createTodoContRef} className='note__wrapper' onClick={handleClick} style={{ background: todo.bgColor }}>
+        <div className='note'>
+            <div ref={createTodoContRef} className='note__wrapper' onClick={handleClick } style={{ background: todo.bgColor }}>
                 <div className='note__scroll-area'>
                     {
 
@@ -108,7 +124,7 @@ if(actualStatus==="trash"){
                                     onChange={changeTitle}
                                     ref={titleRef}
                                     value={todo.title}
-                                    disabled= {actualStatus === "trash"}
+                                    disabled={actualStatus === "trash"}
                                 />
                                 <Pin todoId={todo.id} status={"note"} />
                             </div>
@@ -119,33 +135,33 @@ if(actualStatus==="trash"){
                                     placeholder='Take a note...'
                                     onChange={changeContent}
                                     value={todo.content}
-                                   disabled= {actualStatus === "trash"}
+                                    disabled={actualStatus === "trash"}
                                 ></textarea>
                             </div>
                         </div>
                     }
                 </div>
                 <div style={{
-                display:"flex",
-                alignItems:"center",
-                justifyContent:"flex-end"
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "flex-end"
                 }}>
-              
-                       {
-                        actualStatus==="trash"&& <p className='note__location'>Note is in Trash</p>
-                       }
-                       {
-                          actualStatus==="archive"&& <p className='note__location'>Note is in Archive</p>
-                       }
-                   
+
+                    {
+                        actualStatus === "trash" && <p className='note__location'>Note is in Trash</p>
+                    }
+                    {
+                        actualStatus === "archive" && <p className='note__location'>Note is in Archive</p>
+                    }
+
                 </div>
                 <div className='createTodo__actions-wrapper note__actions-wrapper'>
                     <Actions todoId={todo.id} status={actualStatus} className={"createTodo__actions"}
                     />
-                   {
-                    actualStatus!=="trash"&&
-                    <div className='createTodo__btn-container'> <button onClick={() => dispatch(clearSelectedTodo())} className='createTodo__btn lg-btn'>Close</button></div>
-                   }
+                    {
+                        actualStatus !== "trash" &&
+                        <div className='createTodo__btn-container'> <button onClick={() => dispatch(clearSelectedTodo())} className='createTodo__btn lg-btn'>Close</button></div>
+                    }
                 </div>
 
             </div>

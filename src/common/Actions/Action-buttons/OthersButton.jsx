@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setIsOthersModal } from '../../../redux/todosSlice'
+import { setIsOthersModal, setIsOthersModalCreate } from '../../../redux/todosSlice'
 
 import DropdownModal from '../../../modals/DropdownModal'
 
@@ -10,8 +10,9 @@ import { setLabelModal } from '../../../redux/labelModalSlice'
 function OthersButton({ todoId, status }) {
 
     const dispatch = useDispatch()
+    const openModalTodoId = useSelector((state) => state.todo.openModalTodoId)
     const isOthersModal = useSelector((state) => state.todo.isOthersModal)
-
+const openModal=openModalTodoId===todoId
     let className = "btn "
 
     switch (status) {
@@ -26,14 +27,21 @@ function OthersButton({ todoId, status }) {
     return (
         <div>
             <button
-                onClick={() => {dispatch(setIsOthersModal()), dispatch(setLabelModal(false))}}
+                onClick={() => {
+                    if (status==="create") {
+                        dispatch(setIsOthersModalCreate())  
+                    }
+                    dispatch(setIsOthersModal(todoId)), 
+                    dispatch(setLabelModal(false))}}
                 className={className}
                 data-tooltip-text="Other">
                 <LuEllipsisVertical />
             </button>
 
             {
-                isOthersModal && <DropdownModal todoId={todoId} status={status} />
+                status==="create"?
+                isOthersModal && <DropdownModal todoId={todoId} status={status} />:
+                openModal && <DropdownModal todoId={todoId} status={status} />
             }
 
         </div>

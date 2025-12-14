@@ -1,12 +1,13 @@
 import React, { useEffect, useRef } from 'react'
 import '../css/CreateTodo.css'
 import { useDispatch, useSelector } from 'react-redux'
-import { showCompactForm, showFullForm, updateTodoFields, addTodo, resetForm, setNewPinnedTodo, setCreateTodoHeight, resetBgColor } from '../../../redux/todosSlice'
+import { showCompactForm, showFullForm, updateTodoFields, addTodo, resetForm, setNewPinnedTodo, setCreateTodoHeight, resetBgColor, setIsOthersModalCreate } from '../../../redux/todosSlice'
 import Pin from '../../../common/Actions/Action-buttons/Pin'
 import Actions from '../../../common/Actions/Actions'
 import { MdOutlineImage } from 'react-icons/md'
 import { BiSolidPaint } from 'react-icons/bi'
 import { IoIosCheckboxOutline } from 'react-icons/io'
+import { clearCheckedLabels } from '../../../redux/labelModalSlice'
 
 function CreateTodo() {
     const dispatch = useDispatch()
@@ -16,7 +17,7 @@ function CreateTodo() {
     const hidden = useSelector((state) => state.todo.hidden)
     const isPinned = useSelector((state) => state.todo.isPinned)
     const todoBgColor = useSelector((state) => state.todo.todoBgColor)
-
+    let checkedLabels = useSelector((state) => state.labelModal.checkedLabels)
     const createTodoContRef = useRef()
     const contentRef = useRef()
     const titleRef = useRef()
@@ -28,8 +29,9 @@ function CreateTodo() {
         selected: false,
         pinned: isPinned,
         bgColor: todoBgColor,
+        labels: [...checkedLabels],
     }
-
+    console.log(newTodo.labels)
 
     useEffect(() => {
         if (createTodoContRef.current) {
@@ -51,19 +53,26 @@ function CreateTodo() {
         }
         dispatch(setNewPinnedTodo(false))
         dispatch(resetBgColor())
+        dispatch(setIsOthersModalCreate())
+        dispatch(clearCheckedLabels())
+
     }
     const closeFunc = () => {
         addTodoFunc()
         dispatch(showFullForm(hidden))
+
+
     }
 
 
 
     const changeTitle = (e) => {
         dispatch(updateTodoFields({ title: e.target.value }))
+
     }
     const changeContent = (e) => {
         dispatch(updateTodoFields({ content: e.target.value }))
+
     }
 
     useEffect(() => {
@@ -146,26 +155,31 @@ function CreateTodo() {
                     {!hidden
                         ? <div className='node-type-wrapper'>
                             <button className="note-type-btn btn md-btn" data-tooltip-text="New list">
-                            <IoIosCheckboxOutline />
+                                <IoIosCheckboxOutline />
                             </button>
                             <button className="note-type-btn btn md-btn" data-tooltip-text="New note with drawing">
-                            <BiSolidPaint />
+                                <BiSolidPaint />
                             </button>
                             <button className="note-type-btn btn md-btn" data-tooltip-text="New note with picture">
-                            <MdOutlineImage />
+                                <MdOutlineImage />
                             </button>
                         </div>
                         : null
                     }
 
                 </div>
+                {
+                    newTodo.labels.map((label) => (
+                        <p key={label}> {label} </p>
+                    ))
+                }
                 {hidden ? <div className='createTodo__actions-wrapper'>
-                    <Actions 
-                        todoId={newTodo.id} 
-                        status={"create"} 
-                        className={"createTodo__actions"} 
+                    <Actions
+                        todoId={newTodo.id}
+                        status={"create"}
+                        className={"createTodo__actions"}
                         type={null}
-                        />
+                    />
                     <div className='createTodo__btn-container'> <button className='createTodo__btn lg-btn' onClick={closeFunc}>Close</button></div>
                 </div> : null}
 

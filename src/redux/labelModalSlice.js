@@ -7,8 +7,10 @@ const initialState = {
     labelName: "",
     editingLabelId: null,
     labelList: [],
-    filteredLabelList:[],
-    closeModal:null,
+    checkedLabels: [],
+    filteredLabelList: [],
+    closeModal: null,
+    isChecked: false,
 }
 
 const labelModalSlice = createSlice({
@@ -38,12 +40,23 @@ const labelModalSlice = createSlice({
                 state.labelList[index].name = newLabelName
             }
         },
-        // setFilteredLabelList:(state)=>{
-            
-        // }
-       
+        setIsChecked: (state, action) => {
+            const labelName = action.payload
+            const index = state.checkedLabels.indexOf(labelName)
+            if (index > -1) {
+                state.checkedLabels.splice(index, 1);
+            } else {
+                state.checkedLabels.push(labelName);
+            }
+
+
+        },
+
+        clearCheckedLabels: (state) => {
+            state.checkedLabels = []
+        }
     }
 })
 
-export const {  setEditLabelModal, setLabelName, addLabelList, deleteLabel, updateLabel,setLabelModal } = labelModalSlice.actions
+export const { setEditLabelModal, setLabelName, addLabelList, deleteLabel, updateLabel, setLabelModal, setIsChecked, clearCheckedLabels } = labelModalSlice.actions
 export default labelModalSlice.reducer

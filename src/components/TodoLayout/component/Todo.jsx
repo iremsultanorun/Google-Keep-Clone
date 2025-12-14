@@ -10,9 +10,9 @@ import { IoIosCheckmarkCircle } from 'react-icons/io';
 
 
 
-function Todo({ todo, status,type}) {
+function Todo({ todo, status, type }) {
   const todoLayout = useSelector((state) => state.todo.todoLayout)
- 
+
   const dispatch = useDispatch();
   const baslik = todo.title
   const content = todo.content
@@ -23,7 +23,6 @@ function Todo({ todo, status,type}) {
   const selectedTodoId = useSelector((state) => state.todo.selectedTodoId)
   const den = selectedTodoId === todo.id
   const isOpenTodoModal = selectedTodoId !== null
-const labelList=useSelector(state=>state.labelModal.labelList)
   useEffect(() => {
     let a = todoTitleRef.current.clientHeight + "px"
     let b = todoContentRef.current.clientHeight + "px"
@@ -31,33 +30,35 @@ const labelList=useSelector(state=>state.labelModal.labelList)
 
   }, [todoTitleRef, todoContentRef])
   const selecetedTodoById = () => {
-    dispatch(setSelectedTodo({selectId:todo.id,status:status}))
+    dispatch(setSelectedTodo({ selectId: todo.id, status: status }))
   }
+  console.log(todo.labels)
   return (
 
     <div className='todo__container' ref={todoContRef}
-      style={{ border: todo.selected ? "2px solid black" : "1px solid var(--color-gray-200)", opacity: den ? isOpenTodoModal ? "0" : "1" : null, background:todo.bgColor }}
+      style={{ border: todo.selected ? "2px solid black" : "1px solid var(--color-gray-200)", opacity: den ? isOpenTodoModal ? "0" : "1" : null, background: todo.bgColor }}
       data-open-modal={todoLayout}
 
     >
- {
-  status!=="trash" && <Pin todoId={todo.id} status={status}/>
- }
+      {
+        status !== "trash" && <Pin todoId={todo.id} status={status} />
+      }
 
-      <div className="todo__wrapper" onClick={() => dispatch(setSelectedTodoById(todo.id,status))} >
+      <div className="todo__wrapper" onClick={() => dispatch(setSelectedTodoById(todo.id, status))} >
         <h2 className='todo__title' ref={todoTitleRef}>{baslik}</h2>
         <pre className='todo__content' ref={todoContentRef}>{content} </pre>
       </div>
-{
-  labelList&&labelList.map((label)=>{
-    <p> {label.name} </p>
-  })
-}
+      {
+        todo.labels?.map((label,id) => (
+          <p key={id}> {label} </p>
+        ))
+
+      }
       <Actions todoId={todo.id} status={status} type={type} className={"todo__actions-wrapper"} />
-     {  status!=="trash" &&
-      <button ref={chooseBtnRef} className="btn todo__choose-btn" onClick={selecetedTodoById}
-        style={{ color: todo.selected ? "black" : "var(--color-gray-700)", }}
-      > <IoIosCheckmarkCircle /></button>
+      {status !== "trash" &&
+        <button ref={chooseBtnRef} className="btn todo__choose-btn" onClick={selecetedTodoById}
+          style={{ color: todo.selected ? "black" : "var(--color-gray-700)", }}
+        > <IoIosCheckmarkCircle /></button>
       }
     </div>
 
