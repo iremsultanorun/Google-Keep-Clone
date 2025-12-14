@@ -12,6 +12,7 @@ import { useSelector } from 'react-redux'
 import SearchPage from './pages/SearchPage'
 import Note from './pages/Note'
 import HeaderLayout from './components/HeaderLayout/components/HeaderLayout'
+import EmptyState from './common/components/EmptyState'
 
 
 function App() {
