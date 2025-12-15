@@ -10,7 +10,13 @@ function Pin({ todoId, status }) {
     const isNewTodoPinned = useSelector((state) => state.todo.isPinned);
 
     const todos = useSelector((state) => state.todo.todos);
-    const currentTodo = todos.find(todo => todo.id === todoId);
+
+    const archiveNotes = useSelector((state) => state.todo.archiveNotes);
+    const todoList = status === 'home' ? todos :
+        status === 'archive' ? archiveNotes : null
+
+
+    const currentTodo = todoList?.find(todo => todo.id === todoId);
 
     let isPinnedStatus = false;
 
@@ -25,10 +31,12 @@ function Pin({ todoId, status }) {
         if (status === "create") {
             dispatch(setNewPinnedTodo(!isNewTodoPinned));
         } else if (status === "selected") {
-            dispatch(setAllPinnedTodo());
+            dispatch(setAllPinnedTodo({ status: status }));
+            console.log("çalışıyor?")
+            console.log(status)
         }
         else {
-            dispatch(setPinnedTodo(todoId));
+            dispatch(setPinnedTodo({ pinnedId: todoId, status: status }));
         }
     }
 
@@ -48,7 +56,7 @@ function Pin({ todoId, status }) {
                 onClick={handleClickPinnedButton}>
 
                 {isPinnedStatus ? <TbPinnedFilled /> : <TbPinned />}
-                
+
             </button>
         </div>
     )

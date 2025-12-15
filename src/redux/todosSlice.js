@@ -11,12 +11,12 @@ const initialState = {
     selectedCurrent: 0,
     todoLayout: false,
     selectedTodoId: null,
-    openModalTodoId:null,
+    openModalTodoId: null,
     isPinned: false,
     todoDetailHeight: {},
     createTodoHeight: {},
     todoBgColor: " ",
-    isOthersModal:false,
+    isOthersModal: false,
 }
 
 const todoSlice = createSlice({
@@ -39,6 +39,7 @@ const todoSlice = createSlice({
 
         updateSpecificTodo: (state, action) => {
             const { id, field, value } = action.payload
+
             const todoIndex = state.todos.findIndex((todo) => id === todo.id)
             if (todoIndex !== -1) {
                 state.todos[todoIndex][field] = value
@@ -72,16 +73,11 @@ const todoSlice = createSlice({
 
         setSelectedTodo: (state, action) => {
             const { selectId, status } = action.payload
+            const todoList = status === 'home' ? state.todos :
+                status === 'archive' ? state.archiveNotes : null;
 
-            let todoSelected;
-            if (status === "archive") {
-                todoSelected = state.archiveNotes.find((todo) => String(todo.id) === String(selectId))
-              
-            } else if (status === "home") {
-                todoSelected = state.todos.find((todo) => String(todo.id) === String(selectId))
-            
-            }
-   
+            const todoSelected = todoList.find((todo) => (todo.id) === selectId)
+
             if (todoSelected) {
                 todoSelected.selected = !todoSelected.selected
                 if (todoSelected.selected == true) {
@@ -93,8 +89,11 @@ const todoSlice = createSlice({
             }
         },
         setPinnedTodo: (state, action) => {
-            const pinnedId = action.payload
-            const todoPinned = state.todos.find((todo) => todo.id === pinnedId)
+            const {pinnedId,status} = action.payload
+            const todoList = status === 'home' ? state.todos :
+            status === 'archive' ? state.archiveNotes : null;
+
+            const todoPinned = todoList.find((todo) => todo.id === pinnedId)
             if (todoPinned) {
                 todoPinned.pinned = !todoPinned.pinned
             }
@@ -107,7 +106,16 @@ const todoSlice = createSlice({
                     state.selectedCurrent = 0
                 }
             })
+            state.archiveNotes.forEach((todo) => {
+                if (todo.selected == true) {
+                    todo.pinned = !todo.pinned
+                    todo.selected = false
+                    state.selectedCurrent = 0
+                }
+            })
+       
         },
+  
         setNewPinnedTodo: (state, action) => {
             state.isPinned = action.payload
         },
@@ -118,11 +126,11 @@ const todoSlice = createSlice({
             const id = action.payload;
             const todo = state.todos.find((todo) => todo.id === id);
             if (todo) {
-              if(state.openModalTodoId===id){
-                state.openModalTodoId=null
-              }else{
-                state.openModalTodoId=id
-              }
+                if (state.openModalTodoId === id) {
+                    state.openModalTodoId = null
+                } else {
+                    state.openModalTodoId = id
+                }
             }
         },
         setIsOthersModalCreate: (state) => {
@@ -234,41 +242,41 @@ const todoSlice = createSlice({
         },
         addLabelToTodo: (state, action) => {
             const { todoId, label, status } = action.payload;
-            
-          
-            const todoList = status === 'home' ? state.todos : 
-                             status === 'archive' ? state.archiveNotes : 
-                             state.trashNotes;
-            
+
+
+            const todoList = status === 'home' ? state.todos :
+                status === 'archive' ? state.archiveNotes :
+                    state.trashNotes;
+
 
             const todo = todoList.find(t => t.id === todoId);
-            
+
             if (todo) {
 
-              if (!todo.labels.includes(label)) {
-                todo.labels.push(label);
-              }
+                if (!todo.labels.includes(label)) {
+                    todo.labels.push(label);
+                }
             }
-          },
-     
-          removeLabelFromTodo: (state, action) => {
+        },
+
+        removeLabelFromTodo: (state, action) => {
             const { todoId, label, status } = action.payload;
-            
-            const todoList = status === 'home' ? state.todos : 
-                             status === 'archive' ? state.archiveNotes : 
-                             state.trashNotes;
-            
+
+            const todoList = status === 'home' ? state.todos :
+                status === 'archive' ? state.archiveNotes :
+                    state.trashNotes;
+
             const todo = todoList.find(t => t.id === todoId);
-            
+
             if (todo) {
-              todo.labels = todo.labels.filter(l => l !== label);
+                todo.labels = todo.labels.filter(l => l !== label);
             }
-          }
         }
-      
     }
+
+}
 )
 
-export const { updateTodoFields, showFullForm, showCompactForm, addTodo, resetForm, setSelectedTodo, setPinnedTodo, setTodoLayout, updateSpecificTodo, setSelectedTodoById, clearSelectedTodo, setIsOthersModal,setIsOthersModalCreate, setDeleteTodo, setArchiveTodo, setNewPinnedTodo, clearSelectedTodos, setAllPinnedTodo, setTodoDetailHeight, setCreateTodoHeight, setIsBgPaletteModal, setBgColor, resetBgColor, setAllBgColor, resetAllBgColor, setAllArchiveTodo, setAllDeleteTodo, setNewArchiveTodo, setRestoreTrash, setRestoreArchive, setDeleteArchive,addLabelToTodo,removeLabelFromTodo } = todoSlice.actions
+export const { updateTodoFields, showFullForm, showCompactForm, addTodo, resetForm, setSelectedTodo, setPinnedTodo, setTodoLayout, updateSpecificTodo, setSelectedTodoById, clearSelectedTodo, setIsOthersModal, setIsOthersModalCreate, setDeleteTodo, setArchiveTodo, setNewPinnedTodo, clearSelectedTodos, setAllPinnedTodo, setTodoDetailHeight, setCreateTodoHeight, setIsBgPaletteModal, setBgColor, resetBgColor, setAllBgColor, resetAllBgColor, setAllArchiveTodo, setAllDeleteTodo, setNewArchiveTodo, setRestoreTrash, setRestoreArchive, setDeleteArchive, addLabelToTodo, removeLabelFromTodo } = todoSlice.actions
 
 export default todoSlice.reducer

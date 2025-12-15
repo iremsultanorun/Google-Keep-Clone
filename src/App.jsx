@@ -16,7 +16,6 @@ import HeaderLayout from './components/HeaderLayout/components/HeaderLayout'
 
 function App() {
   const isEditLabelModal = useSelector((state) => state.labelModal.isEditLabelModal)
-  const labelLists = useSelector((state) => state.labelModal.labelList)
   const isSlideModal = useSelector((state) => state.header.isSlideModal);
   const selectedTodoId = useSelector((state) => state.todo.selectedTodoId)
   const todos = useSelector((state) => state.todo.todos)
@@ -30,8 +29,6 @@ function App() {
   const selectedTodo = ALLNOTES.find((todo) => todo.id === selectedTodoId
   )
   const isOpenTodoModal = selectedTodoId !== null
-  console.log(labelLists)
-
 
   return (
     <div>
