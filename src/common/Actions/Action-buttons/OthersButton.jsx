@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setIsOthersModal, setIsOthersModalCreate } from '../../../redux/todosSlice'
+import { setIsOthersModal } from '../../../redux/todosSlice'
 
 import DropdownModal from '../../../modals/DropdownModal'
 
@@ -28,10 +28,8 @@ const openModal=openModalTodoId===todoId
         <div>
             <button
                 onClick={() => {
-                    if (status==="create") {
-                        dispatch(setIsOthersModalCreate())  
-                    }
-                    dispatch(setIsOthersModal(todoId)), 
+                
+                    dispatch(setIsOthersModal({id:todoId,status:status})), 
                     dispatch(setLabelModal(false))}}
                 className={className}
                 data-tooltip-text="Other">
@@ -39,8 +37,8 @@ const openModal=openModalTodoId===todoId
             </button>
 
             {
-                status==="create"?
-                isOthersModal && <DropdownModal todoId={todoId} status={status} />:
+                status==="create"||status==="selected"?
+                isOthersModal && <DropdownModal todoId={null} status={status} />:
                 openModal && <DropdownModal todoId={todoId} status={status} />
             }
 

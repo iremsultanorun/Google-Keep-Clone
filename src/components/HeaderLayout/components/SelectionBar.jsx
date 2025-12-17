@@ -1,17 +1,20 @@
 import React from 'react'
 import "./../css/Header.css"
 import { useDispatch, useSelector } from 'react-redux'
-import { clearSelectedTodos, setAllArchiveTodo } from '../../../redux/todosSlice'
+import { clearSelectedTodos, setAllArchiveTodo, setAllRestoreArchiveTodo } from '../../../redux/todosSlice'
 
 import Pin from '../../../common/Actions/Action-buttons/Pin'
 import BgPaletteButton from '../../../common/Actions/Action-buttons/BgPaletteButton'
 import OthersButton from '../../../common/Actions/Action-buttons/OthersButton'
 import { CgClose } from 'react-icons/cg'
 import { BiBellPlus } from 'react-icons/bi'
-import { RiInboxArchiveLine } from 'react-icons/ri'
+import { RiInboxArchiveLine, RiInboxUnarchiveLine } from 'react-icons/ri'
+import { useLocation } from 'react-router-dom'
 
 function SelectionBar() {
     const dispatch = useDispatch()
+    const location =useLocation()
+    const statusArchive=location.pathname==="/archive"
     const selectedCurrent = useSelector((state) => state.todo.selectedCurrent)
 
     const isSelected = selectedCurrent > 0
@@ -42,18 +45,27 @@ function SelectionBar() {
                         <BiBellPlus />
                     </button>
 
-                    <button 
+               
+                 {
+                    statusArchive?
+                    <button
                     className='btn md-btn selection-bar__action'
-                    onClick={()=>
-                {
-                    dispatch(setAllArchiveTodo())
-            
-                }
-                        
-                     }
+                    onClick={() => {
+                        dispatch(setAllRestoreArchiveTodo())
+                    }
+                    }
+                >
+                    <RiInboxUnarchiveLine />
+                </button>:  <button
+                        className='btn md-btn selection-bar__action'
+                        onClick={() => {
+                            dispatch(setAllArchiveTodo())
+                        }
+                        }
                     >
                         <RiInboxArchiveLine />
                     </button>
+                 }
 
                     <OthersButton todoId={null} status={"selected"} />
                 </div>

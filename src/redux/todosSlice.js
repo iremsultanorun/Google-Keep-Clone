@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { transferNote } from "./utils"
+import { modalControl, transferNote } from "./utils"
 const initialState = {
     title: "",
     content: "",
@@ -16,7 +16,8 @@ const initialState = {
     todoDetailHeight: {},
     createTodoHeight: {},
     todoBgColor: " ",
-    isOthersModal: false,
+    isOthersModal: null,
+    isBgPaletteModal:  null,
 }
 
 const todoSlice = createSlice({
@@ -89,9 +90,9 @@ const todoSlice = createSlice({
             }
         },
         setPinnedTodo: (state, action) => {
-            const {pinnedId,status} = action.payload
+            const { pinnedId, status } = action.payload
             const todoList = status === 'home' ? state.todos :
-            status === 'archive' ? state.archiveNotes : null;
+                status === 'archive' ? state.archiveNotes : null;
 
             const todoPinned = todoList.find((todo) => todo.id === pinnedId)
             if (todoPinned) {
@@ -113,28 +114,19 @@ const todoSlice = createSlice({
                     state.selectedCurrent = 0
                 }
             })
-       
+
         },
-  
+
         setNewPinnedTodo: (state, action) => {
             state.isPinned = action.payload
         },
+
         setTodoLayout: (state) => {
             state.todoLayout = !state.todoLayout;
         },
+
         setIsOthersModal: (state, action) => {
-            const id = action.payload;
-            const todo = state.todos.find((todo) => todo.id === id);
-            if (todo) {
-                if (state.openModalTodoId === id) {
-                    state.openModalTodoId = null
-                } else {
-                    state.openModalTodoId = id
-                }
-            }
-        },
-        setIsOthersModalCreate: (state) => {
-            state.isOthersModal = !state.isOthersModal;
+            modalControl(state,action,"isOthersModal","openModalTodoId")
         },
 
         setDeleteTodo: (state, action) => {
@@ -176,9 +168,9 @@ const todoSlice = createSlice({
             state.hidden = false
         },
         setAllArchiveTodo: (state) => {
-            const selectedId = state.todos.filter((todo) => todo.selected !== todo).map(todo => todo.id)
+            const selectedId = state.todos.filter((todo) => todo.selected).map(todo => todo.id)
             state.todos.forEach((todo) => {
-                if (todo.selected === true) {
+                if (todo.selected) {
                     state.archiveNotes.push(todo)
                     todo.selected = false
                     state.selectedCurrent = 0
@@ -186,6 +178,19 @@ const todoSlice = createSlice({
             })
 
             state.todos = state.todos.filter((todo) => !selectedId.includes(todo.id))
+
+        },
+        setAllRestoreArchiveTodo: (state) => {
+            const selectedId = state.archiveNotes.filter((todo) => todo.selected).map(todo => todo.id)
+            state.archiveNotes.forEach((todo) => {
+                if (todo.selected) {
+                    state.todos.push(todo)
+                    todo.selected = false
+                    state.selectedCurrent = 0
+                }
+            })
+
+            state.archiveNotes = state.archiveNotes.filter((todo) => !selectedId.includes(todo.id))
 
         },
         setTodoDetailHeight: (state, action) => {
@@ -196,10 +201,11 @@ const todoSlice = createSlice({
             const { height } = action.payload
             state.createTodoHeight = height
         },
-        setIsBgPaletteModal: (state) => {
-            state.isBgPaletteModal = !state.isBgPaletteModal
+
+        setIsBgPaletteModal: (state,action) => {
+            modalControl(state,action,"isBgPaletteModal","openModalTodoIdd")
         },
-        // todosSlice.js
+
         setBgColor: (state, action) => {
             const { color, status, id } = action.payload
             if (status == "create") { state.todoBgColor = color }
@@ -229,8 +235,22 @@ const todoSlice = createSlice({
 
 
         },
-        resetBgColor: (state) => {
-            state.todoBgColor = "white";
+        resetBgColor: (state, action) => {
+            const { todoId, status } = action.payload;
+            let todoList;
+            if (status === "home") {
+                todoList = state.todos
+            } if (status === "archive") {
+                todoList = state.archiveNotes
+            }
+            if (status === "create") {
+                state.todoBgColor = "white";
+            } else {
+                const todo = todoList.find(todo => todo.id === todoId)
+                if (todo) {
+                    todo.bgColor = "white"
+                }
+            }
         },
         resetAllBgColor: (state) => {
             state.todos.forEach((todo) => {
@@ -277,6 +297,6 @@ const todoSlice = createSlice({
 }
 )
 
-export const { updateTodoFields, showFullForm, showCompactForm, addTodo, resetForm, setSelectedTodo, setPinnedTodo, setTodoLayout, updateSpecificTodo, setSelectedTodoById, clearSelectedTodo, setIsOthersModal, setIsOthersModalCreate, setDeleteTodo, setArchiveTodo, setNewPinnedTodo, clearSelectedTodos, setAllPinnedTodo, setTodoDetailHeight, setCreateTodoHeight, setIsBgPaletteModal, setBgColor, resetBgColor, setAllBgColor, resetAllBgColor, setAllArchiveTodo, setAllDeleteTodo, setNewArchiveTodo, setRestoreTrash, setRestoreArchive, setDeleteArchive, addLabelToTodo, removeLabelFromTodo } = todoSlice.actions
+export const { updateTodoFields, showFullForm, showCompactForm, addTodo, resetForm, setSelectedTodo, setPinnedTodo, setTodoLayout, updateSpecificTodo, setSelectedTodoById, clearSelectedTodo, setIsOthersModal, setDeleteTodo, setArchiveTodo, setNewPinnedTodo, clearSelectedTodos, setAllPinnedTodo, setTodoDetailHeight, setCreateTodoHeight, setIsBgPaletteModal, setBgColor, resetBgColor, setAllBgColor, resetAllBgColor, setAllArchiveTodo, setAllDeleteTodo, setNewArchiveTodo, setRestoreTrash, setRestoreArchive, setDeleteArchive, addLabelToTodo, removeLabelFromTodo, setAllRestoreArchiveTodo } = todoSlice.actions
 
 export default todoSlice.reducer

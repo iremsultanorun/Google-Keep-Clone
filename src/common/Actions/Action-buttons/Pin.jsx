@@ -32,8 +32,6 @@ function Pin({ todoId, status }) {
             dispatch(setNewPinnedTodo(!isNewTodoPinned));
         } else if (status === "selected") {
             dispatch(setAllPinnedTodo({ status: status }));
-            console.log("çalışıyor?")
-            console.log(status)
         }
         else {
             dispatch(setPinnedTodo({ pinnedId: todoId, status: status }));

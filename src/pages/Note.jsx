@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { clearSelectedTodo, setIsOthersModalCreate, setTodoDetailHeight, updateSpecificTodo } from '../redux/todosSlice'
+import { clearSelectedTodo, setIsOthersModal, setTodoDetailHeight, updateSpecificTodo } from '../redux/todosSlice'
 import "./css/Note.css"
 
 import Pin from '../common/Actions/Action-buttons/Pin'
@@ -98,7 +98,7 @@ function Note({ todo }) {
     const handleClickOutside = (e) => {
         if (createTodoContRef.current && !createTodoContRef.current.contains(e.target)) {
             dispatch(clearSelectedTodo())
-            dispatch(setIsOthersModalCreate())  
+            dispatch(setIsOthersModal({id:null,status:"create"})) 
         }
     }
 

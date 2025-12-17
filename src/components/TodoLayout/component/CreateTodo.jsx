@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import '../css/CreateTodo.css'
 import { useDispatch, useSelector } from 'react-redux'
-import { showCompactForm, showFullForm, updateTodoFields, addTodo, resetForm, setNewPinnedTodo, setCreateTodoHeight, resetBgColor, setIsOthersModalCreate } from '../../../redux/todosSlice'
+import { showCompactForm, showFullForm, updateTodoFields, addTodo, resetForm, setNewPinnedTodo, setCreateTodoHeight, resetBgColor, setIsOthersModal } from '../../../redux/todosSlice'
 import Pin from '../../../common/Actions/Action-buttons/Pin'
 import Actions from '../../../common/Actions/Actions'
 import { MdOutlineImage } from 'react-icons/md'
@@ -51,8 +51,8 @@ function CreateTodo() {
             contentRef.current.style.height = "20px";
         }
         dispatch(setNewPinnedTodo(false))
-        dispatch(resetBgColor())
-        dispatch(setIsOthersModalCreate())
+        dispatch(resetBgColor({id:newTodo.id,status:"create"}))
+        dispatch(setIsOthersModal({id:null,status:"create"}))
         dispatch(clearCheckedLabels())
 
     }
@@ -150,7 +150,8 @@ function CreateTodo() {
                         value={content}
                         style={{ marginTop: hidden ? "10px" : "0" }}></textarea>
                     {!hidden
-                        ? <div className='node-type-wrapper'>
+                        ? 
+                        <div className='node-type-wrapper'>
                             <button className="note-type-btn btn md-btn" data-tooltip-text="New list">
                                 <IoIosCheckboxOutline />
                             </button>

@@ -8,7 +8,6 @@ import { setIsAppsModal, setIsSearchModal, setIsSettingsModal } from '../../../r
 import GoogleAppsModal from '../../../modals/GoogleAppsModal'
 
 import { RiSettings3Line } from "react-icons/ri";
-import { TfiViewList } from "react-icons/tfi";
 import { FaTableCellsLarge } from "react-icons/fa6";
 import { IoMdRefresh } from "react-icons/io";
 import { TbGridDots } from "react-icons/tb";

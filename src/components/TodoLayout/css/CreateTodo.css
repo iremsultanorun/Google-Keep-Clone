@@ -131,9 +131,6 @@ create-todo__others-btn.userOptions__dropdown-menu {
     margin-right: 0;
 }
 
-.note-type-btn:nth-child(2) {
-    font-size: 19px;
-}
 
 @media screen and (max-width:800px) {
     .createTodo__form {

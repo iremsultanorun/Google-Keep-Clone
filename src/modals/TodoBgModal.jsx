@@ -6,7 +6,17 @@ import { resetAllBgColor, resetBgColor, setAllBgColor, setBgColor } from '../red
 function TodoBgModal({ todoId, status }) {
   const COLOR_PALAETTE = ["#FAAFA9", "#F39F76", "#FFF8B8", "#E2F6D3", "#D4E4ED", "#AECCDC", "#D3BFDB", "#F6E2DD", "#E9E3D4", "#EFEFF1"]
   const dispatch = useDispatch()
-  const todos = useSelector((state) => state.todo.todos)
+  const todos = useSelector(
+    (state) => {
+      if (status === "home"||status==="selected") {
+       return state.todo.todos
+      } if (status === "archive"||status==="selected") {
+
+       return state.todo.archiveNotes
+      }
+      return [] 
+    }
+  )
   const createBgColor = useSelector((state) => state.todo.todoBgColor)
   let todoBgColor;
   if (status === "selected") {
@@ -16,7 +26,6 @@ function TodoBgModal({ todoId, status }) {
       todoBgColor = "white";
     } else {
       const firstColor = selectedTodos[0].bgColor;
-
       const allSameColor = selectedTodos.every(t => t.bgColor === firstColor);
       if (allSameColor) {
         todoBgColor = firstColor;
@@ -26,7 +35,7 @@ function TodoBgModal({ todoId, status }) {
     }
   } else if (status === "create") {
     todoBgColor = createBgColor || "white";
-}
+  }
   else {
     todoBgColor = todos.find((todo) => todo.id === todoId)?.bgColor || "white";
   }
@@ -42,21 +51,22 @@ function TodoBgModal({ todoId, status }) {
     isResetSelected
       ? selectedBorder
       : (hoverColor === "gray" ? "black" : resetDefaultColor)
-      let paletteModal="bg-modal "
-      switch (status) {
-        case "create":
-          paletteModal+="bg-modal__create"
-          break;
-        case "selected":
-         paletteModal+="bg-modal__selected"
-          break;
-        case "note":
-          paletteModal+="bg-modal__note"
-          break;
-        case "todo":
-        paletteModal+="bg-modal__todo"
-          break;
-      }
+  let paletteModal = "bg-modal "
+
+  switch (status) {
+    case "create":
+      paletteModal += "bg-modal__create"
+      break;
+    case "selected":
+      paletteModal += "bg-modal__selected"
+      break;
+    case "note":
+      paletteModal += "bg-modal__note"
+      break;
+    case "todo":
+      paletteModal += "bg-modal__todo"
+      break;
+  }
   const handleClickSetBgColor = (color) => {
     if (status === "selected") {
       dispatch(setAllBgColor({ color: color }))
@@ -68,7 +78,7 @@ function TodoBgModal({ todoId, status }) {
     if (status === "selected") {
       dispatch(resetAllBgColor())
     } else {
-      dispatch(resetBgColor())
+      dispatch(resetBgColor({todoId:todoId,status:status}))
     }
   }
   return (
