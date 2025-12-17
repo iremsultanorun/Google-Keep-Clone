@@ -22,7 +22,7 @@ function Note({ todo }) {
     } else if (archiveNotes.some(t => t.id === todo.id)) {
         actualStatus = "archive";
     } else if (todos.some(t => t.id === todo.id)) {
-        actualStatus = "create";
+        actualStatus = "note";
     }
     const handleClick = () => {
         if (actualStatus === "trash") {
@@ -98,7 +98,7 @@ function Note({ todo }) {
     const handleClickOutside = (e) => {
         if (createTodoContRef.current && !createTodoContRef.current.contains(e.target)) {
             dispatch(clearSelectedTodo())
-            dispatch(setIsOthersModal({id:null,status:"create"})) 
+            dispatch(setIsOthersModal({id:null,status:"note"})) 
         }
     }
 
@@ -126,7 +126,10 @@ function Note({ todo }) {
                                     value={todo.title}
                                     disabled={actualStatus === "trash"}
                                 />
-                                <Pin todoId={todo.id} status={"note"} />
+                                    {
+        status !== "trash" && 
+        <Pin todoId={todo.id} status={"note"} />
+      }
                             </div>
                             <div className='createTodo__content-wrapper'>
                                 <textarea

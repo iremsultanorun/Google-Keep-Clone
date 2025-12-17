@@ -2,9 +2,7 @@
    width: 100%;
    display: flex;
    flex-direction: column;
-   justify-content: center;
    align-items: center;
-   ;
  }
 
  .todoList__type {
@@ -29,9 +27,10 @@
   column-width: 250px;
 }
  .todoList__type[data-open-modal="true"] {
-   width: 100%;
+   width: 95%;
    display: flex;
    justify-content: center;
+   background-color: red;
    flex-wrap: wrap;
  }
 

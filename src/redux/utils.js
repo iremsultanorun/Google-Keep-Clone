@@ -13,17 +13,15 @@ export const transferNote = (state, action, sourceKey, destinationKey) => {
 export const modalControl = (state, action, modalKey, todoModalKey) => {
     const { id, status } = action.payload;
 
-    if (status === "create" || status === "selected") {
-        // Aynı status'a tekrar tıklanırsa kapat
+    if (status === "create" || status === "selected"||status==="note") {
         if (state[modalKey]?.status === status) {
             state[modalKey] = null;
         } else {
-            // Yeni modal aç, todo modalı kapat
+  
             state[modalKey] = { id, status };
-            state[todoModalKey] = null; // ← EKLE
+            state[todoModalKey] = null; 
         }
     } else {
-        // home veya archive
         const todoList = status === 'home' ? state.todos : state.archiveNotes;
         const todo = todoList?.find((todo) => todo.id === id);
         

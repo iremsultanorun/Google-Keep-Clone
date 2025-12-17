@@ -13,7 +13,7 @@ function TodoList({ notes, status }) {
 
 
   return (
-    <div className='todoList__container'>
+    <div className='todoList__container' style={{minHeight:todos!==0?"80dvh":"auto"}}>
       {
         status == "trash" ? null :
           pinnedTodos.length > 0 &&

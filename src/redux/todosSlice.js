@@ -74,8 +74,13 @@ const todoSlice = createSlice({
 
         setSelectedTodo: (state, action) => {
             const { selectId, status } = action.payload
-            const todoList = status === 'home' ? state.todos :
-                status === 'archive' ? state.archiveNotes : null;
+            const todoList = 
+            status === 'home' 
+            ? state.todos 
+            :status === 'archive' 
+            ? state.archiveNotes 
+            : status==="trash"
+            ? state.trashNotes:null
 
             const todoSelected = todoList.find((todo) => (todo.id) === selectId)
 
@@ -295,7 +300,7 @@ const todoSlice = createSlice({
     }
 
 }
-)
+) 
 
 export const { updateTodoFields, showFullForm, showCompactForm, addTodo, resetForm, setSelectedTodo, setPinnedTodo, setTodoLayout, updateSpecificTodo, setSelectedTodoById, clearSelectedTodo, setIsOthersModal, setDeleteTodo, setArchiveTodo, setNewPinnedTodo, clearSelectedTodos, setAllPinnedTodo, setTodoDetailHeight, setCreateTodoHeight, setIsBgPaletteModal, setBgColor, resetBgColor, setAllBgColor, resetAllBgColor, setAllArchiveTodo, setAllDeleteTodo, setNewArchiveTodo, setRestoreTrash, setRestoreArchive, setDeleteArchive, addLabelToTodo, removeLabelFromTodo, setAllRestoreArchiveTodo } = todoSlice.actions
 

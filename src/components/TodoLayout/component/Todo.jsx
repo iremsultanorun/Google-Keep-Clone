@@ -55,11 +55,11 @@ function Todo({ todo, status, type }) {
 
       }
       <Actions todoId={todo.id} status={status} type={type} className={"todo__actions-wrapper"} />
-      {status !== "trash" &&
+    
         <button ref={chooseBtnRef} className="btn todo__choose-btn" onClick={selecetedTodoById}
           style={{ color: todo.selected ? "black" : "var(--color-gray-700)", }}
         > <IoIosCheckmarkCircle /></button>
-      }
+      
     </div>
 
   )

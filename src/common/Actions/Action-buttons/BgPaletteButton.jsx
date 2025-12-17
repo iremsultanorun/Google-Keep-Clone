@@ -15,13 +15,19 @@ function BgPaletteButton({ todoId, status }) {
     if (isPaletteModal) {
         if (status === "create") {
             isModalOpen = isPaletteModal.status === "create"
+            console.log(isPaletteModal)
         } else if (status === "selected") {
             isModalOpen = isPaletteModal.status === "selected"
+        } else if (status === "note") {
+            isModalOpen = isPaletteModal.status === "note"
         } else {
             isModalOpen = isPaletteModal.status === status && openModalTodoId === todoId
         }
     }
 
+console.log(isPaletteModal)
+console.log(status)
+console.log(openModalTodoId)
     let currentClassName = "btn "
 
     if (status === "selected") {

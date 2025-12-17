@@ -16,7 +16,7 @@ function Actions({ todoId, status, className }) {
 
     const dispatch = useDispatch()
 
-    const isEditingOrNote = status === "create" || status === "todo";
+    const isEditingOrNote = status === "create" || status === "todo"||status==="note";
 
     const isActiveTodo = isEditingOrNote || status === "home" || status === "archive";
 

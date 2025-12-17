@@ -1,7 +1,7 @@
 import React from 'react'
 import "./../css/Header.css"
 import { useDispatch, useSelector } from 'react-redux'
-import { clearSelectedTodos, setAllArchiveTodo, setAllRestoreArchiveTodo } from '../../../redux/todosSlice'
+import { clearSelectedTodos, setAllArchiveTodo, setAllRestoreArchiveTodo, setRestoreTrash } from '../../../redux/todosSlice'
 
 import Pin from '../../../common/Actions/Action-buttons/Pin'
 import BgPaletteButton from '../../../common/Actions/Action-buttons/BgPaletteButton'
@@ -10,11 +10,13 @@ import { CgClose } from 'react-icons/cg'
 import { BiBellPlus } from 'react-icons/bi'
 import { RiInboxArchiveLine, RiInboxUnarchiveLine } from 'react-icons/ri'
 import { useLocation } from 'react-router-dom'
+import { MdDeleteForever, MdRestoreFromTrash } from 'react-icons/md'
 
 function SelectionBar() {
     const dispatch = useDispatch()
     const location =useLocation()
     const statusArchive=location.pathname==="/archive"
+    const statusTrash=location.pathname==="/trash"
     const selectedCurrent = useSelector((state) => state.todo.selectedCurrent)
 
     const isSelected = selectedCurrent > 0
@@ -36,39 +38,59 @@ function SelectionBar() {
                     <h3 className='selection-bar__count'>{selectedCurrent} of them was selected</h3>
                 </div>
 
-                <div className='selection-bar__actions-wrapper'>
-                    <Pin todoId={null} status={"selected"} />
-
-                    <BgPaletteButton todoId={null} status={"selected"} />
-
-                    <button className='btn md-btn selection-bar__action disabled'>
-                        <BiBellPlus />
-                    </button>
-
+              {
+                statusTrash
+                ? 
                
-                 {
-                    statusArchive?
-                    <button
+                  <div className="selection-bar__actions-wrapper">
+                          <button className='btn md-btn selection-bar__action' data-tooltip-text="Completely delete">
+                            <MdDeleteForever />
+                        </button>
+                
+                        <button
+                         className='btn md-btn selection-bar__action' 
+                         data-tooltip-text="Restore"
+                         onClick={()=>dispatch(setRestoreTrash(null))}
+                         >
+                            <MdRestoreFromTrash />
+                        </button> 
+                  </div>
+                
+                :  <div className='selection-bar__actions-wrapper'>
+                <Pin todoId={null} status={"selected"} />
+
+                <BgPaletteButton todoId={null} status={"selected"} />
+
+                <button className='btn md-btn selection-bar__action disabled'>
+                    <BiBellPlus />
+                </button>
+
+           
+             {
+                statusArchive?
+                <button
+                className='btn md-btn selection-bar__action'
+                onClick={() => {
+                    dispatch(setAllRestoreArchiveTodo())
+                }
+                }
+            >
+                <RiInboxUnarchiveLine />
+            </button>:  <button
                     className='btn md-btn selection-bar__action'
                     onClick={() => {
-                        dispatch(setAllRestoreArchiveTodo())
+                        dispatch(setAllArchiveTodo())
                     }
                     }
                 >
-                    <RiInboxUnarchiveLine />
-                </button>:  <button
-                        className='btn md-btn selection-bar__action'
-                        onClick={() => {
-                            dispatch(setAllArchiveTodo())
-                        }
-                        }
-                    >
-                        <RiInboxArchiveLine />
-                    </button>
-                 }
+                    <RiInboxArchiveLine />
+                </button>
+             }
 
-                    <OthersButton todoId={null} status={"selected"} />
-                </div>
+                <OthersButton todoId={null} status={"selected"} />
+            </div>
+                
+              }
             </div>
         </div>
     )
