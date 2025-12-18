@@ -16,7 +16,6 @@ function Note({ todo }) {
     const contentRef = useRef()
     const titleRef = useRef()
     let actualStatus = "note";
-
     if (trashNotes.some(t => t.id === todo.id)) {
         actualStatus = "trash";
     } else if (archiveNotes.some(t => t.id === todo.id)) {
@@ -93,29 +92,28 @@ function Note({ todo }) {
         }
     }, [])
 
-   // Modal dışına tıklandığında kapat
-   useEffect(() => {
-    const handleClickOutside = (e) => {
-        if (createTodoContRef.current && !createTodoContRef.current.contains(e.target)) {
-            dispatch(clearSelectedTodo())
-            dispatch(setIsOthersModal({id:null,status:"note"})) 
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            if (createTodoContRef.current && !createTodoContRef.current.contains(e.target)) {
+                dispatch(clearSelectedTodo())
+                dispatch(setIsOthersModal({ id: null, status: "note" }))
+            }
         }
-    }
 
-    document.addEventListener('mousedown', handleClickOutside)
+        document.addEventListener('mousedown', handleClickOutside)
 
-    return () => {
-        document.removeEventListener('mousedown', handleClickOutside)
-    }
-}, [dispatch])
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside)
+        }
+    }, [dispatch])
 
     return (
         <div className='note'>
-            <div ref={createTodoContRef} className='note__wrapper' onClick={handleClick } style={{ background: todo.bgColor }}>
+            <div ref={createTodoContRef} className='note__wrapper' style={{ background: todo.bgColor }}>
                 <div className='note__scroll-area'>
                     {
 
-                        <div key={todo.id} className='note__info-container'>
+                        <div key={todo.id} className='note__info-container' onClick={handleClick }>
                             <div className='createTodo__title-wrapper'>
                                 <input
                                     className='createTodo__title'
@@ -126,10 +124,10 @@ function Note({ todo }) {
                                     value={todo.title}
                                     disabled={actualStatus === "trash"}
                                 />
-                                    {
-        status !== "trash" && 
-        <Pin todoId={todo.id} status={"note"} />
-      }
+                                {
+                                    actualStatus !== "trash" &&
+                                    <Pin todoId={todo.id} status={"note"} />
+                                }
                             </div>
                             <div className='createTodo__content-wrapper'>
                                 <textarea

@@ -274,11 +274,9 @@ overflow: scroll;
 .color-btn:hover {
   cursor: pointer;
 }
-
-.color-btn.selected {
-  border-color: red;
+.color-btn.selected{
+  border-color:#A142F4;
 }
-
 .color-btn.selected::after {
   content: '\2713';
   position: absolute;

@@ -21,8 +21,6 @@ function EditLabel() {
   const [isCreateInput, setIsCreateInput] = useState(true);
   const [editingName, setEditingName] = useState("");
   const [editingId, setEditingId] = useState(null);
-  const checkedLabels = useSelector(state => state.labelModal.checkedLabels)
-  const todoList = useSelector(state => state.todo.todos)
   const dispatch = useDispatch()
   const createLabelInputRef = useRef()
     

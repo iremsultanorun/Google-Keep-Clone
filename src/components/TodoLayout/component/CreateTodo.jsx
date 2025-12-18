@@ -1,13 +1,14 @@
 import React, { useEffect, useRef } from 'react'
 import '../css/CreateTodo.css'
 import { useDispatch, useSelector } from 'react-redux'
-import { showCompactForm, showFullForm, updateTodoFields, addTodo, resetForm, setNewPinnedTodo, setCreateTodoHeight, resetBgColor, setIsOthersModal } from '../../../redux/todosSlice'
+import { showCompactForm, showFullForm, updateTodoFields, addTodo, resetForm, setNewPinnedTodo, setCreateTodoHeight, resetBgColor, setIsOthersModal, clearCheckedLabels } from '../../../redux/todosSlice'
 import Pin from '../../../common/Actions/Action-buttons/Pin'
 import Actions from '../../../common/Actions/Actions'
 import { MdOutlineImage } from 'react-icons/md'
 import { BiSolidPaint } from 'react-icons/bi'
 import { IoIosCheckboxOutline } from 'react-icons/io'
-import { clearCheckedLabels } from '../../../redux/labelModalSlice'
+
+
 
 function CreateTodo() {
     const dispatch = useDispatch()
@@ -17,7 +18,7 @@ function CreateTodo() {
     const hidden = useSelector((state) => state.todo.hidden)
     const isPinned = useSelector((state) => state.todo.isPinned)
     const todoBgColor = useSelector((state) => state.todo.todoBgColor)
-    let checkedLabels = useSelector((state) => state.labelModal.checkedLabels)
+    let checkedLabels = useSelector((state) => state.todo.checkedLabels)
     const createTodoContRef = useRef()
     const contentRef = useRef()
     const titleRef = useRef()

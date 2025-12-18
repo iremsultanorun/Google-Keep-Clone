@@ -9,13 +9,12 @@ function BgPaletteButton({ todoId, status }) {
     const dispatch = useDispatch()
     const isPaletteModal = useSelector((state) => state.todo.isBgPaletteModal)
     const openModalTodoId = useSelector((state) => state.todo.openModalTodoIdd)
- 
+
     let isModalOpen = false;
-    
+
     if (isPaletteModal) {
         if (status === "create") {
             isModalOpen = isPaletteModal.status === "create"
-            console.log(isPaletteModal)
         } else if (status === "selected") {
             isModalOpen = isPaletteModal.status === "selected"
         } else if (status === "note") {
@@ -25,9 +24,6 @@ function BgPaletteButton({ todoId, status }) {
         }
     }
 
-console.log(isPaletteModal)
-console.log(status)
-console.log(openModalTodoId)
     let currentClassName = "btn "
 
     if (status === "selected") {
@@ -35,7 +31,7 @@ console.log(openModalTodoId)
     } else {
         currentClassName += "action-btn sm-btn"
     }
-    
+
     const handleClick = () => {
         if (status === "selected" || status === "create") {
             dispatch(setIsBgPaletteModal({ id: null, status: status }))

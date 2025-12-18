@@ -1,9 +1,9 @@
 import React from 'react'
 import './css/Modals.css'
 import { useDispatch, useSelector } from 'react-redux'
-import { setDeleteArchive, setDeleteTodo } from '../redux/todosSlice'
+import { setAllDeleteTodo, setDeleteArchive, setDeleteTodo } from '../redux/todosSlice'
 import LabelModal from './LabelModal'
-import {setLabelModal } from '../redux/labelModalSlice'
+import { setLabelModal } from '../redux/labelModalSlice'
 
 function DropdownModal({ todoId, status }) {
   const dispatch = useDispatch()
@@ -61,6 +61,9 @@ function DropdownModal({ todoId, status }) {
             break;
           case "archive":
             dispatch(setDeleteArchive(todoId))
+            break
+          case "selected":
+            dispatch(setAllDeleteTodo(status))
             break
         }
         break

@@ -1,7 +1,7 @@
 import React from 'react'
 import "./../css/Header.css"
 import { useDispatch, useSelector } from 'react-redux'
-import { clearSelectedTodos, setAllArchiveTodo, setAllRestoreArchiveTodo, setRestoreTrash } from '../../../redux/todosSlice'
+import { clearSelectedTodos, setAllArchiveTodo, setAllDeleteTodos, setAllRestoreArchiveTodo } from '../../../redux/todosSlice'
 
 import Pin from '../../../common/Actions/Action-buttons/Pin'
 import BgPaletteButton from '../../../common/Actions/Action-buttons/BgPaletteButton'
@@ -50,7 +50,7 @@ function SelectionBar() {
                         <button
                          className='btn md-btn selection-bar__action' 
                          data-tooltip-text="Restore"
-                         onClick={()=>dispatch(setRestoreTrash(null))}
+                         onClick={()=>dispatch(setAllDeleteTodos())}
                          >
                             <MdRestoreFromTrash />
                         </button> 

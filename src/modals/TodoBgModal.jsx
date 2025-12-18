@@ -11,7 +11,6 @@ function TodoBgModal({ todoId, status }) {
       if (status === "home"||status==="selected") {
        return state.todo.todos
       } if (status === "archive"||status==="selected") {
-
        return state.todo.archiveNotes
       }
       return [] 
@@ -29,8 +28,9 @@ function TodoBgModal({ todoId, status }) {
       const allSameColor = selectedTodos.every(t => t.bgColor === firstColor);
       if (allSameColor) {
         todoBgColor = firstColor;
+
       } else {
-        todoBgColor = null;
+        todoBgColor = "white";
       }
     }
   } else if (status === "create") {
@@ -45,11 +45,11 @@ function TodoBgModal({ todoId, status }) {
   const handleMouseEnter = (color) => setHoverColor(color)
   const handleMouseLeave = () => setHoverColor(null)
   const selectedBorder = "#A142F4"
-  const isResetSelected = todoBgColor === "white"
+  const isResetSelected =  todoBgColor === "white" || todoBgColor === null
   const resetDefaultColor = "gray"
   const resetBorderColor =
     isResetSelected
-      ? selectedBorder
+      ? selectedBorder 
       : (hoverColor === "gray" ? "black" : resetDefaultColor)
   let paletteModal = "bg-modal "
 
@@ -81,6 +81,7 @@ function TodoBgModal({ todoId, status }) {
       dispatch(resetBgColor({todoId:todoId,status:status}))
     }
   }
+  console.log(isResetSelected)
   return (
     <div className={paletteModal}>
       <div className="bg-color">

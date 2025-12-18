@@ -1,12 +1,12 @@
 import React, { useMemo, useState } from 'react'
 import { GoPencil } from "react-icons/go";
 import { useDispatch, useSelector } from 'react-redux';
-import { setIsChecked } from '../redux/labelModalSlice';
-import { addLabelToTodo, removeLabelFromTodo } from '../redux/todosSlice';
+
+import { addLabelToTodo, removeLabelFromTodo, setIsChecked } from '../redux/todosSlice';
 
 function LabelModal({ status, todoId }) {
     const labelList = useSelector((state) => state.labelModal.labelList)
-    const checkedLabels = useSelector((state) => state.labelModal.checkedLabels)
+    const checkedLabels = useSelector((state) => state.todo.checkedLabels)
     
     const todos = useSelector((state) => {
         if(status==="create") return []
