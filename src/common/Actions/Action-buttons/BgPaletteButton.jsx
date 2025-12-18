@@ -10,6 +10,7 @@ function BgPaletteButton({ todoId, status }) {
     const isPaletteModal = useSelector((state) => state.todo.isBgPaletteModal)
     const openModalTodoId = useSelector((state) => state.todo.openModalTodoIdd)
 
+
     let isModalOpen = false;
 
     if (isPaletteModal) {
@@ -17,6 +18,7 @@ function BgPaletteButton({ todoId, status }) {
             isModalOpen = isPaletteModal.status === "create"
         } else if (status === "selected") {
             isModalOpen = isPaletteModal.status === "selected"
+
         } else if (status === "note") {
             isModalOpen = isPaletteModal.status === "note"
         } else {

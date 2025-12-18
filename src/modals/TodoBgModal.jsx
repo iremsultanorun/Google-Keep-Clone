@@ -3,23 +3,24 @@ import './css/Modals.css'
 import { MdOutlineFormatColorReset } from "react-icons/md";
 import { useDispatch, useSelector } from 'react-redux';
 import { resetAllBgColor, resetBgColor, setAllBgColor, setBgColor } from '../redux/todosSlice';
+import { useLocation } from 'react-router-dom';
 function TodoBgModal({ todoId, status }) {
   const COLOR_PALAETTE = ["#FAAFA9", "#F39F76", "#FFF8B8", "#E2F6D3", "#D4E4ED", "#AECCDC", "#D3BFDB", "#F6E2DD", "#E9E3D4", "#EFEFF1"]
   const dispatch = useDispatch()
-  const todos = useSelector(
+  const location = useLocation()
+  const isArchivePage = location.pathname === "/archive"
+  
+  const todoList = useSelector(
     (state) => {
-      if (status === "home"||status==="selected") {
-       return state.todo.todos
-      } if (status === "archive"||status==="selected") {
-       return state.todo.archiveNotes
-      }
-      return [] 
+      if (status === "selected") {
+        return isArchivePage ? state.todo.archiveNotes : state.todo.todos
+      } 
     }
   )
   const createBgColor = useSelector((state) => state.todo.todoBgColor)
   let todoBgColor;
   if (status === "selected") {
-    const selectedTodos = todos.filter(t => t.selected);
+    const selectedTodos = todoList.filter(t => t.selected);
 
     if (selectedTodos.length === 0) {
       todoBgColor = "white";
@@ -28,7 +29,6 @@ function TodoBgModal({ todoId, status }) {
       const allSameColor = selectedTodos.every(t => t.bgColor === firstColor);
       if (allSameColor) {
         todoBgColor = firstColor;
-
       } else {
         todoBgColor = "white";
       }
@@ -37,7 +37,7 @@ function TodoBgModal({ todoId, status }) {
     todoBgColor = createBgColor || "white";
   }
   else {
-    todoBgColor = todos.find((todo) => todo.id === todoId)?.bgColor || "white";
+    todoBgColor = todoList.find((todo) => todo.id === todoId)?.bgColor || "white";
   }
 
   const [hoverColor, setHoverColor] = useState(null)

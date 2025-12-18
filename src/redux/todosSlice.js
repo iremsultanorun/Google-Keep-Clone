@@ -19,6 +19,7 @@ const initialState = {
     isOthersModal: null,
     isBgPaletteModal: null,
     checkedLabels: [],
+
 }
 
 const todoSlice = createSlice({
@@ -60,7 +61,14 @@ const todoSlice = createSlice({
                     todo.selected = false;
                 }
             });
+            state.archiveNotes.forEach(todo => {
+                if (todo.selected) {
+                    todo.selected = false;
+                }
+            });
             state.selectedCurrent = 0;
+            state.isBgPaletteModal = false 
+            state.isOthersModal=false
         },
         showFullForm: (state) => {
             state.hidden = false
@@ -313,16 +321,19 @@ const todoSlice = createSlice({
         },
         resetBgColor: (state, action) => {
             const { todoId, status } = action.payload;
-            let todoList;
-            if (status === "home") {
-                todoList = state.todos
-            } if (status === "archive") {
-                todoList = state.archiveNotes
-            }
+            
             if (status === "create") {
                 state.todoBgColor = "white";
             } else {
-                const todo = todoList.find(todo => todo.id === todoId)
+                let todoList;
+                
+                if (status === "home") {
+                    todoList = state.todos
+                } else if (status === "archive") {  
+                    todoList = state.archiveNotes
+                }
+                
+                const todo = todoList?.find(todo => todo.id === todoId)
                 if (todo) {
                     todo.bgColor = "white"
                 }
@@ -330,6 +341,11 @@ const todoSlice = createSlice({
         },
         resetAllBgColor: (state) => {
             state.todos.forEach((todo) => {
+                if (todo.selected === true) {
+                    todo.bgColor = "white";
+                }
+            });
+            state.archiveNotes.forEach((todo) => {
                 if (todo.selected === true) {
                     todo.bgColor = "white";
                 }
@@ -373,6 +389,6 @@ const todoSlice = createSlice({
 }
 )
 
-export const { updateTodoFields, showFullForm, showCompactForm, addTodo, resetForm, setSelectedTodo, setPinnedTodo, setTodoLayout, updateSpecificTodo, setSelectedTodoById, clearSelectedTodo, setIsOthersModal, setDeleteTodo, setArchiveTodo, setNewPinnedTodo, clearSelectedTodos, setAllPinnedTodo, setTodoDetailHeight, setCreateTodoHeight, setIsBgPaletteModal, setBgColor, resetBgColor, setAllBgColor, resetAllBgColor, setAllArchiveTodo, setAllDeleteTodo, setNewArchiveTodo, setRestoreTrash, setRestoreArchive, setDeleteArchive, addLabelToTodo, removeLabelFromTodo, setAllRestoreArchiveTodo, setIsChecked, clearCheckedLabels,setAllDeleteTodos } = todoSlice.actions
+export const { updateTodoFields, showFullForm, showCompactForm, addTodo, resetForm, setSelectedTodo, setPinnedTodo, setTodoLayout, updateSpecificTodo, setSelectedTodoById, clearSelectedTodo, setIsOthersModal, setDeleteTodo, setArchiveTodo, setNewPinnedTodo, clearSelectedTodos, setAllPinnedTodo, setTodoDetailHeight, setCreateTodoHeight, setIsBgPaletteModal, setBgColor, resetBgColor, setAllBgColor, resetAllBgColor, setAllArchiveTodo, setAllDeleteTodo, setNewArchiveTodo, setRestoreTrash, setRestoreArchive, setDeleteArchive, addLabelToTodo, removeLabelFromTodo, setAllRestoreArchiveTodo, setIsChecked, clearCheckedLabels,setAllDeleteTodos,setBgPaletteModal } = todoSlice.actions
 
 export default todoSlice.reducer

@@ -13,7 +13,7 @@ function Reminders() {
     <CreateTodo/>
     <TodoList notes={remindersNotes} status={"reminders"} />
     {
-        remindersNotes.length===0 && <EmptyState icon={EmptyStateReminders} message={"Notes with upcoming reminders appear here"}/>
+        remindersNotes.length===0 && <EmptyState icon={EmptyStateReminders} message={"Notes with upcoming reminders appear here (This part is currently non-functional)"}/>
     }
         </div>
     </div>
