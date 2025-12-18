@@ -1,7 +1,7 @@
 import React from 'react'
 import "./../css/Header.css"
 import { useDispatch, useSelector } from 'react-redux'
-import { clearSelectedTodos, setAllArchiveTodo, setAllDeleteTodos, setAllRestoreArchiveTodo, setBgPaletteModal, setIsBgPaletteModal } from '../../../redux/todosSlice'
+import { clearSelectedTodos, setAllArchiveTodo, setAllDeleteTodos, setAllRestoreArchiveTodo, } from '../../../redux/todosSlice'
 
 import Pin from '../../../common/Actions/Action-buttons/Pin'
 import BgPaletteButton from '../../../common/Actions/Action-buttons/BgPaletteButton'

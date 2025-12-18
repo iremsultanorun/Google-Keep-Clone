@@ -67,8 +67,8 @@ const todoSlice = createSlice({
                 }
             });
             state.selectedCurrent = 0;
-            state.isBgPaletteModal = false 
-            state.isOthersModal=false
+            state.isBgPaletteModal = false
+            state.isOthersModal = false
         },
         showFullForm: (state) => {
             state.hidden = false
@@ -151,17 +151,17 @@ const todoSlice = createSlice({
         },
         setAllDeleteTodo: (state, action) => {
             const status = action.payload
-            
+
             if (status === "selected") {
                 const selectedFromTodos = state.todos.filter(todo => todo.selected)
                 const selectedFromArchive = state.archiveNotes.filter(todo => todo.selected)
-                
+
                 selectedFromTodos.forEach(todo => state.trashNotes.push(todo))
                 selectedFromArchive.forEach(todo => state.trashNotes.push(todo))
 
                 state.todos = state.todos.filter(todo => !todo.selected)
                 state.archiveNotes = state.archiveNotes.filter(todo => !todo.selected)
-                
+
                 state.todos.forEach(todo => {
                     if (todo.selected) todo.selected = false
                 })
@@ -172,44 +172,44 @@ const todoSlice = createSlice({
                     if (todo.selected) todo.selected = false
                 })
                 state.selectedCurrent = 0
-            } 
-       
+            }
+
         },
-        setAllDeleteTodos:(state)=>{
-                // const status = action.payload
-                
-                // if (status === "selected") {
-                //     const selectedFromTodos = state.todos.filter(todo => todo.selected)
-                //     const selectedFromArchive = state.archiveNotes.filter(todo => todo.selected)
-                    
-                //     selectedFromTodos.forEach(todo => state.trashNotes.push(todo))
-                //     selectedFromArchive.forEach(todo => state.trashNotes.push(todo))
-    
-                //     state.todos = state.todos.filter(todo => !todo.selected)
-                //     state.archiveNotes = state.archiveNotes.filter(todo => !todo.selected)
-                    
-                //     state.todos.forEach(todo => {
-                //         if (todo.selected) todo.selected = false
-                //     })
-                //     state.archiveNotes.forEach(todo => {
-                //         if (todo.selected) todo.selected = false
-                //     })
-                //     state.trashNotes.forEach(todo => {
-                //         if (todo.selected) todo.selected = false
-                //     })
-                //     state.selectedCurrent = 0
-                // } 
-                const selectedId = state.trashNotes.filter((todo) => todo.selected).map(todo => todo.id)
-                state.trashNotes.forEach((todo) => {
-                    if (todo.selected) {
-                        state.todos.push(todo)
-                        todo.selected = false
-                        state.selectedCurrent = 0
-                    }
-                })
-    
-                state.trashNotes = state.trashNotes.filter((todo) => !selectedId.includes(todo.id))
-            
+        setAllDeleteTodos: (state) => {
+            // const status = action.payload
+
+            // if (status === "selected") {
+            //     const selectedFromTodos = state.todos.filter(todo => todo.selected)
+            //     const selectedFromArchive = state.archiveNotes.filter(todo => todo.selected)
+
+            //     selectedFromTodos.forEach(todo => state.trashNotes.push(todo))
+            //     selectedFromArchive.forEach(todo => state.trashNotes.push(todo))
+
+            //     state.todos = state.todos.filter(todo => !todo.selected)
+            //     state.archiveNotes = state.archiveNotes.filter(todo => !todo.selected)
+
+            //     state.todos.forEach(todo => {
+            //         if (todo.selected) todo.selected = false
+            //     })
+            //     state.archiveNotes.forEach(todo => {
+            //         if (todo.selected) todo.selected = false
+            //     })
+            //     state.trashNotes.forEach(todo => {
+            //         if (todo.selected) todo.selected = false
+            //     })
+            //     state.selectedCurrent = 0
+            // } 
+            const selectedId = state.trashNotes.filter((todo) => todo.selected).map(todo => todo.id)
+            state.trashNotes.forEach((todo) => {
+                if (todo.selected) {
+                    state.todos.push(todo)
+                    todo.selected = false
+                    state.selectedCurrent = 0
+                }
+            })
+
+            state.trashNotes = state.trashNotes.filter((todo) => !selectedId.includes(todo.id))
+
         },
         setRestoreTrash: (state, action) => {
             transferNote(state, action, "trashNotes", "todos")
@@ -321,18 +321,18 @@ const todoSlice = createSlice({
         },
         resetBgColor: (state, action) => {
             const { todoId, status } = action.payload;
-            
-            if (status === "create") {
+
+            if (status === "create" || status === "note") {
                 state.todoBgColor = "white";
             } else {
                 let todoList;
-                
+
                 if (status === "home") {
                     todoList = state.todos
-                } else if (status === "archive") {  
+                } else if (status === "archive") {
                     todoList = state.archiveNotes
                 }
-                
+
                 const todo = todoList?.find(todo => todo.id === todoId)
                 if (todo) {
                     todo.bgColor = "white"
@@ -389,6 +389,6 @@ const todoSlice = createSlice({
 }
 )
 
-export const { updateTodoFields, showFullForm, showCompactForm, addTodo, resetForm, setSelectedTodo, setPinnedTodo, setTodoLayout, updateSpecificTodo, setSelectedTodoById, clearSelectedTodo, setIsOthersModal, setDeleteTodo, setArchiveTodo, setNewPinnedTodo, clearSelectedTodos, setAllPinnedTodo, setTodoDetailHeight, setCreateTodoHeight, setIsBgPaletteModal, setBgColor, resetBgColor, setAllBgColor, resetAllBgColor, setAllArchiveTodo, setAllDeleteTodo, setNewArchiveTodo, setRestoreTrash, setRestoreArchive, setDeleteArchive, addLabelToTodo, removeLabelFromTodo, setAllRestoreArchiveTodo, setIsChecked, clearCheckedLabels,setAllDeleteTodos,setBgPaletteModal } = todoSlice.actions
+export const { updateTodoFields, showFullForm, showCompactForm, addTodo, resetForm, setSelectedTodo, setPinnedTodo, setTodoLayout, updateSpecificTodo, setSelectedTodoById, clearSelectedTodo, setIsOthersModal, setDeleteTodo, setArchiveTodo, setNewPinnedTodo, clearSelectedTodos, setAllPinnedTodo, setTodoDetailHeight, setCreateTodoHeight, setIsBgPaletteModal, setBgColor, resetBgColor, setAllBgColor, resetAllBgColor, setAllArchiveTodo, setAllDeleteTodo, setNewArchiveTodo, setRestoreTrash, setRestoreArchive, setDeleteArchive, addLabelToTodo, removeLabelFromTodo, setAllRestoreArchiveTodo, setIsChecked, clearCheckedLabels, setAllDeleteTodos, setBgPaletteModal } = todoSlice.actions
 
 export default todoSlice.reducer
