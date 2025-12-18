@@ -29,6 +29,7 @@ const todoSlice = createSlice({
 
         addTodo: (state, action) => {
             state.todos.push(action.payload)
+            state.isOthersModal = false
         },
 
         updateTodoFields: (state, action) => {
@@ -54,6 +55,8 @@ const todoSlice = createSlice({
 
         clearSelectedTodo: (state) => {
             state.selectedTodoId = null;
+            state.isBgPaletteModal = false
+            state.isOthersModal = false
         },
         clearSelectedTodos: (state) => {
             state.todos.forEach(todo => {
@@ -102,7 +105,10 @@ const todoSlice = createSlice({
                     state.selectedCurrent -= 1
                 }
             }
+            state.isBgPaletteModal=false
+            state.isOthersModal=false
         },
+
         setPinnedTodo: (state, action) => {
             const { pinnedId, status } = action.payload
             const todoList = status === 'home' ? state.todos :
@@ -220,6 +226,7 @@ const todoSlice = createSlice({
         setArchiveTodo: (state, action) => {
             transferNote(state, action, "todos", "archiveNotes")
             state.selectedTodoId = null;
+            state.isPinned = false
         },
         setIsChecked: (state, action) => {
             const labelName = action.payload
@@ -249,6 +256,7 @@ const todoSlice = createSlice({
             state.title = ""
             state.hidden = false
             state.checkedLabels = []
+            state.todoBgColor = "white"
 
         },
         setAllArchiveTodo: (state) => {
@@ -322,7 +330,7 @@ const todoSlice = createSlice({
         resetBgColor: (state, action) => {
             const { todoId, status } = action.payload;
 
-            if (status === "create" ) {
+            if (status === "create") {
                 state.todoBgColor = "white";
             } else {
                 let todoList;
@@ -331,8 +339,8 @@ const todoSlice = createSlice({
                     todoList = state.todos
                 } else if (status === "archive") {
                     todoList = state.archiveNotes
-                }else{
-                       todoList = state.todos;
+                } else {
+                    todoList = state.todos;
                 }
 
                 const todo = todoList?.find(todo => todo.id === todoId)

@@ -19,6 +19,7 @@ function CreateTodo() {
     const isPinned = useSelector((state) => state.todo.isPinned)
     const todoBgColor = useSelector((state) => state.todo.todoBgColor)
     let checkedLabels = useSelector((state) => state.todo.checkedLabels)
+   
     const createTodoContRef = useRef()
     const contentRef = useRef()
     const titleRef = useRef()
@@ -53,7 +54,6 @@ function CreateTodo() {
         }
         dispatch(setNewPinnedTodo(false))
         dispatch(resetBgColor({id:newTodo.id,status:"create"}))
-        dispatch(setIsOthersModal({id:null,status:"create"}))
         dispatch(clearCheckedLabels())
 
     }

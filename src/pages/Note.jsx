@@ -97,7 +97,7 @@ function Note({ todo }) {
             if (createTodoContRef.current && !createTodoContRef.current.contains(e.target)) {
                 dispatch(clearSelectedTodo())
                 dispatch(setIsOthersModal({ id: null, status: "note" }))
-                dispatch(resetBgColor({id:todo.id,status:"note"}))
+                dispatch(resetBgColor({ id: todo.id, status: "note" }))
             }
         }
 
@@ -114,7 +114,7 @@ function Note({ todo }) {
                 <div className='note__scroll-area'>
                     {
 
-                        <div key={todo.id} className='note__info-container' onClick={handleClick }>
+                        <div key={todo.id} className='note__info-container' onClick={handleClick}>
                             <div className='createTodo__title-wrapper'>
                                 <input
                                     className='createTodo__title'

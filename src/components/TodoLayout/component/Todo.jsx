@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import "../css/Todo.css"
 import { useDispatch, useSelector } from 'react-redux'
-import { clearSelectedTodos, setSelectedTodo, setSelectedTodoById } from '../../../redux/todosSlice';
+import { setSelectedTodo, setSelectedTodoById } from '../../../redux/todosSlice';
 
 import Actions from '../../../common/Actions/Actions';
 import Pin from '../../../common/Actions/Action-buttons/Pin';
