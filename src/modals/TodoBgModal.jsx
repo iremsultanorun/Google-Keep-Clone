@@ -10,13 +10,18 @@ function TodoBgModal({ todoId, status }) {
   const location = useLocation()
   const isArchivePage = location.pathname === "/archive"
   
-  const todoList = useSelector(
-    (state) => {
-      if (status === "selected") {
-        return isArchivePage ? state.todo.archiveNotes : state.todo.todos
-      } 
+  const todoList = useSelector((state) => {
+    if (status === "create") {
+      return []
     }
-  )
+    if (status === "selected") {
+      return isArchivePage ? state.todo.archiveNotes : state.todo.todos
+    }
+    if (status === "archive") {
+      return state.todo.archiveNotes
+    }
+    return state.todo.todos
+  })
   const createBgColor = useSelector((state) => state.todo.todoBgColor)
   let todoBgColor;
   if (status === "selected") {
@@ -37,7 +42,7 @@ function TodoBgModal({ todoId, status }) {
     todoBgColor = createBgColor || "white";
   }
   else {
-    todoBgColor = todoList.find((todo) => todo.id === todoId)?.bgColor || "white";
+    todoBgColor = todoList?.find((todo) => todo.id === todoId)?.bgColor || "white";
   }
 
   const [hoverColor, setHoverColor] = useState(null)

@@ -322,7 +322,7 @@ const todoSlice = createSlice({
         resetBgColor: (state, action) => {
             const { todoId, status } = action.payload;
 
-            if (status === "create" || status === "note") {
+            if (status === "create" ) {
                 state.todoBgColor = "white";
             } else {
                 let todoList;
@@ -331,6 +331,8 @@ const todoSlice = createSlice({
                     todoList = state.todos
                 } else if (status === "archive") {
                     todoList = state.archiveNotes
+                }else{
+                       todoList = state.todos;
                 }
 
                 const todo = todoList?.find(todo => todo.id === todoId)
