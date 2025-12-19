@@ -3,8 +3,8 @@
    display: flex;
    flex-direction: column;
    align-items: center;
+   margin-bottom: 50px;
  }
-
  .todoList__type {
    column-count: 5;
  }
@@ -16,13 +16,7 @@
    margin-bottom: 15px;
  }
 
- .todoList__title {
-   text-transform: uppercase;
-   font-size: 11px;
-   margin: 0 0 5px 10px;
-   color: var(--color-gray-650);
-   letter-spacing: 1px;
- }
+
  .todoList__type[data-open-modal="false"] {
   column-width: 250px;
 }

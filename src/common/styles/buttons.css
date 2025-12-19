@@ -132,7 +132,13 @@
     color: var(--color-blue-main);
    text-decoration: none;
 }
-
+.todoList__title {
+    text-transform: uppercase;
+    font-size: 11px;
+    margin: 0 0 5px 10px;
+    color: var(--color-gray-650);
+    letter-spacing: 1px;
+  }
 
 @media screen and (max-width:430px) {
     .md-btn{

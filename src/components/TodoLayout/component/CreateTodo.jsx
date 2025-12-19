@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import '../css/CreateTodo.css'
 import { useDispatch, useSelector } from 'react-redux'
-import { showCompactForm, showFullForm, updateTodoFields, addTodo, resetForm, setNewPinnedTodo, setCreateTodoHeight, resetBgColor, setIsOthersModal, clearCheckedLabels } from '../../../redux/todosSlice'
+import { showCompactForm, showFullForm, updateTodoFields, addTodo, resetForm, setNewPinnedTodo, setCreateTodoHeight, resetBgColor, clearCheckedLabels } from '../../../redux/todosSlice'
 import Pin from '../../../common/Actions/Action-buttons/Pin'
 import Actions from '../../../common/Actions/Actions'
 import { MdOutlineImage } from 'react-icons/md'
@@ -10,7 +10,8 @@ import { IoIosCheckboxOutline } from 'react-icons/io'
 
 
 
-function CreateTodo() {
+
+function CreateTodo({status,labelName}) {
     const dispatch = useDispatch()
 
     const title = useSelector((state) => state.todo.title)
@@ -23,7 +24,6 @@ function CreateTodo() {
     const createTodoContRef = useRef()
     const contentRef = useRef()
     const titleRef = useRef()
-
     const newTodo = {
         content: content,
         title: title,
@@ -31,8 +31,9 @@ function CreateTodo() {
         selected: false,
         pinned: isPinned,
         bgColor: todoBgColor,
-        labels: [...checkedLabels],
+        labels:  status === "labelPage" ? [labelName] : [...checkedLabels],
     }
+    console.log(newTodo.labels)
 
     useEffect(() => {
         if (createTodoContRef.current) {
@@ -55,8 +56,8 @@ function CreateTodo() {
         dispatch(setNewPinnedTodo(false))
         dispatch(resetBgColor({id:newTodo.id,status:"create"}))
         dispatch(clearCheckedLabels())
-
     }
+   
     const closeFunc = () => {
         addTodoFunc()
         dispatch(showFullForm(hidden))
@@ -168,8 +169,11 @@ function CreateTodo() {
 
                 </div>
                 {
-                    newTodo.labels.map((label) => (
-                        <p key={label}> {label} </p>
+             
+                    hidden&&newTodo.labels.map((label) => (
+                        <p key={label}>
+                        {label }
+                       </p>
                     ))
                 }
                 {hidden ? <div className='createTodo__actions-wrapper'>

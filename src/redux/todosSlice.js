@@ -30,6 +30,7 @@ const todoSlice = createSlice({
         addTodo: (state, action) => {
             state.todos.push(action.payload)
             state.isOthersModal = false
+            state.isBgPaletteModal=false
         },
 
         updateTodoFields: (state, action) => {
@@ -249,7 +250,7 @@ const todoSlice = createSlice({
                 selected: false,
                 pinned: false,
                 bgColor: state.todoBgColor,
-                label: [...state.checkedLabels]
+                labels: [...state.checkedLabels]
             }
             state.archiveNotes.push(newArchiveTodo)
             state.content = ""
@@ -257,6 +258,8 @@ const todoSlice = createSlice({
             state.hidden = false
             state.checkedLabels = []
             state.todoBgColor = "white"
+            state.isBgPaletteModal=false
+            state.isOthersModal=false
 
         },
         setAllArchiveTodo: (state) => {
@@ -375,7 +378,7 @@ const todoSlice = createSlice({
 
             if (todo) {
 
-                if (!todo.labels.includes(label)) {
+                if (!todo.labels?.includes(label)) {
                     todo.labels.push(label);
                 }
             }
