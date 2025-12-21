@@ -11,83 +11,91 @@ import { BiBellPlus } from 'react-icons/bi'
 import { PiTextAUnderline } from 'react-icons/pi'
 import { FiUserPlus } from 'react-icons/fi'
 import { MdDeleteForever, MdOutlineImage, MdRestoreFromTrash } from 'react-icons/md'
+import Archive from '../../pages/ArchivePage'
 
-function Actions({ todoId, status, className }) {
+function Actions({ todoId, status, className, isNoteComponent = false }) {
 
     const dispatch = useDispatch()
 
-    const isEditingOrNote = status === "create" || status === "todo"||status==="note";
-
-    const isActiveTodo = isEditingOrNote || status === "home" || status === "archive";
+    const isCreate = status === "create"
+    const isNote = isNoteComponent
+    const isTodo = status === "todo"
+    const isHome = status === "home"
+    const isArchive = status === "archive"
+    const isTrash = status === "trash"
 
     return (
-
         <div className={"actions " + className} key={todoId}>
 
             {
-                status === "trash" ?
-                    <button className='btn action-btn sm-btn' data-tooltip-text="Completely delete">
-                        <MdDeleteForever />
-                    </button> : null
+                isTrash &&
+                <button className='btn action-btn sm-btn' data-tooltip-text="Completely delete">
+                    <MdDeleteForever />
+                </button>
             }
             {
-                status === "trash"?
-                    <button
-                     className='btn action-btn sm-btn' 
-                     data-tooltip-text="Restore"
-                     onClick={()=>dispatch(setRestoreTrash(todoId))}
-                     >
-                        <MdRestoreFromTrash />
-                    </button> : null
+                isTrash &&
+                <button
+                    className='btn action-btn sm-btn'
+                    data-tooltip-text="Restore"
+                    onClick={() => dispatch(setRestoreTrash(todoId))}
+                >
+                    <MdRestoreFromTrash />
+                </button>
             }
             {
-                isEditingOrNote ?
+                isCreate ||   (isNote && !isTrash) ?
                     <button className='btn action-btn sm-btn disabled' data-tooltip-text="Formatting options">
                         <PiTextAUnderline />
                     </button> : null
             }
             {
-                isActiveTodo ?
+                isCreate ||   (isNote && !isTrash) || isTodo || isHome || isArchive ?
                     <BgPaletteButton todoId={todoId} status={status} className={className} /> : null
             }
             {
-                isActiveTodo ?
+                isCreate ||   (isNote && !isTrash) || isTodo || isHome || isArchive ?
                     <button className='btn action-btn sm-btn actionBtn-remind disabled' data-tooltip-text="Remind me">
                         <BiBellPlus />
                     </button> : null
             }
             {
-                isActiveTodo ?
+                isCreate ||   (isNote && !isTrash) || isTodo || isHome || isArchive ?
                     <button className='btn action-btn sm-btn actionBtn-collaborator disabled' data-tooltip-text="Collaborator">
                         <FiUserPlus />
                     </button> : null
             }
             {
-                isActiveTodo ?
+                isCreate ||   (isNote && !isTrash) || isTodo || isHome || isArchive ?
                     <button className='btn action-btn sm-btn disabled' data-tooltip-text="Add image">
                         <MdOutlineImage />
                     </button> : null
             }
             {
-                isEditingOrNote || status === "home" ?
-                    <button className='btn action-btn sm-btn' onClick={() => 
-                        {
-                        dispatch(setArchiveTodo(todoId))
-                     if(status==="create"){
-                        dispatch(setNewArchiveTodo())
-                     }
-                    }} data-tooltip-text="Archive">
+             
+             (isNote && isHome) || isCreate || isTodo || (isHome && !isNote)  ?
+                    <button
+                        className='btn action-btn sm-btn'
+                        onClick={() => {
+                            dispatch(setArchiveTodo(todoId))
+                            if (status === "create") {
+                                dispatch(setNewArchiveTodo())
+                            }
+                        }}
+                        data-tooltip-text="Archive"
+                    >
                         <RiInboxArchiveLine />
-                    </button> : null
+                    </button>
+                    : null
             }
             {
-                status === "archive" ?
+           
+           (isNote && isArchive)  || isTodo || (isArchive && !isNote)  ?
                     <button
                         className='btn action-btn sm-btn'
                         data-tooltip-text="Unarchive"
-                        onClick={()=>{
-                          dispatch(setRestoreArchive(todoId))
-
+                        onClick={() => {
+                            dispatch(setRestoreArchive(todoId))
                         }}
                     >
                         <RiInboxUnarchiveLine />
@@ -95,27 +103,36 @@ function Actions({ todoId, status, className }) {
                     : null
             }
             {
-                isActiveTodo ?
-                    <OthersButton todoId={todoId} status={status} className={className} /> : null
+           
+                isCreate ||   (isNote && !isTrash) || isTodo || isHome || isArchive ?
+                    <OthersButton todoId={todoId} status={status} className={className} />
+                    : null
             }
             {
-                isEditingOrNote ?
-                    <button className='btn action-btn sm-btn disabled' disabled={true} data-tooltip-text="Undo">
+      
+                isCreate ||     (isNote && !isTrash) ?
+                    <button
+                        className='btn action-btn sm-btn disabled'
+                        disabled={true}
+                        data-tooltip-text="Undo"
+                    >
                         <RiArrowGoBackLine />
                     </button>
                     : null
             }
-
             {
-                isEditingOrNote ?
-                    <button className='btn action-btn sm-btn disabled' disabled={true} data-tooltip-text="Rebuild">
+                // Redo butonu - Create VEYA Note component'inde
+                isCreate ||   (isNote && !isTrash) ?
+                    <button
+                        className='btn action-btn sm-btn disabled'
+                        disabled={true}
+                        data-tooltip-text="Redo"
+                    >
                         <RiArrowGoForwardLine />
-                    </button> : null
+                    </button>
+                    : null
             }
-
-
         </div>
-
     )
 }
 

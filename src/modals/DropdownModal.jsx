@@ -78,9 +78,21 @@ function DropdownModal({ todoId, status }) {
       {
         isLabelModal
           ? <LabelModal status={status} todoId={todoId} />
-          : dropdownText.map((itemText, index) => (
-            <button key={index} onClick={() => handleAction(dispatch, itemText, todoId)} className='dropdownModal__item'><p className='dropdownModal__text'> {itemText} </p></button>
-          ))
+          : dropdownText.map((itemText, index) => {
+              const isDisabled = itemText !== "Delete note" && itemText !== "Add label"
+              const dropdownClassName = `dropdownModal__item ${isDisabled ? 'disabled' : ''}`
+              
+              return (
+                <button 
+                  key={index} 
+                  onClick={() => handleAction(dispatch, itemText, todoId)} 
+                  className={dropdownClassName}
+                  disabled={isDisabled}
+                >
+                  <p className='dropdownModal__text'>{itemText}</p>
+                </button>
+              )
+            })
       }
     </div>
   )

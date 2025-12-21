@@ -12,7 +12,6 @@ function OthersButton({ todoId, status }) {
     const dispatch = useDispatch()
     const openModalTodoId = useSelector((state) => state.todo.openModalTodoId)
     const isOthersModal = useSelector((state) => state.todo.isOthersModal)
-    // const openModal=openModalTodoId===todoId
     let isModalOpen = false
     let className = "btn "
     if (isOthersModal) {

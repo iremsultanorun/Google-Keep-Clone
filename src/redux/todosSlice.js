@@ -30,7 +30,7 @@ const todoSlice = createSlice({
         addTodo: (state, action) => {
             state.todos.push(action.payload)
             state.isOthersModal = false
-            state.isBgPaletteModal=false
+            state.isBgPaletteModal = false
         },
 
         updateTodoFields: (state, action) => {
@@ -52,6 +52,10 @@ const todoSlice = createSlice({
         },
         setSelectedTodoById: (state, action) => {
             state.selectedTodoId = action.payload
+            if(state.selectedTodoId!==null){
+                state.isOthersModal=false
+                state.isBgPaletteModal=false
+            }
         },
 
         clearSelectedTodo: (state) => {
@@ -106,8 +110,8 @@ const todoSlice = createSlice({
                     state.selectedCurrent -= 1
                 }
             }
-            state.isBgPaletteModal=false
-            state.isOthersModal=false
+            state.isBgPaletteModal = false
+            state.isOthersModal = false
         },
 
         setPinnedTodo: (state, action) => {
@@ -220,9 +224,11 @@ const todoSlice = createSlice({
         },
         setRestoreTrash: (state, action) => {
             transferNote(state, action, "trashNotes", "todos")
+            state.selectedTodoId=null
         },
         setRestoreArchive: (state, action) => {
             transferNote(state, action, "archiveNotes", "todos")
+            state.selectedTodoId=null
         },
         setArchiveTodo: (state, action) => {
             transferNote(state, action, "todos", "archiveNotes")
@@ -258,8 +264,8 @@ const todoSlice = createSlice({
             state.hidden = false
             state.checkedLabels = []
             state.todoBgColor = "white"
-            state.isBgPaletteModal=false
-            state.isOthersModal=false
+            state.isBgPaletteModal = false
+            state.isOthersModal = false
 
         },
         setAllArchiveTodo: (state) => {

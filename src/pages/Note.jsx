@@ -21,7 +21,7 @@ function Note({ todo }) {
     } else if (archiveNotes.some(t => t.id === todo.id)) {
         actualStatus = "archive";
     } else if (todos.some(t => t.id === todo.id)) {
-        actualStatus = "note";
+        actualStatus = "home";
     }
     const handleClick = () => {
         if (actualStatus === "trash") {
@@ -158,7 +158,7 @@ function Note({ todo }) {
 
                 </div>
                 <div className='createTodo__actions-wrapper note__actions-wrapper'>
-                    <Actions todoId={todo.id} status={actualStatus} className={"createTodo__actions"}
+                    <Actions todoId={todo.id} status={actualStatus}     isNoteComponent={true}  className={"createTodo__actions"}
                     />
                     {
                         actualStatus !== "trash" &&
