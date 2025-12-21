@@ -52,9 +52,9 @@ const todoSlice = createSlice({
         },
         setSelectedTodoById: (state, action) => {
             state.selectedTodoId = action.payload
-            if(state.selectedTodoId!==null){
-                state.isOthersModal=false
-                state.isBgPaletteModal=false
+            if (state.selectedTodoId !== null) {
+                state.isOthersModal = false
+                state.isBgPaletteModal = false
             }
         },
 
@@ -224,11 +224,11 @@ const todoSlice = createSlice({
         },
         setRestoreTrash: (state, action) => {
             transferNote(state, action, "trashNotes", "todos")
-            state.selectedTodoId=null
+            state.selectedTodoId = null
         },
         setRestoreArchive: (state, action) => {
             transferNote(state, action, "archiveNotes", "todos")
-            state.selectedTodoId=null
+            state.selectedTodoId = null
         },
         setArchiveTodo: (state, action) => {
             transferNote(state, action, "todos", "archiveNotes")
@@ -371,36 +371,53 @@ const todoSlice = createSlice({
             });
 
         },
-        addLabelToTodo: (state, action) => {
-            const { todoId, label, status } = action.payload;
+      
+  
+addLabelToTodo: (state, action) => {
+    const { todoId, label, status } = action.payload;
 
-
-            const todoList = status === 'home' ? state.todos :
-                status === 'archive' ? state.archiveNotes :
-                    state.trashNotes;
-
-
-            const todo = todoList.find(t => t.id === todoId);
-
-            if (todo) {
-
-                if (!todo.labels?.includes(label)) {
+    if (todoId === null) {
+        [state.todos, state.archiveNotes, state.trashNotes].forEach(list => {
+            console.log(list)
+            list.forEach(todo => {
+                console.log(todo)
+                if (todo.selected && !todo.labels?.includes(label)) {
                     todo.labels.push(label);
                 }
-            }
-        },
-
+            });
+        });
+    } else {
+        const todoList = status === 'home' ? state.todos :
+            status === 'archive' ? state.archiveNotes :
+                state.trashNotes;
+        const todo = todoList.find(t => t.id === todoId);
+        if (todo && !todo.labels?.includes(label)) {
+            todo.labels.push(label);
+        }
+    }
+},
+        
         removeLabelFromTodo: (state, action) => {
             const { todoId, label, status } = action.payload;
-
-            const todoList = status === 'home' ? state.todos :
+        
+        
+            if (todoId === null) {
+                [state.todos, state.archiveNotes, state.trashNotes].forEach(list=>{
+                    list.forEach(todo => {
+                        if (todo.selected) {
+                            todo.labels = todo.labels.filter(l => l !== label);
+                        }
+                    });
+                })
+            } else {
+                const todoList = status === 'home' ? state.todos :
                 status === 'archive' ? state.archiveNotes :
                     state.trashNotes;
-
-            const todo = todoList.find(t => t.id === todoId);
-
-            if (todo) {
-                todo.labels = todo.labels.filter(l => l !== label);
+        
+                const todo = todoList.find(t => t.id === todoId);
+                if (todo) {
+                    todo.labels = todo.labels.filter(l => l !== label);
+                }
             }
         }
     }
@@ -408,6 +425,6 @@ const todoSlice = createSlice({
 }
 )
 
-export const { updateTodoFields, showFullForm, showCompactForm, addTodo, resetForm, setSelectedTodo, setPinnedTodo, setTodoLayout, updateSpecificTodo, setSelectedTodoById, clearSelectedTodo, setIsOthersModal, setDeleteTodo, setArchiveTodo, setNewPinnedTodo, clearSelectedTodos, setAllPinnedTodo, setTodoDetailHeight, setCreateTodoHeight, setIsBgPaletteModal, setBgColor, resetBgColor, setAllBgColor, resetAllBgColor, setAllArchiveTodo, setAllDeleteTodo, setNewArchiveTodo, setRestoreTrash, setRestoreArchive, setDeleteArchive, addLabelToTodo, removeLabelFromTodo, setAllRestoreArchiveTodo, setIsChecked, clearCheckedLabels, setAllDeleteTodos, setBgPaletteModal } = todoSlice.actions
+export const { updateTodoFields, showFullForm, showCompactForm, addTodo, resetForm, setSelectedTodo, setPinnedTodo, setTodoLayout, updateSpecificTodo, setSelectedTodoById, clearSelectedTodo, setIsOthersModal, setDeleteTodo, setArchiveTodo, setNewPinnedTodo, clearSelectedTodos, setAllPinnedTodo, setTodoDetailHeight, setCreateTodoHeight, setIsBgPaletteModal, setBgColor, resetBgColor, setAllBgColor, resetAllBgColor, setAllArchiveTodo, setAllDeleteTodo, setNewArchiveTodo, setRestoreTrash, setRestoreArchive, setDeleteArchive, addLabelToTodo, removeLabelFromTodo, setAllRestoreArchiveTodo, setIsChecked, clearCheckedLabels, setAllDeleteTodos, setBgPaletteModal, addLabelAllToTodo } = todoSlice.actions
 
 export default todoSlice.reducer

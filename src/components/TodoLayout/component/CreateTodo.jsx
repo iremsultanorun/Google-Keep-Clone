@@ -33,7 +33,6 @@ function CreateTodo({status,labelName}) {
         bgColor: todoBgColor,
         labels:  status === "labelPage" ? [labelName] : [...checkedLabels],
     }
-    console.log(newTodo.labels)
 
     useEffect(() => {
         if (createTodoContRef.current) {

@@ -12,7 +12,7 @@ function LabelPage() {
   const todos = useSelector((state) => state.todo.todos)
   
   const homeLabelTodos = todos.filter(todo =>
-    todo.labels.includes(labelName)
+    todo.labels?.includes(labelName)
   )
   
   const archiveLabelTodos = archiveNotes.filter(todo =>

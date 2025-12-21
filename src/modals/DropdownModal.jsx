@@ -1,7 +1,7 @@
 import React from 'react'
 import './css/Modals.css'
 import { useDispatch, useSelector } from 'react-redux'
-import { setAllDeleteTodo, setDeleteArchive, setDeleteTodo } from '../redux/todosSlice'
+import {  setAllDeleteTodo, setDeleteArchive, setDeleteTodo } from '../redux/todosSlice'
 import LabelModal from './LabelModal'
 import { setLabelModal } from '../redux/labelModalSlice'
 
@@ -69,7 +69,8 @@ function DropdownModal({ todoId, status }) {
         break
       case "Add label":
         dispatch(setLabelModal(true))
-        break;
+       
+
     }
   }
 
@@ -79,20 +80,20 @@ function DropdownModal({ todoId, status }) {
         isLabelModal
           ? <LabelModal status={status} todoId={todoId} />
           : dropdownText.map((itemText, index) => {
-              const isDisabled = itemText !== "Delete note" && itemText !== "Add label"
-              const dropdownClassName = `dropdownModal__item ${isDisabled ? 'disabled' : ''}`
-              
-              return (
-                <button 
-                  key={index} 
-                  onClick={() => handleAction(dispatch, itemText, todoId)} 
-                  className={dropdownClassName}
-                  disabled={isDisabled}
-                >
-                  <p className='dropdownModal__text'>{itemText}</p>
-                </button>
-              )
-            })
+            const isDisabled = itemText !== "Delete note" && itemText !== "Add label"
+            const dropdownClassName = `dropdownModal__item ${isDisabled ? 'disabled' : ''}`
+
+            return (
+              <button
+                key={index}
+                onClick={() => handleAction(dispatch, itemText, todoId)}
+                className={dropdownClassName}
+                disabled={isDisabled}
+              >
+                <p className='dropdownModal__text'>{itemText}</p>
+              </button>
+            )
+          })
       }
     </div>
   )

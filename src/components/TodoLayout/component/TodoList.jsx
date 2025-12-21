@@ -11,9 +11,6 @@ function TodoList({ notes, status }) {
   const othersTodos = todos?.filter((todo) => todo.pinned == false)
   const todoLayout = useSelector((state) => state.todo.todoLayout)
 
-todos?.forEach(todo => {
-  console.log(todo.selected)
-});
   return (
   <>
     <div className='todoList__container' style={{ minHeight: todos === 0 ? "80dvh" : "auto" }}>
