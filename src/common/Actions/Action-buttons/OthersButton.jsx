@@ -10,35 +10,41 @@ import { setLabelModal } from '../../../redux/labelModalSlice'
 function OthersButton({ todoId, status }) {
 
     const dispatch = useDispatch()
-    const openModalTodoId = useSelector((state) => state.todo.openModalTodoId)
+
+    const openModalTodoIdOther = useSelector((state) => state.todo.openModalTodoIdOther)
     const isOthersModal = useSelector((state) => state.todo.isOthersModal)
+
     let isModalOpen = false
-    let className = "btn "
+    let currentClassName = "btn "
+    const statusList = ["create", "selected", "note"]
+
     if (isOthersModal) {
-        if (status === "create") {
-            isModalOpen = isOthersModal.status === "create"
-        } else if (status === "selected") {
-            isModalOpen = isOthersModal.status === "selected"
-        } else if (status === "note") {
-            isModalOpen = isOthersModal.status === "note"
-        } else {
-            isModalOpen = isOthersModal.status === status && openModalTodoId === todoId
-        }
+        statusList.includes(status)
+            ? isModalOpen = isOthersModal.status === status
+            : isModalOpen = isOthersModal.status === status && openModalTodoIdOther === todoId
     }
-    switch (status) {
-        case "selected":
-            className += "md-btn selection-bar__action"
-            break;
-        default:
-            className += "action-btn sm-btn"
-            break;
-    }
+
+
+
+    status === "selected"
+        ? currentClassName += "md-btn selection-bar__action"
+        : currentClassName += "action-btn sm-btn"
+
     const handleClick = () => {
-        if (status === "selected" || status === "create") {
-            dispatch(setIsOthersModal({ id: null, status: status }))
-        } else {
-            dispatch(setIsOthersModal({ id: todoId, status: status }))
-        }
+        (status === "selected" || status === "create") ?
+            dispatch(setIsOthersModal(
+                {
+                    id: null,
+                    status: status
+
+                }
+            ))
+            : dispatch(setIsOthersModal(
+                {
+                    id: todoId,
+                    status: status
+                }
+            ))
         dispatch(setLabelModal(false))
     }
 
@@ -46,17 +52,18 @@ function OthersButton({ todoId, status }) {
         <div>
             <button
                 onClick={handleClick}
-                className={className}
+                className={currentClassName}
                 data-tooltip-text="Other">
                 <LuEllipsisVertical />
             </button>
 
             {
-                status === "create" || status === "selected" ?
-                isModalOpen && <DropdownModal todoId={null} status={status} /> :
-                    isModalOpen && <DropdownModal todoId={todoId} status={status} />
+                (status === "create" || status === "selected")
+                    ? isModalOpen
+                    && <DropdownModal todoId={null} status={status} />
+                    : isModalOpen
+                    && <DropdownModal todoId={todoId} status={status} />
             }
-
         </div>
     )
 }

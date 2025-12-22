@@ -32,14 +32,28 @@ function HeaderControls() {
     <div className='headerControls'>
       <div className='headerControls__wrapper'>
         <button
+          className='btn headerControls__search-close'
+          data-tooltip-text= "Close Search" 
+          onClick={() => dispatch(setIsSearchModal(false))}>
+       {
+        isSearchModal?
+        !isSearchPage?
+         <CgClose />:null :null
+       }
+           
+          
+          
+        </button>
+        <button
           className='btn headerControls__search'
-          data-tooltip-text={!isSearchModal ? "Search" : null}
-          onClick={() => dispatch(setIsSearchModal())}>
-          {
-            isSearchModal
-              ? <CgClose />
-              : <HiOutlineMagnifyingGlass />
-          }
+          data-tooltip-text="Search"
+          onClick={() => dispatch(setIsSearchModal(true))}>
+         
+             { 
+                !isSearchModal&&   
+              <HiOutlineMagnifyingGlass />
+              }
+          
 
         </button>
 

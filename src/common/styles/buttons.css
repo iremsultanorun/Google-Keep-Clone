@@ -140,6 +140,38 @@
     letter-spacing: 1px;
   }
 
+  @media screen and (min-width:2000px) {
+    .md-btn{
+        font-size:40px;
+    }
+    .sm-btn{
+        font-size: 32px;
+    }
+}
+  @media screen and (min-width:1800px) {
+    .md-btn{
+        font-size: 35px;
+    }
+    .sm-btn{
+        font-size: 27px;
+    }
+}
+  @media screen and (min-width:1600px) {
+    .md-btn{
+        font-size: 30px;
+    }
+    .sm-btn{
+        font-size: 22px;
+    }
+}
+  @media screen and (min-width:1440px) {
+    .md-btn{
+        font-size: 25px;
+    }
+    .sm-btn{
+        font-size: 17px;
+    }
+}
 @media screen and (max-width:430px) {
     .md-btn{
         font-size: 22px;

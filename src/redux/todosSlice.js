@@ -1,24 +1,35 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { modalControl, transferNote } from "./utils"
 const initialState = {
-    title: "",
-    content: "",
-    hidden: false,
+    // bg palette
+    openModalTodoIdPalette: null,
+    isBgPaletteModal: null,
+    todoBgColor: "white",
+
+    // todos
     todos: [],
     trashNotes: [],
     remindersNotes: [],
     archiveNotes: [],
-    selectedCurrent: 0,
-    todoLayout: false,
+
+    checkedLabels: [],
+    // create
+    title: "",
+    content: "",
+    hidden: false,
+
+    // selected
     selectedTodoId: null,
-    openModalTodoId: null,
+    selectedCurrent: 0,
+
+    todoLayout: false,
+
+    openModalTodoIdOther: null,
+    isOthersModal: null,
+
     isPinned: false,
     todoDetailHeight: {},
     createTodoHeight: {},
-    todoBgColor: "white",
-    isOthersModal: null,
-    isBgPaletteModal: null,
-    checkedLabels: [],
 
 }
 
@@ -151,7 +162,7 @@ const todoSlice = createSlice({
         },
 
         setIsOthersModal: (state, action) => {
-            modalControl(state, action, "isOthersModal", "openModalTodoId")
+            modalControl(state, action, "isOthersModal", "openModalTodoIdOther")
         },
 
         setDeleteTodo: (state, action) => {
@@ -209,7 +220,7 @@ const todoSlice = createSlice({
             //         if (todo.selected) todo.selected = false
             //     })
             //     state.selectedCurrent = 0
-            // } 
+            // }
             const selectedId = state.trashNotes.filter((todo) => todo.selected).map(todo => todo.id)
             state.trashNotes.forEach((todo) => {
                 if (todo.selected) {
@@ -304,7 +315,7 @@ const todoSlice = createSlice({
         },
 
         setIsBgPaletteModal: (state, action) => {
-            modalControl(state, action, "isBgPaletteModal", "openModalTodoIdd")
+            modalControl(state, action, "isBgPaletteModal", "openModalTodoIdPalette")
         },
 
         setBgColor: (state, action) => {
@@ -371,8 +382,8 @@ const todoSlice = createSlice({
             });
 
         },
-      
-  
+
+
 addLabelToTodo: (state, action) => {
     const { todoId, label, status } = action.payload;
 
@@ -396,11 +407,11 @@ addLabelToTodo: (state, action) => {
         }
     }
 },
-        
+
         removeLabelFromTodo: (state, action) => {
             const { todoId, label, status } = action.payload;
-        
-        
+
+
             if (todoId === null) {
                 [state.todos, state.archiveNotes, state.trashNotes].forEach(list=>{
                     list.forEach(todo => {
@@ -413,7 +424,7 @@ addLabelToTodo: (state, action) => {
                 const todoList = status === 'home' ? state.todos :
                 status === 'archive' ? state.archiveNotes :
                     state.trashNotes;
-        
+
                 const todo = todoList.find(t => t.id === todoId);
                 if (todo) {
                     todo.labels = todo.labels.filter(l => l !== label);

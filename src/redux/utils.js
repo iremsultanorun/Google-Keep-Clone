@@ -26,12 +26,12 @@ export const modalControl = (state, action, modalKey, todoModalKey) => {
         const todo = todoList?.find((todo) => todo.id === id);
         
         if (todo) {
-            // Aynı todo'ya tıklanırsa kapat
+        
             if (state[todoModalKey] === id && state[modalKey]?.status === status) {
                 state[todoModalKey] = null;
                 state[modalKey] = null;
             } else {
-                // Farklı todo'ya tıklanırsa aç
+          
                 state[todoModalKey] = id;
                 state[modalKey] = { id, status };
             }

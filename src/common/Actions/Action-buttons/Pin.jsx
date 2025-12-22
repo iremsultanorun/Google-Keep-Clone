@@ -7,53 +7,53 @@ function Pin({ todoId, status }) {
 
     const dispatch = useDispatch()
 
-    const isNewTodoPinned = useSelector((state) => state.todo.isPinned);
-
     const todos = useSelector((state) => state.todo.todos);
-
     const archiveNotes = useSelector((state) => state.todo.archiveNotes);
+    const isNewTodoPinned = useSelector((state) => state.todo.isPinned);
+    let isPinnedStatus = false;
+
     const todoList = status === 'home' ? todos :
         status === 'archive' ? archiveNotes : null
 
-
     const currentTodo = todoList?.find(todo => todo.id === todoId);
 
-    let isPinnedStatus = false;
 
-    if (status === "create") {
-        isPinnedStatus = isNewTodoPinned;
-    } else if (currentTodo) {
-        isPinnedStatus = currentTodo.pinned;
-    }
+    (status === "create")
+        ? isPinnedStatus = isNewTodoPinned
+        : currentTodo
+            ? isPinnedStatus = currentTodo.pinned : null
+
 
     const handleClickPinnedButton = () => {
-
         if (status === "create") {
             dispatch(setNewPinnedTodo(!isNewTodoPinned));
         } else if (status === "selected") {
             dispatch(setAllPinnedTodo({ status: status }));
-        }
-        else {
+        } else {
             dispatch(setPinnedTodo({ pinnedId: todoId, status: status }));
         }
     }
 
-    let className = "btn ";
-    if (status === "selected") {
-        className += " md-btn selection-bar__action";
-    } else {
-        className += " sm-btn fixed-btn";
-    }
+    let currentClassName = "btn ";
+
+    (status === "selected")
+        ? currentClassName += " md-btn selection-bar__action"
+        : currentClassName += " sm-btn fixed-btn"
+
 
     return (
         <div>
             <button
                 key={todoId}
-                className={className}
+                className={currentClassName}
                 data-tooltip-text="Pin note"
                 onClick={handleClickPinnedButton}>
 
-                {isPinnedStatus ? <TbPinnedFilled /> : <TbPinned />}
+                {
+                    isPinnedStatus
+                        ? <TbPinnedFilled />
+                        : <TbPinned />
+                }
 
             </button>
         </div>

@@ -28,11 +28,14 @@ const headerSlice = createSlice({
         setIsSlideModal: (state) => {
             state.isSlideModal = !state.isSlideModal
         },
-        setIsSearchModal: (state) => {
-            state.isSearchModal = !state.isSearchModal
+        setIsSearchModal: (state,action) => {
+            state.isSearchModal = action.payload
         },
         setIsSearchPage: (state, action) => {
             state.isSearchPage = action.payload
+if(!state.isSearchPage){
+    state.isSearchModal=false
+}
         },
         setIsSettingsModal: (state) => {
             state.isSettingsModal = !state.isSettingsModal

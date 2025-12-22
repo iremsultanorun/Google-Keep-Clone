@@ -126,14 +126,18 @@
 
 @media screen and (max-width: 510px) {
     .search[data-open-modal="true"] {
-        right: 37vw;
-        width: 60vw;
+        right: 40vw;
+        width: 58vw;
     }
 }
 
-@media screen and (max-width: 450px) {
+@media screen and (max-width: 480px) {
     .search[data-open-modal="true"] {
-        right: 34vw;
-        width: 63vw;
+      width: 95%;
+        position: fixed;
+        top: 10px;
+        left: 128px;
+        z-index: 300;
     }
+   
 }
