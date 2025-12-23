@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import './css/Modals.css'
 import { MdOutlineFormatColorReset } from "react-icons/md";
 import { useDispatch, useSelector } from 'react-redux';
-import { resetAllBgColor, resetBgColor, setAllBgColor, setBgColor } from '../redux/todosSlice';
+import { resetSelectedTodosBgColor, resetBgColor, updateSelectedTodosBgColor, updateTodoBgColor  } from '../redux/todosSlice';
 import { useLocation } from 'react-router-dom';
 function TodoBgModal({ todoId, status }) {
   const COLOR_PALAETTE = ["#FAAFA9", "#F39F76", "#FFF8B8", "#E2F6D3", "#D4E4ED", "#AECCDC", "#D3BFDB", "#F6E2DD", "#E9E3D4", "#EFEFF1"]
@@ -74,14 +74,14 @@ function TodoBgModal({ todoId, status }) {
   }
   const handleClickSetBgColor = (color) => {
     if (status === "selected") {
-      dispatch(setAllBgColor({ color: color }))
+      dispatch(updateSelectedTodosBgColor({ color: color }))
     } else {
-      dispatch(setBgColor({ id: todoId, color: color, status: status }))
+      dispatch(updateTodoBgColor ({ id: todoId, color: color, status: status }))
     }
   }
   const handleClickResetBgColor = () => {
     if (status === "selected") {
-      dispatch(resetAllBgColor())
+      dispatch(resetSelectedTodosBgColor())
     } else {
       dispatch(resetBgColor({todoId:todoId,status:status}))
     }

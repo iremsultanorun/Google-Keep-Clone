@@ -6,7 +6,7 @@ import { MdLabelOutline, MdLightbulbOutline } from "react-icons/md";
 import { AiOutlineBell } from "react-icons/ai";
 import { GoPencil } from "react-icons/go";
 import "./../css/Slide.css"
-import {  setEditLabelModal } from '../../../redux/labelModalSlice';
+import { setEditLabelModal } from '../../../redux/labelModalSlice';
 import { RiInboxArchiveLine } from 'react-icons/ri';
 import { IoTrashOutline } from 'react-icons/io5';
 
@@ -114,13 +114,13 @@ function Slide() {
 
             const isActive = active === logoname.name;
             let itemClasses = 'slide__item';
-if(isActive){
-  if(isCollapsed){
-    itemClasses += ' sm-active';
-  }else{
-    itemClasses += ' active';
-  }
-}
+            if (isActive) {
+              if (isCollapsed) {
+                itemClasses += ' sm-active';
+              } else {
+                itemClasses += ' active';
+              }
+            }
 
             return (
               <div key={id}>
@@ -171,7 +171,7 @@ if(isActive){
 
                       onClick={() => {
                         handleClick(logoname.name)
-                        dispatch( setEditLabelModal(true))
+                        dispatch(setEditLabelModal(true))
                       }
 
                       }
@@ -205,20 +205,20 @@ if(isActive){
                     const isActive = active === label.name;
                     let itemClasses = 'slide__item';
 
-                    if(isActive){
-                      if(isCollapsed){
+                    if (isActive) {
+                      if (isCollapsed) {
                         itemClasses += ' sm-active';
-                      }else{
+                      } else {
                         itemClasses += ' active';
                       }
                     }
 
                     return (
-                   
-                        <Link
+
+                      <Link
                         key={labelId}
                         onClick={() => handleClick(label.name)}
-                        to={`/label/${label.name}`} 
+                        to={`/label/${label.name}`}
                       >
                         <button
                           className={itemClasses +
@@ -249,7 +249,7 @@ if(isActive){
                           </h4>
                         </button>
                       </Link>
-           
+
                     )
                   })
                 }

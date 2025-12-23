@@ -38,7 +38,7 @@ function Pin({ todoId, status }) {
 
     (status === "selected")
         ? currentClassName += " md-btn selection-bar__action"
-        : currentClassName += " sm-btn fixed-btn"
+        : currentClassName += " fixed-btn"
 
 
     return (

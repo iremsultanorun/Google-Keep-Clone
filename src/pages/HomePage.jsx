@@ -7,7 +7,7 @@ import EmptyStateHome from '../assets/empty-state-icons/empty-state-home-icon.sv
 function HomePage() {
     const todos = useSelector((state) => state.todo.todos)
     return (
-        <div>
+        <div style={{minHeight:"100dvh"}}>
             <CreateTodo />
             <TodoList notes={todos} status={"home"} />
     {

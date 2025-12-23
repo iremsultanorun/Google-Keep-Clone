@@ -11,7 +11,6 @@ import { BiBellPlus } from 'react-icons/bi'
 import { PiTextAUnderline } from 'react-icons/pi'
 import { FiUserPlus } from 'react-icons/fi'
 import { MdDeleteForever, MdOutlineImage, MdRestoreFromTrash } from 'react-icons/md'
-import Archive from '../../pages/ArchivePage'
 
 function Actions({ todoId, status, className, isNoteComponent = false }) {
 
@@ -121,7 +120,6 @@ function Actions({ todoId, status, className, isNoteComponent = false }) {
                     : null
             }
             {
-                // Redo butonu - Create VEYA Note component'inde
                 isCreate ||   (isNote && !isTrash) ?
                     <button
                         className='btn action-btn sm-btn disabled'

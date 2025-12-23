@@ -24,7 +24,6 @@
    width: 95%;
    display: flex;
    justify-content: center;
-   background-color: red;
    flex-wrap: wrap;
  }
 

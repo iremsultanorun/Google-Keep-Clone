@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { modalControl, transferNote } from "./utils"
 const initialState = {
-    // bg palette
+    // Background Colors
     openModalTodoIdPalette: null,
-    isBgPaletteModal: null,
+    bgPaletteModal: null,
     todoBgColor: "white",
 
     // todos
@@ -41,7 +41,7 @@ const todoSlice = createSlice({
         addTodo: (state, action) => {
             state.todos.push(action.payload)
             state.isOthersModal = false
-            state.isBgPaletteModal = false
+            state.bgPaletteModal = false
         },
 
         updateTodoFields: (state, action) => {
@@ -65,13 +65,13 @@ const todoSlice = createSlice({
             state.selectedTodoId = action.payload
             if (state.selectedTodoId !== null) {
                 state.isOthersModal = false
-                state.isBgPaletteModal = false
+                state.bgPaletteModal = false
             }
         },
 
         clearSelectedTodo: (state) => {
             state.selectedTodoId = null;
-            state.isBgPaletteModal = false
+            state.bgPaletteModal = false
             state.isOthersModal = false
         },
         clearSelectedTodos: (state) => {
@@ -86,7 +86,7 @@ const todoSlice = createSlice({
                 }
             });
             state.selectedCurrent = 0;
-            state.isBgPaletteModal = false
+            state.bgPaletteModal = false
             state.isOthersModal = false
         },
         showFullForm: (state) => {
@@ -121,7 +121,7 @@ const todoSlice = createSlice({
                     state.selectedCurrent -= 1
                 }
             }
-            state.isBgPaletteModal = false
+            state.bgPaletteModal = false
             state.isOthersModal = false
         },
 
@@ -275,7 +275,7 @@ const todoSlice = createSlice({
             state.hidden = false
             state.checkedLabels = []
             state.todoBgColor = "white"
-            state.isBgPaletteModal = false
+            state.bgPaletteModal = false
             state.isOthersModal = false
 
         },
@@ -313,12 +313,12 @@ const todoSlice = createSlice({
             const { height } = action.payload
             state.createTodoHeight = height
         },
-
-        setIsBgPaletteModal: (state, action) => {
-            modalControl(state, action, "isBgPaletteModal", "openModalTodoIdPalette")
+// Background Colors
+        openBgPaletteModal: (state, action) => {
+            modalControl(state, action, "bgPaletteModal", "openModalTodoIdPalette")
         },
 
-        setBgColor: (state, action) => {
+        updateTodoBgColor : (state, action) => {
             const { color, status, id } = action.payload
             if (status == "create") { state.todoBgColor = color }
             if (status == "home" || status == "note") {
@@ -330,7 +330,7 @@ const todoSlice = createSlice({
                 state.archiveNotes[todoIndex].bgColor = color
             }
         },
-        setAllBgColor: (state, action) => {
+        updateSelectedTodosBgColor: (state, action) => {
             const { color, status } = action.payload;
             if (status !== "archive") {
                 state.todos.forEach((todo) => {
@@ -369,7 +369,7 @@ const todoSlice = createSlice({
                 }
             }
         },
-        resetAllBgColor: (state) => {
+        resetSelectedTodosBgColor: (state) => {
             state.todos.forEach((todo) => {
                 if (todo.selected === true) {
                     todo.bgColor = "white";
@@ -384,36 +384,36 @@ const todoSlice = createSlice({
         },
 
 
-addLabelToTodo: (state, action) => {
-    const { todoId, label, status } = action.payload;
+        addLabelToTodo: (state, action) => {
+            const { todoId, label, status } = action.payload;
 
-    if (todoId === null) {
-        [state.todos, state.archiveNotes, state.trashNotes].forEach(list => {
-            console.log(list)
-            list.forEach(todo => {
-                console.log(todo)
-                if (todo.selected && !todo.labels?.includes(label)) {
+            if (todoId === null) {
+                [state.todos, state.archiveNotes, state.trashNotes].forEach(list => {
+                    console.log(list)
+                    list.forEach(todo => {
+                        console.log(todo)
+                        if (todo.selected && !todo.labels?.includes(label)) {
+                            todo.labels.push(label);
+                        }
+                    });
+                });
+            } else {
+                const todoList = status === 'home' ? state.todos :
+                    status === 'archive' ? state.archiveNotes :
+                        state.trashNotes;
+                const todo = todoList.find(t => t.id === todoId);
+                if (todo && !todo.labels?.includes(label)) {
                     todo.labels.push(label);
                 }
-            });
-        });
-    } else {
-        const todoList = status === 'home' ? state.todos :
-            status === 'archive' ? state.archiveNotes :
-                state.trashNotes;
-        const todo = todoList.find(t => t.id === todoId);
-        if (todo && !todo.labels?.includes(label)) {
-            todo.labels.push(label);
-        }
-    }
-},
+            }
+        },
 
         removeLabelFromTodo: (state, action) => {
             const { todoId, label, status } = action.payload;
 
 
             if (todoId === null) {
-                [state.todos, state.archiveNotes, state.trashNotes].forEach(list=>{
+                [state.todos, state.archiveNotes, state.trashNotes].forEach(list => {
                     list.forEach(todo => {
                         if (todo.selected) {
                             todo.labels = todo.labels.filter(l => l !== label);
@@ -422,8 +422,8 @@ addLabelToTodo: (state, action) => {
                 })
             } else {
                 const todoList = status === 'home' ? state.todos :
-                status === 'archive' ? state.archiveNotes :
-                    state.trashNotes;
+                    status === 'archive' ? state.archiveNotes :
+                        state.trashNotes;
 
                 const todo = todoList.find(t => t.id === todoId);
                 if (todo) {
@@ -436,6 +436,15 @@ addLabelToTodo: (state, action) => {
 }
 )
 
-export const { updateTodoFields, showFullForm, showCompactForm, addTodo, resetForm, setSelectedTodo, setPinnedTodo, setTodoLayout, updateSpecificTodo, setSelectedTodoById, clearSelectedTodo, setIsOthersModal, setDeleteTodo, setArchiveTodo, setNewPinnedTodo, clearSelectedTodos, setAllPinnedTodo, setTodoDetailHeight, setCreateTodoHeight, setIsBgPaletteModal, setBgColor, resetBgColor, setAllBgColor, resetAllBgColor, setAllArchiveTodo, setAllDeleteTodo, setNewArchiveTodo, setRestoreTrash, setRestoreArchive, setDeleteArchive, addLabelToTodo, removeLabelFromTodo, setAllRestoreArchiveTodo, setIsChecked, clearCheckedLabels, setAllDeleteTodos, setBgPaletteModal, addLabelAllToTodo } = todoSlice.actions
+export const { updateTodoFields, showFullForm, showCompactForm, addTodo, resetForm, setSelectedTodo, setPinnedTodo, setTodoLayout, updateSpecificTodo, setSelectedTodoById, clearSelectedTodo, setIsOthersModal, setDeleteTodo, setArchiveTodo, setNewPinnedTodo, clearSelectedTodos, setAllPinnedTodo, setTodoDetailHeight, setCreateTodoHeight,
+
+    // Background Colors
+    openBgPaletteModal,
+    updateTodoBgColor ,
+    resetBgColor,
+    updateSelectedTodosBgColor,
+    resetSelectedTodosBgColor,
+
+    setAllArchiveTodo, setAllDeleteTodo, setNewArchiveTodo, setRestoreTrash, setRestoreArchive, setDeleteArchive, addLabelToTodo, removeLabelFromTodo, setAllRestoreArchiveTodo, setIsChecked, clearCheckedLabels, setAllDeleteTodos, addLabelAllToTodo } = todoSlice.actions
 
 export default todoSlice.reducer

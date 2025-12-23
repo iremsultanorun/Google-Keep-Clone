@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setIsBgPaletteModal } from '../../../redux/todosSlice'
+import { openBgPaletteModal } from '../../../redux/todosSlice'
 
 import TodoBgModal from '../../../modals/TodoBgModal'
 
@@ -10,17 +10,17 @@ function BgPaletteButton({ todoId, status }) {
 
     const dispatch = useDispatch()
 
-    const isPaletteModal = useSelector((state) => state.todo.isBgPaletteModal)
+    const bgPaletteModal = useSelector((state) => state.todo.isBgPaletteModal)
     const openModalTodoId = useSelector((state) => state.todo.openModalTodoIdPalette)
 
     let isModalOpen = false;
     let currentClassName = "btn "
     const statusList = ["create", "selected", "note"]
 
-   if( isPaletteModal){
+   if( bgPaletteModal){
       statusList?.includes(status)
-        ? isModalOpen = isPaletteModal.status === status
-        : isModalOpen = isPaletteModal.status === status && openModalTodoId === todoId
+        ? isModalOpen = bgPaletteModal.status === status
+        : isModalOpen = bgPaletteModal.status === status && openModalTodoId === todoId
    }
 
 
@@ -31,13 +31,13 @@ function BgPaletteButton({ todoId, status }) {
 
     const handleClick = () => {
         (status === "selected" || status === "create")
-            ? dispatch(setIsBgPaletteModal(
+            ? dispatch(openBgPaletteModal(
                 {
                     id: null,
                     status: status
                 }
             ))
-            : dispatch(setIsBgPaletteModal(
+            : dispatch(openBgPaletteModal(
                 {
                     id: todoId,
                     status: status
