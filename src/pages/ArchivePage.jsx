@@ -4,12 +4,12 @@ import { useSelector } from 'react-redux'
 import EmptyState from '../common/components/EmptyState'
 import EmptyStateArchive from "./../assets/empty-state-icons/empty-state-archive-icon.svg"
 function Archive() {
-  const archiveNotes = useSelector((state) => state.todo.archiveNotes)
+  const archiveTodos = useSelector((state) => state.todo.archiveTodos)
   return (
     <div style={{marginTop:"20px"}}>
-      <TodoList notes={archiveNotes} status={"archive"} />
+      <TodoList notes={archiveTodos} status={"archive"} />
       {
-        archiveNotes.length===0 && <EmptyState icon={EmptyStateArchive} message={"Your archived notes appear here"}/>
+        archiveTodos.length===0 && <EmptyState icon={EmptyStateArchive} message={"Your archived notes appear here"}/>
     }
     </div>
   )

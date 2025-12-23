@@ -10,18 +10,18 @@ function BgPaletteButton({ todoId, status }) {
 
     const dispatch = useDispatch()
 
-    const bgPaletteModal = useSelector((state) => state.todo.isBgPaletteModal)
-    const openModalTodoId = useSelector((state) => state.todo.openModalTodoIdPalette)
+    const bgPaletteModal = useSelector((state) => state.todo.bgPaletteModal)
+    const activePaletteTodoId = useSelector((state) => state.todo.activePaletteTodoId)
 
     let isModalOpen = false;
     let currentClassName = "btn "
-    const statusList = ["create", "selected", "note"]
+    const statusList = ["create", "selected", "todoDetail"]
 
-   if( bgPaletteModal){
-      statusList?.includes(status)
-        ? isModalOpen = bgPaletteModal.status === status
-        : isModalOpen = bgPaletteModal.status === status && openModalTodoId === todoId
-   }
+    if (bgPaletteModal) {
+        statusList?.includes(status)
+            ? isModalOpen = bgPaletteModal.status === status
+            : isModalOpen = bgPaletteModal.status === status && activePaletteTodoId === todoId
+    }
 
 
     status === "selected"
@@ -29,7 +29,7 @@ function BgPaletteButton({ todoId, status }) {
         : currentClassName += "action-btn sm-btn"
 
 
-    const handleClick = () => {
+    const handleOpenBgPalette = () => {
         (status === "selected" || status === "create")
             ? dispatch(openBgPaletteModal(
                 {
@@ -48,14 +48,16 @@ function BgPaletteButton({ todoId, status }) {
     return (
         <div>
             <button
-                onClick={handleClick}
+                onClick={handleOpenBgPalette}
                 className={currentClassName}
                 data-tooltip-text="Background options">
                 <MdOutlinePalette />
             </button>
 
-            {isModalOpen
-                && <TodoBgModal todoId={todoId} status={status} />}
+            {
+                isModalOpen
+                && <TodoBgModal todoId={todoId} status={status} />
+            }
         </div>
     )
 }

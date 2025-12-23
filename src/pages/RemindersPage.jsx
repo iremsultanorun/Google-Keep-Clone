@@ -6,14 +6,14 @@ import { useSelector } from 'react-redux'
 import EmptyState from '../common/components/EmptyState'
 
 function Reminders() {
-  const remindersNotes=useSelector((state)=>state.todo.remindersNotes)
+  const reminderTodos=useSelector((state)=>state.todo.reminderTodos)
   return (
     <div>
     <div>
     <CreateTodo/>
-    <TodoList notes={remindersNotes} status={"reminders"} />
+    <TodoList notes={reminderTodos} status={"reminders"} />
     {
-        remindersNotes.length===0 && <EmptyState icon={EmptyStateReminders} message={"Notes with upcoming reminders appear here (This part is currently non-functional)"}/>
+        reminderTodos.length===0 && <EmptyState icon={EmptyStateReminders} message={"Notes with upcoming reminders appear here (This part is currently non-functional)"}/>
     }
         </div>
     </div>

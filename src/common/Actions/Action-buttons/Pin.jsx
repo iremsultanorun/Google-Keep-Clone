@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setAllPinnedTodo, setNewPinnedTodo, setPinnedTodo } from '../../../redux/todosSlice'
+import { pinSelectedTodos, toggleDraftPin, toggleTodoPin } from '../../../redux/todosSlice'
 import { TbPinned, TbPinnedFilled } from 'react-icons/tb'
 
 function Pin({ todoId, status }) {
@@ -8,12 +8,12 @@ function Pin({ todoId, status }) {
     const dispatch = useDispatch()
 
     const todos = useSelector((state) => state.todo.todos);
-    const archiveNotes = useSelector((state) => state.todo.archiveNotes);
+    const archiveTodos = useSelector((state) => state.todo.archiveTodos);
     const isNewTodoPinned = useSelector((state) => state.todo.isPinned);
     let isPinnedStatus = false;
 
     const todoList = status === 'home' ? todos :
-        status === 'archive' ? archiveNotes : null
+        status === 'archive' ? archiveTodos : null
 
     const currentTodo = todoList?.find(todo => todo.id === todoId);
 
@@ -26,11 +26,11 @@ function Pin({ todoId, status }) {
 
     const handleClickPinnedButton = () => {
         if (status === "create") {
-            dispatch(setNewPinnedTodo(!isNewTodoPinned));
+            dispatch(toggleDraftPin(!isNewTodoPinned));
         } else if (status === "selected") {
-            dispatch(setAllPinnedTodo({ status: status }));
+            dispatch(pinSelectedTodos({ status: status }));
         } else {
-            dispatch(setPinnedTodo({ pinnedId: todoId, status: status }));
+            dispatch(toggleTodoPin({ pinnedId: todoId, status: status }));
         }
     }
 
@@ -46,7 +46,7 @@ function Pin({ todoId, status }) {
             <button
                 key={todoId}
                 className={currentClassName}
-                data-tooltip-text="Pin note"
+                data-tooltip-text="Pin todo"
                 onClick={handleClickPinnedButton}>
 
                 {

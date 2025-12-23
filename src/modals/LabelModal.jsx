@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react'
 import { GoPencil } from "react-icons/go";
 import { useDispatch, useSelector } from 'react-redux';
 
-import {  addLabelToTodo, removeLabelFromTodo, setIsChecked } from '../redux/todosSlice';
+import { addLabelToTodo, removeLabelFromTodo, toggleLabelFilter } from '../redux/todosSlice';
 
 function LabelModal({ status, todoId }) {
     const labelList = useSelector((state) => state.labelModal.labelList)
@@ -13,12 +13,12 @@ function LabelModal({ status, todoId }) {
         if (status === "selected") {
             return [
                 ...state.todo.todos.filter(t => t.selected),
-                ...state.todo.archiveNotes.filter(t => t.selected),
+                ...state.todo.archiveTodos.filter(t => t.selected),
             ];
         }
         if (status === 'home') return state.todo.todos;
-        if (status === 'archive') return state.todo.archiveNotes;
-        if (status === 'trash') return state.todo.trashNotes;
+        if (status === 'archive') return state.todo.archiveTodos;
+        if (status === 'trash') return state.todo.trashTodos;
         return state.todo.todos || [];
     });
 
@@ -28,7 +28,7 @@ function LabelModal({ status, todoId }) {
 
     const currentTodo = useMemo(() => {
         if (status === "create") return null;
-        if(status!=="selected"){
+        if (status !== "selected") {
             return todos?.find(t => t.id === todoId);
         }
     }, [todos, todoId, status]);
@@ -44,12 +44,12 @@ function LabelModal({ status, todoId }) {
     }, [searchText, labelList])
     const handleCheckboxChange = (labelName) => {
         if (status === "create") {
-            dispatch(setIsChecked(labelName));
+            dispatch(toggleLabelFilter(labelName));
         }
         else if (todoId === null || todoId === undefined) {  // <- Çoklu seçim
             const selectedTodos = todos.filter(t => t.selected);
             const allHaveLabel = selectedTodos.every(t => t.labels?.includes(labelName));
-            
+
             if (allHaveLabel) {
                 dispatch(removeLabelFromTodo({
                     todoId: null,
@@ -82,7 +82,7 @@ function LabelModal({ status, todoId }) {
         }
         console.log("id", todoId)
         console.log(
-            "ststus",status
+            "ststus", status
         )
     };
 
@@ -101,36 +101,36 @@ function LabelModal({ status, todoId }) {
                     <GoPencil />
                 </div>
                 <div>
-                 
-                            {
-                                filteredLabels && filteredLabels.map((label) => {
-                                    const isLabelChecked = (() => {
-                                        if (status === "create") {
-                                            return checkedLabels.includes(label.name);
-                                        } else if (status === "selected") {
-                                            const selectedTodos = todos.filter(t => t.selected);
-                                            if (selectedTodos.length === 0) return false;
-                                            return selectedTodos.every(t => t.labels?.includes(label.name));
-                                        } else {
-                                            return todoLabels.includes(label.name);
-                                        }
-                                       
-                                    })();
-                            
-                                    return (
-                                        <div key={label.id} className='label-lists'>
-                                            <input
-                                                type="checkbox"
-                                                checked={isLabelChecked}
-                                                onChange={() => handleCheckboxChange(label.name)}
-                                            />
-                                            <label>{label.name}</label>
-                                        </div>
-                                    )
-                                })
-                            }
-                        
-                    
+
+                    {
+                        filteredLabels && filteredLabels.map((label) => {
+                            const isLabelChecked = (() => {
+                                if (status === "create") {
+                                    return checkedLabels.includes(label.name);
+                                } else if (status === "selected") {
+                                    const selectedTodos = todos.filter(t => t.selected);
+                                    if (selectedTodos.length === 0) return false;
+                                    return selectedTodos.every(t => t.labels?.includes(label.name));
+                                } else {
+                                    return todoLabels.includes(label.name);
+                                }
+
+                            })();
+
+                            return (
+                                <div key={label.id} className='label-lists'>
+                                    <input
+                                        type="checkbox"
+                                        checked={isLabelChecked}
+                                        onChange={() => handleCheckboxChange(label.name)}
+                                    />
+                                    <label>{label.name}</label>
+                                </div>
+                            )
+                        })
+                    }
+
+
                 </div>
             </div>
         </div>

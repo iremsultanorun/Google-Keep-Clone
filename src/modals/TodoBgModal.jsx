@@ -15,10 +15,10 @@ function TodoBgModal({ todoId, status }) {
       return []
     }
     if (status === "selected") {
-      return isArchivePage ? state.todo.archiveNotes : state.todo.todos
+      return isArchivePage ? state.todo.archiveTodos : state.todo.todos
     }
     if (status === "archive") {
-      return state.todo.archiveNotes
+      return state.todo.archiveTodos
     }
     return state.todo.todos
   })
@@ -65,8 +65,8 @@ function TodoBgModal({ todoId, status }) {
     case "selected":
       paletteModal += "bg-modal__selected"
       break;
-    case "note":
-      paletteModal += "bg-modal__note"
+    case "todoDetail":
+      paletteModal += "bg-modal__todoDetail"
       break;
     case "todo":
       paletteModal += "bg-modal__todo"

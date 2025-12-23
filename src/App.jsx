@@ -10,7 +10,7 @@ import LabelPage from './pages/LabelPage'
 import EditLabel from './components/SlideLayout/components/EditLabelModal'
 import { useSelector } from 'react-redux'
 import SearchPage from './pages/SearchPage'
-import Note from './pages/Note'
+import TodoDetail from './pages/TodoDetail'
 import HeaderLayout from './components/HeaderLayout/components/HeaderLayout'
 
 
@@ -19,12 +19,12 @@ function App() {
   const isSlideModal = useSelector((state) => state.header.isSlideModal);
   const selectedTodoId = useSelector((state) => state.todo.selectedTodoId)
   const todos = useSelector((state) => state.todo.todos)
-  const archiveNotes = useSelector((state) => state.todo.archiveNotes)
-  const trashNotes = useSelector((state) => state.todo.trashNotes)
+  const archiveTodos = useSelector((state) => state.todo.archiveTodos)
+  const trashTodos = useSelector((state) => state.todo.trashTodos)
   const ALLNOTES = [
     ...todos,
-    ...archiveNotes,
-    ...trashNotes
+    ...archiveTodos,
+    ...trashTodos
   ]
   const selectedTodo = ALLNOTES.find((todo) => todo.id === selectedTodoId
   )
@@ -33,7 +33,7 @@ function App() {
   return (
     <div>
       {
-        isOpenTodoModal && <Note todo={selectedTodo} />
+        isOpenTodoModal && <TodoDetail todo={selectedTodo} />
       }
       {
         isEditLabelModal ?

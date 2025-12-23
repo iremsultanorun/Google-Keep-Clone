@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import '../css/CreateTodo.css'
 import { useDispatch, useSelector } from 'react-redux'
-import { showCompactForm, showFullForm, updateTodoFields, addTodo, resetForm, setNewPinnedTodo, setCreateTodoHeight, resetBgColor, clearCheckedLabels } from '../../../redux/todosSlice'
+import { setFormVisibility, updateDraft, createTodo, resetForm, toggleDraftPin, setCreateTodoHeight, resetBgColor, clearCheckedLabels } from '../../../redux/todosSlice'
 import Pin from '../../../common/Actions/Action-buttons/Pin'
 import Actions from '../../../common/Actions/Actions'
 import { MdOutlineImage } from 'react-icons/md'
@@ -16,7 +16,7 @@ function CreateTodo({status,labelName}) {
 
     const title = useSelector((state) => state.todo.title)
     const content = useSelector((state) => state.todo.content)
-    const hidden = useSelector((state) => state.todo.hidden)
+    const isExpanded = useSelector((state) => state.todo.isExpanded)
     const isPinned = useSelector((state) => state.todo.isPinned)
     const todoBgColor = useSelector((state) => state.todo.todoBgColor)
     let checkedLabels = useSelector((state) => state.todo.checkedLabels)
@@ -45,38 +45,38 @@ function CreateTodo({status,labelName}) {
         }
     }, [newTodo.content, dispatch])
 
-    const addTodoFunc = () => {
+    const createTodoFunc = () => {
 
         if (title.trim() || content.trim()) {
-            dispatch(addTodo(newTodo))
+            dispatch(createTodo(newTodo))
             dispatch(resetForm())
             contentRef.current.style.height = "20px";
         }
-        dispatch(setNewPinnedTodo(false))
+        dispatch(toggleDraftPin(false))
         dispatch(resetBgColor({id:newTodo.id,status:"create"}))
         dispatch(clearCheckedLabels())
     }
    
     const closeFunc = () => {
-        addTodoFunc()
-        dispatch(showFullForm(hidden))
+        createTodoFunc()
+        dispatch(setFormVisibility(false))
     }
 
 
 
     const changeTitle = (e) => {
-        dispatch(updateTodoFields({ title: e.target.value }))
+        dispatch(updateDraft({ title: e.target.value }))
 
     }
     const changeContent = (e) => {
-        dispatch(updateTodoFields({ content: e.target.value }))
+        dispatch(updateDraft({ content: e.target.value }))
 
     }
 
     useEffect(() => {
         const handleFormClick = (event) => {
             if (createTodoContRef.current.contains(event.target)) {
-                dispatch(showCompactForm(hidden));
+                dispatch(setFormVisibility(true));
             };
             // if (!createTodoContRef.current.contains(event.target)) {
             //     closeFunc();
@@ -86,7 +86,7 @@ function CreateTodo({status,labelName}) {
         return () => {
             window.removeEventListener("click", handleFormClick)
         }
-    }, [hidden, dispatch, closeFunc])
+    }, [ dispatch, closeFunc])
 
     useEffect(() => {
         if (contentRef.current.value !== " ") {
@@ -123,12 +123,12 @@ function CreateTodo({status,labelName}) {
                 }
             })
         }
-    }, [hidden])
-
+    }, [isExpanded])
+console.log(isExpanded);
     return (
         <div className='createTodo'>
-            <div ref={createTodoContRef} className='createTodo__form' style={{ background: newTodo.bgColor }} data-open-modal={hidden}>
-                {hidden ?
+            <div ref={createTodoContRef} className='createTodo__form' style={{ background: newTodo.bgColor }} data-open-modal={isExpanded}>
+                {isExpanded ?
                     <div className='createTodo__title-wrapper'>
                         <input
                             className='createTodo__title'
@@ -144,22 +144,22 @@ function CreateTodo({status,labelName}) {
                 <div className='createTodo__content-wrapper'>
                     <textarea
                         ref={contentRef}
-                        onClick={() => dispatch(showCompactForm(hidden))}
+                        onClick={() => dispatch(setFormVisibility(false))}
                         className='createTodo__content' type="text"
                         placeholder='Take a note...'
                         onChange={changeContent}
                         value={content}
-                        style={{ marginTop: hidden ? "10px" : "0" }}></textarea>
-                    {!hidden
+                        style={{ marginTop: isExpanded ? "10px" : "0" }}></textarea>
+                    {!isExpanded
                         ? 
                         <div className='node-type-wrapper'>
-                            <button className="note-type-btn btn md-btn" data-tooltip-text="New list">
+                            <button className="todoDetail-type-btn btn md-btn" data-tooltip-text="New list">
                                 <IoIosCheckboxOutline />
                             </button>
-                            <button className="note-type-btn btn md-btn" data-tooltip-text="New note with drawing">
+                            <button className="todoDetail-type-btn btn md-btn" data-tooltip-text="New note with drawing">
                                 <BiSolidPaint />
                             </button>
-                            <button className="note-type-btn btn md-btn" data-tooltip-text="New note with picture">
+                            <button className="todoDetail-type-btn btn md-btn" data-tooltip-text="New note with picture">
                                 <MdOutlineImage />
                             </button>
                         </div>
@@ -169,13 +169,13 @@ function CreateTodo({status,labelName}) {
                 </div>
                 {
              
-                    hidden&&newTodo.labels.map((label) => (
+             isExpanded&&newTodo.labels.map((label) => (
                         <p key={label}>
                         {label }
                        </p>
                     ))
                 }
-                {hidden ? <div className='createTodo__actions-wrapper'>
+                {isExpanded ? <div className='createTodo__actions-wrapper'>
                     <Actions
                         todoId={newTodo.id}
                         status={"create"}

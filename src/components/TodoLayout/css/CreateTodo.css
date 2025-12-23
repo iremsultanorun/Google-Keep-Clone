@@ -123,11 +123,11 @@ create-todo__others-btn.userOptions__dropdown-menu {
     align-items: center;
 }
 
-.note-type-btn {
+.todoDetail-type-btn {
     margin-right: 25px;
 }
 
-.note-type-btn:nth-child(3) {
+.todoDetail-type-btn:nth-child(3) {
     margin-right: 0;
 }
 
@@ -144,7 +144,7 @@ create-todo__others-btn.userOptions__dropdown-menu {
         margin-left: 0px;
     }
 
-    .note-type-btn:nth-child(2) {
+    .todoDetail-type-btn:nth-child(2) {
         font-size: 16px;
     }
 

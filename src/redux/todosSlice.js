@@ -1,59 +1,100 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { modalControl, transferNote } from "./utils"
+import { modalControl, transferTodo, getTodoListByStatus } from "./utils"
 const initialState = {
-    // Background Colors
-    openModalTodoIdPalette: null,
+    // Background & Color Management
+    activePaletteTodoId: null,
     bgPaletteModal: null,
     todoBgColor: "white",
 
-    // todos
+    // Todo Collections
     todos: [],
-    trashNotes: [],
-    remindersNotes: [],
-    archiveNotes: [],
+    trashTodos: [],
+    reminderTodos: [],
+    archiveTodos: [],
 
+    // Label Management
     checkedLabels: [],
-    // create
+
+    // Todo Creation Form
     title: "",
     content: "",
-    hidden: false,
+    isExpanded: false,
 
-    // selected
+    // Selection
     selectedTodoId: null,
     selectedCurrent: 0,
 
+    // Header Controls/Layout
     todoLayout: false,
 
-    openModalTodoIdOther: null,
-    isOthersModal: null,
+    // Modal Management
+    activeOptionsTodoId: null,
+    optionsModal: null,
 
+    // Todo Properties
     isPinned: false,
+
+    // Responsive
     todoDetailHeight: {},
     createTodoHeight: {},
-
 }
 
 const todoSlice = createSlice({
     name: "todo",
     initialState,
     reducers: {
+        //* Selection Reducers
+        toggleTodoSelection: (state, action) => {
+            const { selectId, status } = action.payload
+            const todoList = getTodoListByStatus(state, status)
+            //find
+            const todoSelected = todoList.find((todo) => (todo.id) === selectId)
 
-        addTodo: (state, action) => {
+            if (todoSelected) {
+                todoSelected.selected = !todoSelected.selected
+                todoSelected.selected
+                    ? state.selectedCurrent += 1
+                    : state.selectedCurrent -= 1
+            }
+            state.bgPaletteModal = false
+            state.optionsModal = false
+        },
+        resetTodoSelection: (state) => {
+            const todoList = [state.todos, state.archiveTodos]
+            todoList.forEach(list => {
+                list.forEach(todo => { todo.selected ? todo.selected = false : null })
+            })
+            state.selectedCurrent = 0;
+            state.bgPaletteModal = false
+            state.optionsModal = false
+        },
+        //* Header Reducers
+        toggleTodoLayout: (state) => {
+            state.todoLayout = !state.todoLayout;
+        },
+        //* Create Todo Reducers
+        createTodo: (state, action) => {
             state.todos.push(action.payload)
-            state.isOthersModal = false
+            state.optionsModal = false
             state.bgPaletteModal = false
         },
 
-        updateTodoFields: (state, action) => {
+        updateDraft: (state, action) => {
             if (action.payload.title !== undefined)
                 state.title = action.payload.title
             if (action.payload.content !== undefined)
                 state.content = action.payload.content
-            if (action.payload.dateHours !== undefined)
-                state.dateHours = action.payload.dateHours
+        },
+        setFormVisibility: (state, action) => {
+            state.isExpanded = action.payload
+        },
+        resetForm: (state) => {
+            state.content = ""
+            state.title = ""
         },
 
-        updateSpecificTodo: (state, action) => {
+        //* Todo Detail Reducers
+        updateActiveTodo: (state, action) => {
             const { id, field, value } = action.payload
 
             const todoIndex = state.todos.findIndex((todo) => id === todo.id)
@@ -61,81 +102,32 @@ const todoSlice = createSlice({
                 state.todos[todoIndex][field] = value
             }
         },
-        setSelectedTodoById: (state, action) => {
+        openTodoDetail: (state, action) => {
             state.selectedTodoId = action.payload
             if (state.selectedTodoId !== null) {
-                state.isOthersModal = false
+                state.optionsModal = false
                 state.bgPaletteModal = false
             }
         },
-
-        clearSelectedTodo: (state) => {
+        closeTodoDetail: (state) => {
             state.selectedTodoId = null;
             state.bgPaletteModal = false
-            state.isOthersModal = false
-        },
-        clearSelectedTodos: (state) => {
-            state.todos.forEach(todo => {
-                if (todo.selected) {
-                    todo.selected = false;
-                }
-            });
-            state.archiveNotes.forEach(todo => {
-                if (todo.selected) {
-                    todo.selected = false;
-                }
-            });
-            state.selectedCurrent = 0;
-            state.bgPaletteModal = false
-            state.isOthersModal = false
-        },
-        showFullForm: (state) => {
-            state.hidden = false
-        },
-        showCompactForm: (state) => {
-            state.hidden = true
-        },
-        resetForm: (state) => {
-            state.content = ""
-            state.title = ""
+            state.optionsModal = false
         },
 
-        setSelectedTodo: (state, action) => {
-            const { selectId, status } = action.payload
-            const todoList =
-                status === 'home'
-                    ? state.todos
-                    : status === 'archive'
-                        ? state.archiveNotes
-                        : status === "trash"
-                            ? state.trashNotes : null
-
-            const todoSelected = todoList.find((todo) => (todo.id) === selectId)
-
-            if (todoSelected) {
-                todoSelected.selected = !todoSelected.selected
-                if (todoSelected.selected == true) {
-                    state.selectedCurrent += 1
-                }
-                if (todoSelected.selected == false) {
-                    state.selectedCurrent -= 1
-                }
-            }
-            state.bgPaletteModal = false
-            state.isOthersModal = false
-        },
-
-        setPinnedTodo: (state, action) => {
+        //* Pinning Reducers
+        toggleTodoPin: (state, action) => {
             const { pinnedId, status } = action.payload
             const todoList = status === 'home' ? state.todos :
-                status === 'archive' ? state.archiveNotes : null;
+                status === 'archive' ? state.archiveTodos : null;
 
             const todoPinned = todoList.find((todo) => todo.id === pinnedId)
             if (todoPinned) {
                 todoPinned.pinned = !todoPinned.pinned
             }
         },
-        setAllPinnedTodo: (state) => {
+
+        pinSelectedTodos: (state) => {
             state.todos.forEach((todo) => {
                 if (todo.selected == true) {
                     todo.pinned = !todo.pinned
@@ -143,7 +135,7 @@ const todoSlice = createSlice({
                     state.selectedCurrent = 0
                 }
             })
-            state.archiveNotes.forEach((todo) => {
+            state.archiveTodos.forEach((todo) => {
                 if (todo.selected == true) {
                     todo.pinned = !todo.pinned
                     todo.selected = false
@@ -153,100 +145,16 @@ const todoSlice = createSlice({
 
         },
 
-        setNewPinnedTodo: (state, action) => {
+        toggleDraftPin: (state, action) => {
             state.isPinned = action.payload
         },
 
-        setTodoLayout: (state) => {
-            state.todoLayout = !state.todoLayout;
+        //* Option Reducers
+        openTodoOptions: (state, action) => {
+            modalControl(state, action, "optionsModal", "activeOptionsTodoId")
         },
-
-        setIsOthersModal: (state, action) => {
-            modalControl(state, action, "isOthersModal", "openModalTodoIdOther")
-        },
-
-        setDeleteTodo: (state, action) => {
-            transferNote(state, action, "todos", "trashNotes")
-        },
-        setDeleteArchive: (state, action) => {
-            transferNote(state, action, "archiveNotes", "trashNotes")
-        },
-        setAllDeleteTodo: (state, action) => {
-            const status = action.payload
-
-            if (status === "selected") {
-                const selectedFromTodos = state.todos.filter(todo => todo.selected)
-                const selectedFromArchive = state.archiveNotes.filter(todo => todo.selected)
-
-                selectedFromTodos.forEach(todo => state.trashNotes.push(todo))
-                selectedFromArchive.forEach(todo => state.trashNotes.push(todo))
-
-                state.todos = state.todos.filter(todo => !todo.selected)
-                state.archiveNotes = state.archiveNotes.filter(todo => !todo.selected)
-
-                state.todos.forEach(todo => {
-                    if (todo.selected) todo.selected = false
-                })
-                state.archiveNotes.forEach(todo => {
-                    if (todo.selected) todo.selected = false
-                })
-                state.trashNotes.forEach(todo => {
-                    if (todo.selected) todo.selected = false
-                })
-                state.selectedCurrent = 0
-            }
-
-        },
-        setAllDeleteTodos: (state) => {
-            // const status = action.payload
-
-            // if (status === "selected") {
-            //     const selectedFromTodos = state.todos.filter(todo => todo.selected)
-            //     const selectedFromArchive = state.archiveNotes.filter(todo => todo.selected)
-
-            //     selectedFromTodos.forEach(todo => state.trashNotes.push(todo))
-            //     selectedFromArchive.forEach(todo => state.trashNotes.push(todo))
-
-            //     state.todos = state.todos.filter(todo => !todo.selected)
-            //     state.archiveNotes = state.archiveNotes.filter(todo => !todo.selected)
-
-            //     state.todos.forEach(todo => {
-            //         if (todo.selected) todo.selected = false
-            //     })
-            //     state.archiveNotes.forEach(todo => {
-            //         if (todo.selected) todo.selected = false
-            //     })
-            //     state.trashNotes.forEach(todo => {
-            //         if (todo.selected) todo.selected = false
-            //     })
-            //     state.selectedCurrent = 0
-            // }
-            const selectedId = state.trashNotes.filter((todo) => todo.selected).map(todo => todo.id)
-            state.trashNotes.forEach((todo) => {
-                if (todo.selected) {
-                    state.todos.push(todo)
-                    todo.selected = false
-                    state.selectedCurrent = 0
-                }
-            })
-
-            state.trashNotes = state.trashNotes.filter((todo) => !selectedId.includes(todo.id))
-
-        },
-        setRestoreTrash: (state, action) => {
-            transferNote(state, action, "trashNotes", "todos")
-            state.selectedTodoId = null
-        },
-        setRestoreArchive: (state, action) => {
-            transferNote(state, action, "archiveNotes", "todos")
-            state.selectedTodoId = null
-        },
-        setArchiveTodo: (state, action) => {
-            transferNote(state, action, "todos", "archiveNotes")
-            state.selectedTodoId = null;
-            state.isPinned = false
-        },
-        setIsChecked: (state, action) => {
+        //* Label Actions Reducers
+        toggleLabelFilter: (state, action) => {
             const labelName = action.payload
             const index = state.checkedLabels.indexOf(labelName)
             if (index > -1) {
@@ -255,11 +163,124 @@ const todoSlice = createSlice({
                 state.checkedLabels.push(labelName);
             }
         },
-
         clearCheckedLabels: (state) => {
             state.checkedLabels = []
         },
-        setNewArchiveTodo: (state) => {
+        addLabelToTodo: (state, action) => {
+            const { todoId, label, status } = action.payload;
+
+            if (todoId === null) {
+                [state.todos, state.archiveTodos, state.trashTodos].forEach(list => {
+                    console.log(list)
+                    list.forEach(todo => {
+                        console.log(todo)
+                        if (todo.selected && !todo.labels?.includes(label)) {
+                            todo.labels.push(label);
+                        }
+                    });
+                });
+            } else {
+                const todoList = status === 'home' ? state.todos :
+                    status === 'archive' ? state.archiveTodos :
+                        state.trashTodos;
+                const todo = todoList.find(t => t.id === todoId);
+                if (todo && !todo.labels?.includes(label)) {
+                    todo.labels.push(label);
+                }
+            }
+        },
+        removeLabelFromTodo: (state, action) => {
+            const { todoId, label, status } = action.payload;
+
+
+            if (todoId === null) {
+                [state.todos, state.archiveTodos, state.trashTodos].forEach(list => {
+                    list.forEach(todo => {
+                        if (todo.selected) {
+                            todo.labels = todo.labels.filter(l => l !== label);
+                        }
+                    });
+                })
+            } else {
+                const todoList = status === 'home' ? state.todos :
+                    status === 'archive' ? state.archiveTodos :
+                        state.trashTodos;
+
+                const todo = todoList.find(t => t.id === todoId);
+                if (todo) {
+                    todo.labels = todo.labels.filter(l => l !== label);
+                }
+            }
+        },
+
+        //* Trash Reducers
+        moveTodoToTrash: (state, action) => {
+            const { transferTodoId, status } = action.payload;
+            transferTodo(state, transferTodoId, "todos", "trashTodos")
+            if (status === "home") {
+                transferTodo(state, transferTodoId, "todos", "trashTodos")
+            } else if (status === "archive") {
+                transferTodo(state, transferTodoId, "archiveTodos", "trashTodos")
+                console.log("archiveden silinmesi bekleniyo");
+            }
+        },
+        moveSelectedTodosToTrash: (state, action) => {
+            const status = action.payload
+
+            if (status === "selected") {
+                const selectedFromTodos = state.todos.filter(todo => todo.selected)
+                const selectedFromArchive = state.archiveTodos.filter(todo => todo.selected)
+
+                selectedFromTodos.forEach(todo => state.trashTodos.push(todo))
+                selectedFromArchive.forEach(todo => state.trashTodos.push(todo))
+
+                state.todos = state.todos.filter(todo => !todo.selected)
+                state.archiveTodos = state.archiveTodos.filter(todo => !todo.selected)
+
+                state.todos.forEach(todo => {
+                    if (todo.selected) todo.selected = false
+                })
+                state.archiveTodos.forEach(todo => {
+                    if (todo.selected) todo.selected = false
+                })
+                state.trashTodos.forEach(todo => {
+                    if (todo.selected) todo.selected = false
+                })
+                state.selectedCurrent = 0
+            }
+
+        },
+        restoreSelectedTodosFromTrash: (state) => {
+            const selectedId = state.trashTodos.filter((todo) => todo.selected).map(todo => todo.id)
+            state.trashTodos.forEach((todo) => {
+                if (todo.selected) {
+                    state.todos.push(todo)
+                    todo.selected = false
+                    state.selectedCurrent = 0
+                }
+            })
+
+            state.trashTodos = state.trashTodos.filter((todo) => !selectedId.includes(todo.id))
+
+        },
+        restoreTodoFromTrash: (state, action) => {
+            transferTodo(state, action, "trashTodos", "todos")
+            state.selectedTodoId = null
+        },
+
+        //* Archive Reducers
+        moveTodoToArchive: (state, action) => {
+            transferTodo(state, action, "todos", "archiveTodos")
+            state.selectedTodoId = null;
+            state.isPinned = false
+            console.log("object");
+        },
+        restoreTodoFromArchive: (state, action) => {
+            transferTodo(state, action, "archiveTodos", "todos")
+            state.selectedTodoId = null
+        },
+
+        createArchivedTodo: (state) => {
             const newArchiveTodo = {
                 content: state.content,
                 title: state.title,
@@ -269,21 +290,21 @@ const todoSlice = createSlice({
                 bgColor: state.todoBgColor,
                 labels: [...state.checkedLabels]
             }
-            state.archiveNotes.push(newArchiveTodo)
+            state.archiveTodos.push(newArchiveTodo)
             state.content = ""
             state.title = ""
-            state.hidden = false
+            state.isExpanded = false
             state.checkedLabels = []
             state.todoBgColor = "white"
             state.bgPaletteModal = false
-            state.isOthersModal = false
+            state.optionsModal = false
 
         },
-        setAllArchiveTodo: (state) => {
+        moveSelectedTodosToArchive: (state) => {
             const selectedId = state.todos.filter((todo) => todo.selected).map(todo => todo.id)
             state.todos.forEach((todo) => {
                 if (todo.selected) {
-                    state.archiveNotes.push(todo)
+                    state.archiveTodos.push(todo)
                     todo.selected = false
                     state.selectedCurrent = 0
                 }
@@ -292,9 +313,9 @@ const todoSlice = createSlice({
             state.todos = state.todos.filter((todo) => !selectedId.includes(todo.id))
 
         },
-        setAllRestoreArchiveTodo: (state) => {
-            const selectedId = state.archiveNotes.filter((todo) => todo.selected).map(todo => todo.id)
-            state.archiveNotes.forEach((todo) => {
+        restoreSelectedTodosFromArchive: (state) => {
+            const selectedId = state.archiveTodos.filter((todo) => todo.selected).map(todo => todo.id)
+            state.archiveTodos.forEach((todo) => {
                 if (todo.selected) {
                     state.todos.push(todo)
                     todo.selected = false
@@ -302,32 +323,41 @@ const todoSlice = createSlice({
                 }
             })
 
-            state.archiveNotes = state.archiveNotes.filter((todo) => !selectedId.includes(todo.id))
+            state.archiveTodos = state.archiveTodos.filter((todo) => !selectedId.includes(todo.id))
 
         },
-        setTodoDetailHeight: (state, action) => {
-            const { todoId, height } = action.payload
-            state.todoDetailHeight[todoId] = height
-        },
-        setCreateTodoHeight: (state, action) => {
-            const { height } = action.payload
-            state.createTodoHeight = height
-        },
-// Background Colors
+
+        //* Background Colors
         openBgPaletteModal: (state, action) => {
-            modalControl(state, action, "bgPaletteModal", "openModalTodoIdPalette")
+            modalControl(state, action, "bgPaletteModal", "activePaletteTodoId")
+            console.log("çalışıypr mu?");
         },
 
-        updateTodoBgColor : (state, action) => {
+        updateTodoBgColor: (state, action) => {
             const { color, status, id } = action.payload
             if (status == "create") { state.todoBgColor = color }
-            if (status == "home" || status == "note") {
+            if (status == "home" || status == "todoDetail") {
                 const todoIndex = state.todos.findIndex((todo) => todo.id === id)
                 state.todos[todoIndex].bgColor = color
             }
             if (status == "archive") {
-                const todoIndex = state.archiveNotes.findIndex((todo) => todo.id === id)
-                state.archiveNotes[todoIndex].bgColor = color
+                const todoIndex = state.archiveTodos.findIndex((todo) => todo.id === id)
+                state.archiveTodos[todoIndex].bgColor = color
+            }
+        },
+
+        resetBgColor: (state, action) => {
+            const { todoId, status } = action.payload;
+
+            if (status === "create") {
+                state.todoBgColor = "white";
+            } else {
+                const todoList = getTodoListByStatus(state, status)
+                //find
+                const todo = todoList?.find(todo => todo.id === todoId)
+                if (todo) {
+                    todo.bgColor = "white"
+                }
             }
         },
         updateSelectedTodosBgColor: (state, action) => {
@@ -339,7 +369,7 @@ const todoSlice = createSlice({
                     }
                 });
             }
-            state.archiveNotes.forEach((todo) => {
+            state.archiveTodos.forEach((todo) => {
                 if (todo.selected === true) {
                     todo.bgColor = color;
                 }
@@ -347,35 +377,13 @@ const todoSlice = createSlice({
 
 
         },
-        resetBgColor: (state, action) => {
-            const { todoId, status } = action.payload;
-
-            if (status === "create") {
-                state.todoBgColor = "white";
-            } else {
-                let todoList;
-
-                if (status === "home") {
-                    todoList = state.todos
-                } else if (status === "archive") {
-                    todoList = state.archiveNotes
-                } else {
-                    todoList = state.todos;
-                }
-
-                const todo = todoList?.find(todo => todo.id === todoId)
-                if (todo) {
-                    todo.bgColor = "white"
-                }
-            }
-        },
         resetSelectedTodosBgColor: (state) => {
             state.todos.forEach((todo) => {
                 if (todo.selected === true) {
                     todo.bgColor = "white";
                 }
             });
-            state.archiveNotes.forEach((todo) => {
+            state.archiveTodos.forEach((todo) => {
                 if (todo.selected === true) {
                     todo.bgColor = "white";
                 }
@@ -383,68 +391,66 @@ const todoSlice = createSlice({
 
         },
 
-
-        addLabelToTodo: (state, action) => {
-            const { todoId, label, status } = action.payload;
-
-            if (todoId === null) {
-                [state.todos, state.archiveNotes, state.trashNotes].forEach(list => {
-                    console.log(list)
-                    list.forEach(todo => {
-                        console.log(todo)
-                        if (todo.selected && !todo.labels?.includes(label)) {
-                            todo.labels.push(label);
-                        }
-                    });
-                });
-            } else {
-                const todoList = status === 'home' ? state.todos :
-                    status === 'archive' ? state.archiveNotes :
-                        state.trashNotes;
-                const todo = todoList.find(t => t.id === todoId);
-                if (todo && !todo.labels?.includes(label)) {
-                    todo.labels.push(label);
-                }
-            }
+        //* Responsive
+        setTodoDetailHeight: (state, action) => {
+            const { todoId, height } = action.payload
+            state.todoDetailHeight[todoId] = height
+        },
+        setCreateTodoHeight: (state, action) => {
+            const { height } = action.payload
+            state.createTodoHeight = height
         },
 
-        removeLabelFromTodo: (state, action) => {
-            const { todoId, label, status } = action.payload;
-
-
-            if (todoId === null) {
-                [state.todos, state.archiveNotes, state.trashNotes].forEach(list => {
-                    list.forEach(todo => {
-                        if (todo.selected) {
-                            todo.labels = todo.labels.filter(l => l !== label);
-                        }
-                    });
-                })
-            } else {
-                const todoList = status === 'home' ? state.todos :
-                    status === 'archive' ? state.archiveNotes :
-                        state.trashNotes;
-
-                const todo = todoList.find(t => t.id === todoId);
-                if (todo) {
-                    todo.labels = todo.labels.filter(l => l !== label);
-                }
-            }
-        }
     }
-
 }
 )
 
-export const { updateTodoFields, showFullForm, showCompactForm, addTodo, resetForm, setSelectedTodo, setPinnedTodo, setTodoLayout, updateSpecificTodo, setSelectedTodoById, clearSelectedTodo, setIsOthersModal, setDeleteTodo, setArchiveTodo, setNewPinnedTodo, clearSelectedTodos, setAllPinnedTodo, setTodoDetailHeight, setCreateTodoHeight,
-
-    // Background Colors
+export const {
+    //* Selection Reducers
+    toggleTodoSelection,
+    resetTodoSelection,
+    //* Header Reducers
+    toggleTodoLayout,
+    //*Create Todo Reducers
+    createTodo,
+    updateDraft,
+    setFormVisibility,
+    resetForm,
+    //* Todo Detail Reducers
+    updateActiveTodo,
+    openTodoDetail,
+    closeTodoDetail,
+    //* Pinning Reducers
+    toggleTodoPin,
+    pinSelectedTodos,
+    toggleDraftPin,
+    //* Option Reducers
+    openTodoOptions,
+    //* Label Actions Reducers
+    toggleLabelFilter,
+    clearCheckedLabels,
+    addLabelToTodo,
+    removeLabelFromTodo,
+    //* Responsive
+    setTodoDetailHeight,
+    setCreateTodoHeight,
+    //* Background Color Actions
     openBgPaletteModal,
-    updateTodoBgColor ,
+    updateTodoBgColor,
     resetBgColor,
     updateSelectedTodosBgColor,
     resetSelectedTodosBgColor,
+    //* Trash Reducers
+    moveTodoToTrash,
+    moveSelectedTodosToTrash,
+    restoreTodoFromTrash,
+    restoreSelectedTodosFromTrash,
+    //* Archive Reducers
+    moveTodoToArchive,
+    moveSelectedTodosToArchive,
+    createArchivedTodo,
+    restoreSelectedTodosFromArchive,
 
-    setAllArchiveTodo, setAllDeleteTodo, setNewArchiveTodo, setRestoreTrash, setRestoreArchive, setDeleteArchive, addLabelToTodo, removeLabelFromTodo, setAllRestoreArchiveTodo, setIsChecked, clearCheckedLabels, setAllDeleteTodos, addLabelAllToTodo } = todoSlice.actions
+} = todoSlice.actions
 
 export default todoSlice.reducer

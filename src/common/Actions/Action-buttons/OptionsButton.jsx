@@ -1,27 +1,27 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setIsOthersModal } from '../../../redux/todosSlice'
+import { openTodoOptions } from '../../../redux/todosSlice'
 
 import DropdownModal from '../../../modals/DropdownModal'
 
 import { LuEllipsisVertical } from 'react-icons/lu'
 import { setLabelModal } from '../../../redux/labelModalSlice'
 
-function OthersButton({ todoId, status }) {
+function OptionsButton({ todoId, status }) {
 
     const dispatch = useDispatch()
 
-    const openModalTodoIdOther = useSelector((state) => state.todo.openModalTodoIdOther)
-    const isOthersModal = useSelector((state) => state.todo.isOthersModal)
+    const optionsModal = useSelector((state) => state.todo.optionsModal)
+    const activeOptionsTodoId = useSelector((state) => state.todo.activeOptionsTodoId)
 
     let isModalOpen = false
     let currentClassName = "btn "
-    const statusList = ["create", "selected", "note"]
+    const statusList = ["create", "selected", "todoDetail"]
 
-    if (isOthersModal) {
+    if (optionsModal) {
         statusList.includes(status)
-            ? isModalOpen = isOthersModal.status === status
-            : isModalOpen = isOthersModal.status === status && openModalTodoIdOther === todoId
+            ? isModalOpen = optionsModal.status === status
+            : isModalOpen = optionsModal.status === status && activeOptionsTodoId === todoId
     }
 
 
@@ -30,16 +30,16 @@ function OthersButton({ todoId, status }) {
         ? currentClassName += "md-btn selection-bar__action"
         : currentClassName += "action-btn sm-btn"
 
-    const handleClick = () => {
+    const handleOpenOthersButton = () => {
         (status === "selected" || status === "create") ?
-            dispatch(setIsOthersModal(
+            dispatch(openTodoOptions(
                 {
                     id: null,
                     status: status
 
                 }
             ))
-            : dispatch(setIsOthersModal(
+            : dispatch(openTodoOptions(
                 {
                     id: todoId,
                     status: status
@@ -51,7 +51,7 @@ function OthersButton({ todoId, status }) {
     return (
         <div>
             <button
-                onClick={handleClick}
+                onClick={handleOpenOthersButton}
                 className={currentClassName}
                 data-tooltip-text="Other">
                 <LuEllipsisVertical />
@@ -68,5 +68,5 @@ function OthersButton({ todoId, status }) {
     )
 }
 
-export default OthersButton
+export default OptionsButton
 

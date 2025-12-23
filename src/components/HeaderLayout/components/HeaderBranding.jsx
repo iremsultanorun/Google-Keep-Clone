@@ -9,12 +9,15 @@ import { setIsCollapsed, setIsSlideModal } from '../../../redux/headerSlice'
 import { HiBars3 } from "react-icons/hi2";
 
 function HeaderBranding() {
+
     const dispatch = useDispatch()
+
     const activeLogo = useSelector((state) => state.header.activeLogo)
-let className="header__title"
-if(activeLogo=="Notes"){
-className+=" keep-title"
-}
+
+    let className = "header__title ";
+
+    (activeLogo == "Notes") ? className += " keep-title" : null
+
     const handleMenuClick = () => {
         dispatch(setIsCollapsed())
         dispatch(setIsSlideModal())

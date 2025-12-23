@@ -37,12 +37,12 @@
   top: 30px;
 }
 
-.modalClassName__note-top {
+.modalClassName__todoDetail-top {
   right: -20px;
   bottom: 30px;
 }
 
-.modalClassName__note-bottom {
+.modalClassName__todoDetail-bottom {
   top: 18px;
   right: 60px;
 }
@@ -232,7 +232,7 @@ overflow: scroll;
 }
 
 .bg-modal__create,
-.bg-modal__note {
+.bg-modal__todoDetail {
   top: 25px;
   left: 50px;
 }

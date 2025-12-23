@@ -12,29 +12,22 @@ function Search() {
 
   const isSearchModal = useSelector((state) => state.header.isSearchModal)
   const isSearchPage = useSelector((state) => state.header.isSearchPage)
-const backgroundColor=isSearchPage ? "white" : "var(--color-gray-100)"
-const boxShadow=isSearchPage
-? "rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px"
-: "none"
+
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  const handleInputClick = () => {
+  const handleSearchOpen = () => {
     dispatch(setIsSearchPage(true))
     navigate("/search")
   }
-  const handleCloseClick = () => {
+  const handleSearchClose = () => {
     dispatch(setIsSearchPage(false))
     navigate("/")
   }
 
   return (
-    <div className='search'
+    <div className={`search ${isSearchPage ? "page-active" : " "}`}
       data-open-modal={isSearchModal}
-      style={{
-        backgroundColor: backgroundColor,
-        boxShadow: boxShadow,
-      }}
     >
       <button
         className='btn md-btn search__icon' data-tooltip-text="Search">
@@ -45,13 +38,14 @@ const boxShadow=isSearchPage
         type="text"
         className='search__input'
         placeholder='Search'
-        onClick={handleInputClick} />
+        onClick={handleSearchOpen} />
 
       <button
-        className='btn md-btn search__close-btn' data-tooltip-text="Clear Search"
-        onClick={handleCloseClick}>
+        className='btn md-btn search__close-btn'
+        data-tooltip-text="Clear Search"
+        onClick={handleSearchClose}>
         {
-          isSearchPage ? <CgClose /> : null
+          isSearchPage && <CgClose />
         }
       </button>
     </div>

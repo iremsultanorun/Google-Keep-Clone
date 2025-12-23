@@ -5,21 +5,21 @@ import { useSelector } from 'react-redux'
 import EmptyState from '../common/components/EmptyState'
 import EmptyStateTrash from "./../assets/empty-state-icons/empty-state-trash-icon.svg"
 function TrashPage() {
-  const trashNotes=useSelector((state)=>state.todo.trashNotes)
+  const trashTodos=useSelector((state)=>state.todo.trashTodos)
   return (
     <div>
         <div style={{display:"flex"
         }}>
       <p>Notes in trash are deleted after 7 days</p>
       {
-       trashNotes.length>0 &&
+       trashTodos.length>0 &&
     
         <button>Empty Trash</button>
       }
       </div>
-<TodoList notes={trashNotes} status={"trash"} />
+<TodoList notes={trashTodos} status={"trash"} />
 {
-        trashNotes.length===0 && <EmptyState icon={EmptyStateTrash} message={"No notes in Recycle Bin"}/>
+        trashTodos.length===0 && <EmptyState icon={EmptyStateTrash} message={"No notes in Recycle Bin"}/>
     }
     </div>
   )

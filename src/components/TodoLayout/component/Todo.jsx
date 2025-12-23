@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import "../css/Todo.css"
 import { useDispatch, useSelector } from 'react-redux'
-import { setSelectedTodo, setSelectedTodoById } from '../../../redux/todosSlice';
+import { toggleTodoSelection, openTodoDetail } from '../../../redux/todosSlice';
 
 import Actions from '../../../common/Actions/Actions';
 import Pin from '../../../common/Actions/Action-buttons/Pin';
@@ -30,7 +30,7 @@ function Todo({ todo, status, type }) {
 
   }, [todoTitleRef, todoContentRef])
   const selecetedTodoById = () => {
-    dispatch(setSelectedTodo({ selectId: todo.id, status: status }))
+    dispatch(toggleTodoSelection({ selectId: todo.id, status: status }))
   }
 
   return (
@@ -44,7 +44,7 @@ function Todo({ todo, status, type }) {
         status !== "trash" && <Pin todoId={todo.id} status={status} />
       }
 
-      <div className="todo__wrapper" onClick={() => dispatch(setSelectedTodoById(todo.id, status))} >
+      <div className="todo__wrapper" onClick={() => dispatch(openTodoDetail(todo.id, status))} >
         <h2 className='todo__title' ref={todoTitleRef}>{baslik}</h2>
         <pre className='todo__content' ref={todoContentRef}>{content} </pre>
       </div>

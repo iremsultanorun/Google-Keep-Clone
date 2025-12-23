@@ -2,7 +2,7 @@ import React from 'react'
 import "../css/HeaderControls.css"
 import { useDispatch, useSelector } from 'react-redux'
 
-import { setTodoLayout } from '../../../redux/todosSlice'
+import { toggleTodoLayout } from '../../../redux/todosSlice'
 import { setIsAppsModal, setIsSearchModal, setIsSettingsModal } from '../../../redux/headerSlice'
 
 import GoogleAppsModal from '../../../modals/GoogleAppsModal'
@@ -31,30 +31,30 @@ function HeaderControls() {
   return (
     <div className='headerControls'>
       <div className='headerControls__wrapper'>
+
         <button
           className='btn headerControls__search-close'
-          data-tooltip-text= "Close Search" 
+          data-tooltip-text="Close Search"
           onClick={() => dispatch(setIsSearchModal(false))}>
-       {
-        isSearchModal?
-        !isSearchPage?
-         <CgClose />:null :null
-       }
-           
-          
-          
+          {
+            isSearchModal
+              ? !isSearchPage
+                ? <CgClose />
+                : null
+              : null
+          }
         </button>
+
         <button
           className='btn headerControls__search'
           data-tooltip-text="Search"
           onClick={() => dispatch(setIsSearchModal(true))}>
-         
-             { 
-                !isSearchModal&&   
-              <HiOutlineMagnifyingGlass />
-              }
-          
 
+          {
+            !isSearchModal &&
+            <HiOutlineMagnifyingGlass />
+          }
+          
         </button>
 
         <button
@@ -68,7 +68,7 @@ function HeaderControls() {
             ? <button
               className='btn md-btn headerControls__list-view'
               data-tooltip-text={todoLayout ? "List view" : "Grid view"}
-              onClick={() => dispatch(setTodoLayout())}>
+              onClick={() => dispatch(toggleTodoLayout())}>
               {
                 todoLayout ? <FaTableCellsLarge /> : <GoRows />
               }

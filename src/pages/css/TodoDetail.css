@@ -1,4 +1,4 @@
-.note{
+.todoDetail{
     width: 100vw;
     height: 100vh;
     display: flex;
@@ -9,7 +9,7 @@
     position: fixed;
 
 }
-.note__wrapper{
+.todoDetail__wrapper{
     width: 600px;
     max-height: 600px;
     min-width: max-content;
@@ -22,35 +22,35 @@
     justify-content: space-between;
     transition: background-color .2s ease;
 }
-.note__info-container{
+.todoDetail__info-container{
    
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
-.note__scroll-area {
+.todoDetail__scroll-area {
     overflow-y: auto;
     flex-grow: 1; 
     padding: 14px 18px; 
 }
-.note__actions-wrapper{
+.todoDetail__actions-wrapper{
     box-shadow: rgba(0, 0, 0, 0.15) 0 -3px 3.2px;
     padding: 10px 20px;
     flex-shrink: 0;
 }
-.note__location{
+.todoDetail__location{
     font-size: 13px;
     padding-right: 30px;
 }
 
 
 @media screen and (max-height:613px) {
-    .note__wrapper{
+    .todoDetail__wrapper{
         height: 400px;
     }
 }
 @media screen and (max-height:500px) {
-    .note__wrapper{
+    .todoDetail__wrapper{
         height: 300px;
     }
 }

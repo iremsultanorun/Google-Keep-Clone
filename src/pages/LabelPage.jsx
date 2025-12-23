@@ -8,14 +8,14 @@ import { useParams } from 'react-router-dom'
 
 function LabelPage() {
   const { labelName } = useParams()
-  const archiveNotes = useSelector((state) => state.todo.archiveNotes)
+  const archiveTodos = useSelector((state) => state.todo.archiveTodos)
   const todos = useSelector((state) => state.todo.todos)
   
   const homeLabelTodos = todos.filter(todo =>
     todo.labels?.includes(labelName)
   )
   
-  const archiveLabelTodos = archiveNotes.filter(todo =>
+  const archiveLabelTodos = archiveTodos.filter(todo =>
     todo.labels?.includes(labelName)
   )
 console.log(labelName)
