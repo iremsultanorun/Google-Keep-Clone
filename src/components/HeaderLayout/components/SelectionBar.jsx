@@ -13,7 +13,7 @@ import { BiBellPlus } from 'react-icons/bi'
 import { RiInboxArchiveLine, RiInboxUnarchiveLine } from 'react-icons/ri'
 import { useLocation } from 'react-router-dom'
 import { MdDeleteForever, MdRestoreFromTrash } from 'react-icons/md'
-import { moveSelectedTodosToArchive, resetTodoSelection, restoreSelectedTodosFromArchive, restoreSelectedTodosFromTrash } from '../../../redux/todosSlice'
+import { deleteSelectedTodosFromTrash, moveSelectedTodosToArchive, resetTodoSelection, restoreSelectedTodosFromArchive, restoreSelectedTodosFromTrash } from '../../../redux/todosSlice'
 
 function SelectionBar() {
 
@@ -49,7 +49,10 @@ function SelectionBar() {
                 {
                     statusTrash
                         ? <div className="selection-bar__actions-wrapper">
-                            <button className='btn md-btn selection-bar__action' data-tooltip-text="Completely delete">
+                            <button 
+                            className='btn md-btn selection-bar__action' data-tooltip-text="Completely delete"
+                            onClick={()=>dispatch(deleteSelectedTodosFromTrash())}
+                            >
                                 <MdDeleteForever />
                             </button>
 

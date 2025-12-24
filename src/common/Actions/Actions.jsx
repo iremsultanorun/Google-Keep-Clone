@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { useDispatch } from 'react-redux'
-import { moveTodoToArchive, createArchivedTodo, restoreTodoFromArchive, restoreTodoFromTrash } from '../../redux/todosSlice'
+import { moveTodoToArchive, createArchivedTodo, restoreTodoFromArchive, restoreTodoFromTrash, deleteTodoFromTrash } from '../../redux/todosSlice'
 
 import OthersButton from './Action-buttons/OptionsButton'
 import BgPaletteButton from './Action-buttons/BgPaletteButton'
@@ -28,7 +28,10 @@ function Actions({ todoId, status, className, isNoteComponent = false }) {
 
             {
                 isTrash &&
-                <button className='btn action-btn sm-btn' data-tooltip-text="Completely delete">
+                <button 
+                className='btn action-btn sm-btn' data-tooltip-text="Completely delete"
+                onClick={()=>dispatch(deleteTodoFromTrash(todoId))}
+                >
                     <MdDeleteForever />
                 </button>
             }
@@ -37,7 +40,7 @@ function Actions({ todoId, status, className, isNoteComponent = false }) {
                 <button
                     className='btn action-btn sm-btn'
                     data-tooltip-text="Restore"
-                    onClick={() => dispatch(restoreTodoFromTrash(todoId))}
+                    onClick={() => dispatch(restoreTodoFromTrash({transferTodoId:todoId}))}
                 >
                     <MdRestoreFromTrash />
                 </button>
@@ -76,7 +79,7 @@ function Actions({ todoId, status, className, isNoteComponent = false }) {
                     <button
                         className='btn action-btn sm-btn'
                         onClick={() => {
-                            dispatch(moveTodoToArchive(todoId))
+                            dispatch(moveTodoToArchive({transferTodoId:todoId}))
                             if (status === "create") {
                                 dispatch(createArchivedTodo())
                             }
@@ -94,7 +97,7 @@ function Actions({ todoId, status, className, isNoteComponent = false }) {
                         className='btn action-btn sm-btn'
                         data-tooltip-text="Unarchive"
                         onClick={() => {
-                            dispatch(restoreTodoFromArchive(todoId))
+                            dispatch(restoreTodoFromArchive({transferTodoId:todoId}))
                         }}
                     >
                         <RiInboxUnarchiveLine />

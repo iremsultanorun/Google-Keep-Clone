@@ -16,43 +16,61 @@
     align-items: center;
     justify-content: space-between;
 }
-.label-editor__input-group{
+.label-editor__input-group {
     display: flex;
     gap: 20px;
+    align-items: center;
 }
 .label-editor__create-wrapper{
     margin-top: 10px;
 }
-.label-editor__input{
+.label-editor__input {
     border: none;
     outline: none;
     background-color: transparent;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--color-gray-700);
+    padding-bottom: 5px;
+    width: 190px;
 }
-.label-editor__input:focus{
-    border-bottom: 1px solid black;
+.label-editor__input:focus,.edit-input:focus{
+    border-bottom: .5px solid var(--color-gray-500);
+ 
 }
-.label-editor__input:focus{
-    border-bottom: 1px solid black;
+.edit-input{
+    outline: none;
+    border: none;
 }
+.edit-input,.edit-text{
+    font-size: 16px;
+}
+
 .label-editor__list-wrapper{
     margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 .label-editor__list-item{
     display: flex;
 }
+
 .label-editor__comleted-btn-wrapper{
     width: 100%;
     padding: 20px;
     display: flex;
     justify-content: flex-end;
-    
 }
 
 .label-editor__comleted-btn{
     font-size: 16px;
+    position: relative;
 }
 .label-editor__comleted-btn.lg-btn::before{
-    width: 108px;
+    content: "";
+    position: absolute;
+    width: 80px;
     height: 40px;
-    left: -14px;
+    left: -24px;
 }

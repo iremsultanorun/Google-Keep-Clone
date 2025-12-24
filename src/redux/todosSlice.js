@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { modalControl, transferTodo, getTodoListByStatus } from "./utils"
+import { modalControl, transferTodo, findTodoIn } from "./utils"
 const initialState = {
     // Background & Color Management
     activePaletteTodoId: null,
@@ -46,9 +46,7 @@ const todoSlice = createSlice({
         //* Selection Reducers
         toggleTodoSelection: (state, action) => {
             const { selectId, status } = action.payload
-            const todoList = getTodoListByStatus(state, status)
-            //find
-            const todoSelected = todoList.find((todo) => (todo.id) === selectId)
+            const todoSelected = findTodoIn(state, status, selectId)
 
             if (todoSelected) {
                 todoSelected.selected = !todoSelected.selected
@@ -118,10 +116,7 @@ const todoSlice = createSlice({
         //* Pinning Reducers
         toggleTodoPin: (state, action) => {
             const { pinnedId, status } = action.payload
-            const todoList = status === 'home' ? state.todos :
-                status === 'archive' ? state.archiveTodos : null;
-
-            const todoPinned = todoList.find((todo) => todo.id === pinnedId)
+            const todoPinned = findTodoIn(state, status, pinnedId)
             if (todoPinned) {
                 todoPinned.pinned = !todoPinned.pinned
             }
@@ -180,10 +175,7 @@ const todoSlice = createSlice({
                     });
                 });
             } else {
-                const todoList = status === 'home' ? state.todos :
-                    status === 'archive' ? state.archiveTodos :
-                        state.trashTodos;
-                const todo = todoList.find(t => t.id === todoId);
+                const todo = findTodoIn(state, status, todoId)
                 if (todo && !todo.labels?.includes(label)) {
                     todo.labels.push(label);
                 }
@@ -202,11 +194,9 @@ const todoSlice = createSlice({
                     });
                 })
             } else {
-                const todoList = status === 'home' ? state.todos :
-                    status === 'archive' ? state.archiveTodos :
-                        state.trashTodos;
 
-                const todo = todoList.find(t => t.id === todoId);
+
+                const todo = findTodoIn(state, status, todoId)
                 if (todo) {
                     todo.labels = todo.labels.filter(l => l !== label);
                 }
@@ -264,19 +254,33 @@ const todoSlice = createSlice({
 
         },
         restoreTodoFromTrash: (state, action) => {
-            transferTodo(state, action, "trashTodos", "todos")
+            const { transferTodoId } = action.payload;
+            transferTodo(state, transferTodoId, "trashTodos", "todos")
             state.selectedTodoId = null
+        },
+        deleteTodoFromTrash:(state,action)=>{
+            const {deleteTodoId}=action.payload
+            state.trashTodos=state.trashTodos.filter((todo)=>todo.id===deleteTodoId)
+        },
+        deleteSelectedTodosFromTrash:(state)=>{
+        state.trashTodos=state.trashTodos.filter(todo=>!todo.selected)
+        state.selectedCurrent=0
+        },
+        emptyTrash:(state)=>{
+        state.trashTodos=[]
         },
 
         //* Archive Reducers
         moveTodoToArchive: (state, action) => {
-            transferTodo(state, action, "todos", "archiveTodos")
+            const { transferTodoId } = action.payload;
+            transferTodo(state, transferTodoId, "todos", "archiveTodos")
             state.selectedTodoId = null;
             state.isPinned = false
             console.log("object");
         },
         restoreTodoFromArchive: (state, action) => {
-            transferTodo(state, action, "archiveTodos", "todos")
+            const {transferTodoId}=action.payload
+            transferTodo(state, transferTodoId, "archiveTodos", "todos")
             state.selectedTodoId = null
         },
 
@@ -352,9 +356,7 @@ const todoSlice = createSlice({
             if (status === "create") {
                 state.todoBgColor = "white";
             } else {
-                const todoList = getTodoListByStatus(state, status)
-                //find
-                const todo = todoList?.find(todo => todo.id === todoId)
+                const todo = findTodoIn(state, status, todoId)
                 if (todo) {
                     todo.bgColor = "white"
                 }
@@ -445,11 +447,15 @@ export const {
     moveSelectedTodosToTrash,
     restoreTodoFromTrash,
     restoreSelectedTodosFromTrash,
+    deleteTodoFromTrash,
+    deleteSelectedTodosFromTrash,
+    emptyTrash,
     //* Archive Reducers
     moveTodoToArchive,
     moveSelectedTodosToArchive,
     createArchivedTodo,
     restoreSelectedTodosFromArchive,
+    restoreTodoFromArchive,
 
 } = todoSlice.actions
 

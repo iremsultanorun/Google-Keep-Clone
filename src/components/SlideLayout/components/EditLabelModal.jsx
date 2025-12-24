@@ -1,41 +1,47 @@
-
-
 import React, { useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import "./../css/EditLabelModal.css"
-import labelIcon from "./../../../assets/slide-icon/label-icon.svg"
 import labelSlideIcon from "./../../../assets/slide-icon/label-slide-icon.svg"
-import labelEditorIcon from "./../../../assets/slide-icon/label-editor-icon.svg"
-import deleteLabelIcon from "./../../../assets/slide-icon/label-delete-icon.svg"
-import { addLabelList,  setEditLabelModal, setLabelName, deleteLabel, updateLabel } from '../../../redux/labelModalSlice';
+import { addLabelList, setEditLabelModal, setLabelName, deleteLabel, updateLabel } from '../../../redux/labelModalSlice';
 import { IoCheckmark } from 'react-icons/io5';
 import { CgClose } from 'react-icons/cg';
 import { GoPlus } from 'react-icons/go';
+import { MdDelete, MdEdit, MdLabel } from 'react-icons/md';
+
 function EditLabel() {
 
   const labelName = useSelector((state) => state.labelModal.labelName)
   const labelList = useSelector((state) => state.labelModal.labelList)
 
-  const [isDeleteIcon, setIsDeleteIcon] = useState(false);
-  const [isSaveIcon, setIsSaveIcon] = useState(false);
+  const [isDeleteIcon, setIsDeleteIcon] = useState(null);
   const [isCreateInput, setIsCreateInput] = useState(true);
   const [editingName, setEditingName] = useState("");
   const [editingId, setEditingId] = useState(null);
   const dispatch = useDispatch()
   const createLabelInputRef = useRef()
-    
+
   const newLabel = {
     id: Date.now(),
     labelIcon: labelSlideIcon,
     name: labelName,
     path: `/label/${labelName}`,
-
   }
-  
-
 
   const addNewLabel = () => {
-    if (labelName.trim() === " ") return;
+    const trimmedName = labelName.trim()
+    
+    if (trimmedName === "") {
+      alert("Please enter a label name.")
+      return;
+    }
+    
+    const isDuplicate = labelList.some(label => label.name.toLowerCase() === trimmedName.toLowerCase())
+    if (isDuplicate) {
+      alert("A label with this name already exists!")
+      createLabelInputRef.current.value = "";
+      return;
+    }
+    
     dispatch(addLabelList(newLabel));
     createLabelInputRef.current.value = "";
   }
@@ -43,17 +49,29 @@ function EditLabel() {
   const startEdit = (label) => {
     setEditingId(label.id);
     setEditingName(label.name);
-    setIsSaveIcon(true)
   }
 
   const saveEdit = () => {
-    if (editingName.trim() === "") return;
-    dispatch(updateLabel({ id: editingId, newLabelName: editingName }));
-    setIsSaveIcon(false)
+    const isDuplicate = labelList.some(label => 
+      (label.name.toLowerCase() === editingName.trim().toLowerCase()) && (label.id !== editingId)
+    )
+
+    if (isDuplicate) {
+      alert("A label with this name already exists!")
+      return;
+    }
+    
+    if (editingName.trim() === "") {
+      alert("Please enter a label name.")
+      return;
+    }
+    
+    dispatch(updateLabel({ id: editingId, newLabelName: editingName.trim() }));
+    setEditingId(null);
   }
 
-  const visibleDeleteIcon = () => setIsDeleteIcon(true)
-  const hiddenDeleteIcon = () => setIsDeleteIcon(false)
+  const visibleDeleteIcon = (id) => setIsDeleteIcon(id)
+  const hiddenDeleteIcon = () => setIsDeleteIcon(null)
 
   const deleteLabelById = (labelId) => dispatch(deleteLabel(labelId))
 
@@ -67,8 +85,8 @@ function EditLabel() {
             <button className='label-editor__control-btn btn sm-btn' onClick={() => setIsCreateInput(!isCreateInput)}>
               {
                 isCreateInput ?
-                <CgClose /> :
-                <GoPlus />
+                  <CgClose /> :
+                  <GoPlus />
               }
             </button>
             {
@@ -77,7 +95,9 @@ function EditLabel() {
                 className='label-editor__input'
                 ref={createLabelInputRef}
                 placeholder='Create new label'
-                onChange={(e) => dispatch(setLabelName(e.target.value))}
+                onChange={(e) => {
+                  dispatch(setLabelName(e.target.value))
+                }}
               /> : null
             }
           </div>
@@ -85,7 +105,7 @@ function EditLabel() {
             isCreateInput ? <button
               className='label-editor__add-btn btn sm-btn'
               onClick={addNewLabel}>
-            <IoCheckmark />
+              <IoCheckmark />
             </button> : null
           }
         </div>
@@ -93,42 +113,51 @@ function EditLabel() {
         <div className='label-editor__list-wrapper '>
           {
             labelList.map((label) => {
-              let isEditing = label.id === editingId;
+              const isEditing = label.id === editingId;
               return (
                 <div
                   className='label-editor__list-item label-editor__wrapper'
-                  onMouseOver={visibleDeleteIcon}
-                  onMouseOut={hiddenDeleteIcon}
+                  onMouseEnter={() => visibleDeleteIcon(label.id)}
+                  onMouseLeave={() => hiddenDeleteIcon()}
                   key={label.id}
                 >
                   <div className="label-editor__input-group">
                     {
-                      isDeleteIcon ?
-                        <button className='label-editor__add-btn btn sm-btn' onClick={() => deleteLabelById(label.id)}><img src={deleteLabelIcon} alt="" /> </button>
-                        : <img src={labelIcon} alt="" />
+                      (label.id === isDeleteIcon && !isEditing) ?
+                        <button
+                          data-tooltip-text="Delete label"
+                          className='label-editor__add-btn btn sm-btn' 
+                          onClick={() => deleteLabelById(label.id)}>
+                          <MdDelete />
+                        </button>
+                        : <MdLabel />
                     }
-                    {isEditing ? isSaveIcon ?
-                      (
-                        <input
-                          type="text"
-                          className='reset-input'
-                          onChange={(e) => setEditingName(e.target.value)}
-                          value={editingName}
-                          autoFocus
-                        />
-                      ) : (
-                        <p> {label.name} </p>
-                      )
-
-                      : <p> {label.name} </p>}
+                    {isEditing ? (
+                      <input
+                        type="text"
+                        className='edit-input'
+                        onChange={(e) => setEditingName(e.target.value)}
+                        value={editingName}
+                        autoFocus
+                      />
+                    ) : (
+                      <p className='edit-text'>{label.name}</p>
+                    )}
                   </div>
-                  {isSaveIcon ? (
-                    <button className='label-editor__add-btn btn sm-btn' onClick={saveEdit}>
-                     <IoCheckmark />
+                  
+                  {isEditing ? (
+                    <button
+                      data-tooltip-text="Save changes"
+                      className='label-editor__add-btn btn sm-btn'
+                      onClick={saveEdit}>
+                      <IoCheckmark />
                     </button>
                   ) : (
-                    <button className='label-editor__add-btn btn sm-btn' onClick={() => { startEdit(label) }}>
-                      <img src={labelEditorIcon} alt="" />
+                    <button
+                      data-tooltip-text="Rename label"
+                      className='label-editor__add-btn btn sm-btn' 
+                      onClick={() => startEdit(label)}>
+                      <MdEdit />
                     </button>
                   )}
                 </div>
@@ -140,8 +169,8 @@ function EditLabel() {
       <hr />
       <div className='label-editor__comleted-btn-wrapper'>
         <button className='label-editor__comleted-btn lg-btn'
-          onClick={() => dispatch( setEditLabelModal(false))}
-        >Completed</button>
+          onClick={() => dispatch(setEditLabelModal(false))}
+        >Done</button>
       </div>
     </div >
   )

@@ -60,7 +60,7 @@
   height: 30px;
   display: flex;
   align-items: center;
-gap: 25px;
+  gap: 25px;
   position: absolute;
   bottom: 10px;
   left: 0;
@@ -78,7 +78,7 @@ gap: 25px;
 .todo__container .todo__choose-btn,
 .todo__container .fixed-btn,
 .todo__container .todo__actions-wrapper {
-  opacity: 0; 
+  opacity: 0;
 }
 
 
@@ -92,13 +92,15 @@ gap: 25px;
 }
 
 @media screen and (max-width:1200px) {
+
   .todo__container .todo__choose-btn,
   .todo__container .fixed-btn,
   .todo__container .todo__actions-wrapper {
-    opacity: 0.7; 
+    opacity: 0.7;
   }
-  
+
 }
+
 @media screen and (min-width:601px) {
   .todo__container[data-open-modal="true"] {
     width: 600px;
@@ -108,5 +110,8 @@ gap: 25px;
 @media screen and (max-width:600px) {
   .todo__container[data-open-modal="false"] {
     width: 100%;
+  }
+  .todo__actions-wrapper {
+ gap: 30px;
   }
 }

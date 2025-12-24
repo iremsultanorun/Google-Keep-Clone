@@ -1,4 +1,4 @@
-export const  transferTodo = (state, transferTodoId, sourceKey, destinationKey) => {
+export const transferTodo = (state, transferTodoId, sourceKey, destinationKey) => {
 
     const transferTodo = state[sourceKey].find((todo) => todo.id === transferTodoId);
     if (transferTodo) {
@@ -36,7 +36,7 @@ export const modalControl = (state, action, modalKey, todoModalKey) => {
     }
 }
 
-export const getTodoListByStatus=(state,status)=>{
+const getTodoListByStatus = (state, status) => {
     switch (status) {
         case 'home':
             return state.todos
@@ -48,3 +48,8 @@ export const getTodoListByStatus=(state,status)=>{
             return []
     }
 }
+
+export const findTodoIn = (state, status, todoId) => {
+    return getTodoListByStatus(state, status).find(todo => todo.id === todoId)
+}
+

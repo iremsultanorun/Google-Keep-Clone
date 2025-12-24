@@ -1,4 +1,4 @@
-.trash__text-wrapper {
+.trash__banner {
     width: 100%;
     display: flex;
     align-items: center;
@@ -7,7 +7,7 @@
     margin-top: 30px;
 }
 
-.trash__text {
+.trash__banner-text {
     font-size: 18px;
     letter-spacing: -1px;
     font-weight: 400;
@@ -19,8 +19,18 @@
     font-weight: 600;
    border: none;
    background-color: transparent;
+   cursor: pointer;
+   position: relative;
 }
-.trash__btn::before{
+.trash__btn:hover::after{
+    content: " ";
+    position: absolute;
+    right: -35px;
+    top: -7px;
     width: 150px;
-    height: 35px;
+    height: 38px;
+    background-color: var(--color-blue-main);
+    opacity: .08;
+    border-radius: 5px;
+ 
 }

@@ -72,20 +72,11 @@
   font-weight: 500;
 }
 
-/* @media screen and (max-width:900px) {
-  .settings__dropdown-menu{
-    right: 110px;
+@media screen and (max-width:900px) {
+  .modalClassName__setting{
+    right: 100px;
   }
 }
-@media screen and (max-width:450px) {
-  .settings__dropdown-menu{
-    right: 60px;
-  }
-} */
-
-
-
-
 
 /* google apps css */
 .apps__modal {
@@ -197,8 +188,8 @@ overflow: scroll;
 
 @media screen and (max-width:500px) {
   .apps__modal {
-    width: 300px;
-    max-height: 300px;
+    width: 350px;
+    max-height: 400px;
   }
 
   .app__img {
@@ -210,12 +201,32 @@ overflow: scroll;
   }
 
   .apps__wrapper {
-    gap: 0;
+    gap: 10px;
   }
 
   .app__container {
     width: 80px;
     height: 80px;
+  }
+}
+@media screen and (max-width:400px) {
+  .apps__modal {
+    width: 300px;
+    max-height: 400px;
+  }
+
+  .apps__wrapper {
+    gap: 5px;
+  }
+}
+@media screen and (max-width:350px) {
+  .apps__modal {
+    width: 280px;
+    max-height: 400px;
+  }
+
+  .apps__wrapper {
+    gap: 0px;
   }
 }
 

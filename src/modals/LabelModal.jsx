@@ -46,7 +46,7 @@ function LabelModal({ status, todoId }) {
         if (status === "create") {
             dispatch(toggleLabelFilter(labelName));
         }
-        else if (todoId === null || todoId === undefined) {  // <- Çoklu seçim
+        else if (todoId === null || todoId === undefined) { 
             const selectedTodos = todos.filter(t => t.selected);
             const allHaveLabel = selectedTodos.every(t => t.labels?.includes(labelName));
 
@@ -54,7 +54,7 @@ function LabelModal({ status, todoId }) {
                 dispatch(removeLabelFromTodo({
                     todoId: null,
                     label: labelName,
-                    status: status  // "home", "archive", "selected" hepsi çalışır
+                    status: status  
                 }));
             } else {
                 dispatch(addLabelToTodo({
@@ -64,7 +64,7 @@ function LabelModal({ status, todoId }) {
                 }));
             }
         }
-        else {  // <- Tek todo
+        else {  
             const isCurrentlyInTodo = todoLabels.includes(labelName);
             if (isCurrentlyInTodo) {
                 dispatch(removeLabelFromTodo({
@@ -80,10 +80,6 @@ function LabelModal({ status, todoId }) {
                 }));
             }
         }
-        console.log("id", todoId)
-        console.log(
-            "ststus", status
-        )
     };
 
 

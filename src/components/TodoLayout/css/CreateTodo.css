@@ -144,10 +144,6 @@ create-todo__others-btn.userOptions__dropdown-menu {
         margin-left: 0px;
     }
 
-    .todoDetail-type-btn:nth-child(2) {
-        font-size: 16px;
-    }
-
     .createTodo__actions-wrapper {
         flex-direction: column;
         justify-content: flex-start;
@@ -155,7 +151,7 @@ create-todo__others-btn.userOptions__dropdown-menu {
     }
 
     .createTodo__actions {
-        gap: 20px;
+ width: 100%;
     }
 
     .createTodo__btn {
@@ -171,13 +167,6 @@ create-todo__others-btn.userOptions__dropdown-menu {
 
     .createTodo__form[ data-open-modal="true"] {
         padding: 14px 18px 30px 18px;
-    }
-
-}
-
-@media screen and (max-width:450px) {
-    .createTodo__actions {
-        gap: 15px;
     }
 
 }
