@@ -50,7 +50,7 @@ function Todo({ todo, status, type }) {
       </div>
       {
         todo.labels?.map((label,id) => (
-          <p key={id}> {label} </p>
+          <p className='label-name' key={id}> {label} </p>
         ))
 
       }

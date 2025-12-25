@@ -169,7 +169,7 @@ function CreateTodo({status,labelName}) {
                 {
              
              isExpanded&&newTodo.labels.map((label) => (
-                        <p key={label}>
+                        <p className='label-name' key={label}>
                         {label }
                        </p>
                     ))

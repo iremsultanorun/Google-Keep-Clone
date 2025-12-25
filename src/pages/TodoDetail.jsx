@@ -143,11 +143,14 @@ function TodoDetail({ todo }) {
                         </div>
                     }
                 </div>
-                <div style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "flex-end"
-                }}>
+             <div className='labels-container'>
+             {
+        todo.labels?.map((label,id) => (
+          <p className='label-name'  key={id}> {label} </p>
+        ))
+      }
+             </div>
+                <div className='status-text'>
 
                     {
                         actualStatus === "trash" && <p className='todoDetail__location'>todoDetail is in Trash</p>
@@ -157,6 +160,7 @@ function TodoDetail({ todo }) {
                     }
 
                 </div>
+             
                 <div className='createTodo__actions-wrapper todoDetail__actions-wrapper'>
                     <Actions todoId={todo.id} status={actualStatus}  istodoDetailComponent={true}  className={"createTodo__actions"}
                     />

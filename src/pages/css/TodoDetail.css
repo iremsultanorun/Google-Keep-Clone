@@ -43,7 +43,14 @@
     padding-right: 30px;
 }
 
-
+.status-text{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.labels-container{
+    margin: 10px 15px;
+}
 @media screen and (max-height:600px) {
   .todoDetail{
     padding-bottom: 0;
