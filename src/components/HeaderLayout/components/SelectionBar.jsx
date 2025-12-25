@@ -77,7 +77,7 @@ function SelectionBar() {
                                     <button
                                         className='btn md-btn selection-bar__action'
                                         onClick={() => {
-                                            dispatch(moveSelectedTodosToArchive())
+                                            dispatch(restoreSelectedTodosFromArchive())
                                         }}
                                     >
                                         <RiInboxUnarchiveLine />
@@ -85,8 +85,9 @@ function SelectionBar() {
                                     : <button
                                         className='btn md-btn selection-bar__action'
                                         onClick={() => {
-                                            dispatch(restoreSelectedTodosFromArchive())
+                                            dispatch(moveSelectedTodosToArchive())
                                         }}
+                                       
                                     >
                                         <RiInboxArchiveLine />
                                     </button>

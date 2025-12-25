@@ -313,6 +313,7 @@ const todoSlice = createSlice({
             })
 
             state.todos = state.todos.filter((todo) => !selectedId.includes(todo.id))
+            console.log("object");
 
         },
         restoreSelectedTodosFromArchive: (state) => {
