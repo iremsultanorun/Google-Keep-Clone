@@ -4,12 +4,12 @@ import keepIcon from "./../../../assets/keep-icon.png"
 import { useDispatch, useSelector } from 'react-redux'
 import "../css/HeaderBranding.css"
 
-import { setIsCollapsed, setIsSlideModal } from '../../../redux/headerSlice'
+import { setIsCollapsed, setIsSlideModal, toggleIsCollapsed } from '../../../redux/headerSlice'
 
 import { HiBars3 } from "react-icons/hi2";
 
 function HeaderBranding() {
-
+ 
     const dispatch = useDispatch()
 
     const activeLogo = useSelector((state) => state.header.activeLogo)
@@ -17,10 +17,13 @@ function HeaderBranding() {
     let className = "header__title ";
 
     (activeLogo == "Notes") ? className += " keep-title" : null
-
+    const MOBILE_BREAKPOINT = 500;
     const handleMenuClick = () => {
-        dispatch(setIsCollapsed())
+   dispatch(toggleIsCollapsed())
         dispatch(setIsSlideModal())
+        if(window.innerWidth<=MOBILE_BREAKPOINT){
+            dispatch(setIsCollapsed(false))
+        }
     }
 
 

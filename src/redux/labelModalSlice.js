@@ -11,6 +11,8 @@ const initialState = {
     filteredLabelList: [],
     closeModal: null,
     isChecked: false,
+
+
 }
 
 const labelModalSlice = createSlice({
@@ -40,7 +42,7 @@ const labelModalSlice = createSlice({
                 state.labelList[index].name = newLabelName
             }
         },
-    
+   
     }
 })
 

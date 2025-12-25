@@ -8,7 +8,6 @@
 }
 
 .modalClassName__todo {
-  right: -60px;
   top: 30px;
 }
 
@@ -46,6 +45,23 @@
   top: 18px;
   right: 60px;
 }
+@media screen and (max-width:600px) {
+  
+.modalClassName__create {
+  right: 55px;
+}
+
+}
+@media screen and (max-width:500px) {
+  .modalClassName__create {
+    right: 0px;
+  }
+  .modalClassName__todo {
+   right: 60px;
+  }
+  
+}
+
 
 .dropdownModal__item {
   min-width: max-content;
@@ -250,12 +266,17 @@ overflow: scroll;
 
 .bg-modal__selected {
   top: 55px;
-  right: 190px;
+  right: 150px;
 }
 
 .bg-modal__todo {
   top: 28px;
   left: -70px;
+}
+
+.bg-modal__home,.bg-modal__archive{
+  top: 28px;
+  left: 0px;
 }
 
 .bg-color-modal {
@@ -265,6 +286,39 @@ overflow: scroll;
   gap: 5px;
   padding: 10px;
   width: 100%;
+}
+@media screen and (max-width:600px) {
+ 
+.bg-modal__create, .bg-modal__home,.bg-modal__archive{
+  left: -20px;
+}
+
+.bg-modal__selected {
+  right: 50px;
+}
+
+}
+@media screen and (max-width:500px) {
+  .bg-color-modal {
+   flex-direction: column;
+  }
+   
+.bg-modal__create {
+  left: 25px;
+}
+.bg-modal__home,.bg-modal__archive{
+left: 20px;
+}
+.bg-modal__selected {
+  right: 170px;
+}
+
+}
+@media screen and (max-width:400px) {
+  .bg-modal__selected {
+    right: 110px;
+  }
+
 }
 
 .color-btn {
@@ -319,15 +373,48 @@ overflow: scroll;
 }
 
 /* label modal */
-
+.label-modal__title{
+  font-size: 15px;
+  color: var(--color-gray-900);
+  font-weight: 400;
+  margin-bottom: 10px;
+}
 .search-label {
   display: flex;
   justify-content: space-between;
   width: 100%;
+  align-items: center;
 }
-
-.label-lists {
+.search-label__input{
+  border: none;
+  outline: none;
+  color: var(--color-gray-900);
+  margin-bottom: 15px;
+}
+.label-list {
   display: flex;
   gap: 5px;
   align-items: center;
+  margin-bottom: 10px;
+  padding: 5px 2px;
 }
+.label-list:hover {
+background-color: var(--color-gray-100);
+cursor: pointer;
+}
+.label-lists label{
+  font-size: 14px;
+  color: var(--color-gray-900);
+cursor: pointer;
+}
+
+.checkbox-input{
+  cursor: pointer;
+}
+.create-btn{
+  font-size: 14px;
+  color: var(--color-gray-900);
+  margin-left: 10px;
+  margin-top: 15px;
+}
+

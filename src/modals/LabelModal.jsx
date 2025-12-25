@@ -1,10 +1,12 @@
 import React, { useMemo, useState } from 'react'
-import { GoPencil } from "react-icons/go";
 import { useDispatch, useSelector } from 'react-redux';
 
 import { addLabelToTodo, removeLabelFromTodo, toggleLabelFilter } from '../redux/todosSlice';
+import { MdOutlineSearch } from 'react-icons/md';
+import { setEditLabelModal } from '../redux/labelModalSlice';
 
 function LabelModal({ status, todoId }) {
+    const [isModal, setIsModal] = useState(false)
     const labelList = useSelector((state) => state.labelModal.labelList)
     const checkedLabels = useSelector((state) => state.todo.checkedLabels)
 
@@ -36,7 +38,9 @@ function LabelModal({ status, todoId }) {
 
     const filteredLabels = useMemo(() => {
         if (searchText.trim() === "") {
+            setIsModal(false)
             return labelList
+
         }
         return labelList.filter((label) => {
             return label.name.toLowerCase().includes(searchText.trim().toLowerCase())
@@ -46,7 +50,7 @@ function LabelModal({ status, todoId }) {
         if (status === "create") {
             dispatch(toggleLabelFilter(labelName));
         }
-        else if (todoId === null || todoId === undefined) { 
+        else if (todoId === null || todoId === undefined) {
             const selectedTodos = todos.filter(t => t.selected);
             const allHaveLabel = selectedTodos.every(t => t.labels?.includes(labelName));
 
@@ -54,7 +58,7 @@ function LabelModal({ status, todoId }) {
                 dispatch(removeLabelFromTodo({
                     todoId: null,
                     label: labelName,
-                    status: status  
+                    status: status
                 }));
             } else {
                 dispatch(addLabelToTodo({
@@ -64,7 +68,7 @@ function LabelModal({ status, todoId }) {
                 }));
             }
         }
-        else {  
+        else {
             const isCurrentlyInTodo = todoLabels.includes(labelName);
             if (isCurrentlyInTodo) {
                 dispatch(removeLabelFromTodo({
@@ -81,20 +85,33 @@ function LabelModal({ status, todoId }) {
             }
         }
     };
+ 
+    const onChangeFunc = (e) => {
+        setSearchText(e.target.value)
+        const labelName = labelList.find(label => label.id).name
+        if (labelName) {
+            (searchText !== labelName) ? setIsModal(true) : setIsModal(false)
+            
+        }
+
+    }
 
 
     return (
         <div className='label-modal'>
             <div className='label-modal__header'>
-                <h3>Etiket ekle</h3>
+                <h3 className='label-modal__title'>Label note</h3>
                 <div className='search-label'>
                     <input
+                        className='search-label__input'
                         type="text"
-                        placeholder="Etiket ara..."
+                        placeholder="Enter label name"
                         value={searchText}
-                        onChange={(e) => setSearchText(e.target.value)}
+                        onChange={
+                            onChangeFunc
+                        }
                     />
-                    <GoPencil />
+                    <button className='btn sm-btn disabled'><MdOutlineSearch /></button>
                 </div>
                 <div>
 
@@ -114,13 +131,17 @@ function LabelModal({ status, todoId }) {
                             })();
 
                             return (
-                                <div key={label.id} className='label-lists'>
-                                    <input
-                                        type="checkbox"
-                                        checked={isLabelChecked}
-                                        onChange={() => handleCheckboxChange(label.name)}
-                                    />
-                                    <label>{label.name}</label>
+                                <div className='label-lists'>
+                                    <div key={label.id} className='label-list'>
+                                        <input
+                                            className='checkbox-input'
+                                            type="checkbox"
+                                            checked={isLabelChecked}
+                                            onChange={() => handleCheckboxChange(label.name)}
+                                        />
+                                        <label>{label.name}</label>
+                                    </div>
+
                                 </div>
                             )
                         })
@@ -128,6 +149,9 @@ function LabelModal({ status, todoId }) {
 
 
                 </div>
+                {
+                    isModal ? <button className='create-btn btn lg-btn' onClick={() => dispatch(setEditLabelModal(true))}>Create </button> : null
+                }
             </div>
         </div>
     )

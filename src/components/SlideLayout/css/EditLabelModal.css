@@ -68,8 +68,6 @@
     position: relative;
 }
 .label-editor__comleted-btn.lg-btn::before{
-    content: "";
-    position: absolute;
     width: 80px;
     height: 40px;
     left: -24px;

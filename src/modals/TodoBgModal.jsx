@@ -65,13 +65,14 @@ function TodoBgModal({ todoId, status }) {
     case "selected":
       paletteModal += "bg-modal__selected"
       break;
-    case "todoDetail":
-      paletteModal += "bg-modal__todoDetail"
+    case "home":
+      paletteModal += "bg-modal__home"
       break;
-    case "todo":
-      paletteModal += "bg-modal__todo"
+    case "archive":
+      paletteModal += "bg-modal__archive"
       break;
   }
+
   const handleClickSetBgColor = (color) => {
     if (status === "selected") {
       dispatch(updateSelectedTodosBgColor({ color: color }))
@@ -86,7 +87,7 @@ function TodoBgModal({ todoId, status }) {
       dispatch(resetBgColor({todoId:todoId,status:status}))
     }
   }
-  console.log(isResetSelected)
+
   return (
     <div className={paletteModal}>
       <div className="bg-color">

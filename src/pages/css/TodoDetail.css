@@ -44,6 +44,14 @@
 }
 
 
+@media screen and (max-height:600px) {
+  .todoDetail{
+    padding-bottom: 0;
+  }
+  .todoDetail__actions-wrapper{
+ padding-bottom: 0;
+}
+}
 @media screen and (max-height:613px) {
     .todoDetail__wrapper{
         height: 400px;

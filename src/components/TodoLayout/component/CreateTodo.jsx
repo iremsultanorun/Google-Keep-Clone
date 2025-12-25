@@ -124,7 +124,6 @@ function CreateTodo({status,labelName}) {
             })
         }
     }, [isExpanded])
-console.log(isExpanded);
     return (
         <div className='createTodo'>
             <div ref={createTodoContRef} className='createTodo__form' style={{ background: newTodo.bgColor }} data-open-modal={isExpanded}>

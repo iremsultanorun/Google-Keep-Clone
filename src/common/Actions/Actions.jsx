@@ -12,12 +12,12 @@ import { PiTextAUnderline } from 'react-icons/pi'
 import { FiUserPlus } from 'react-icons/fi'
 import { MdDeleteForever, MdOutlineImage, MdRestoreFromTrash } from 'react-icons/md'
 
-function Actions({ todoId, status, className, isNoteComponent = false }) {
+function Actions({ todoId, status, className, istodoDetailComponent = false }) {
 
     const dispatch = useDispatch()
 
     const isCreate = status === "create"
-    const isNote = isNoteComponent
+    const isNote = istodoDetailComponent
     const isTodo = status === "todo"
     const isHome = status === "home"
     const isArchive = status === "archive"

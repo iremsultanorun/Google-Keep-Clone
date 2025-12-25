@@ -166,9 +166,9 @@ const todoSlice = createSlice({
 
             if (todoId === null) {
                 [state.todos, state.archiveTodos, state.trashTodos].forEach(list => {
-                    console.log(list)
+                
                     list.forEach(todo => {
-                        console.log(todo)
+                   
                         if (todo.selected && !todo.labels?.includes(label)) {
                             todo.labels.push(label);
                         }
@@ -211,7 +211,6 @@ const todoSlice = createSlice({
                 transferTodo(state, transferTodoId, "todos", "trashTodos")
             } else if (status === "archive") {
                 transferTodo(state, transferTodoId, "archiveTodos", "trashTodos")
-                console.log("archiveden silinmesi bekleniyo");
             }
         },
         moveSelectedTodosToTrash: (state, action) => {
@@ -276,7 +275,6 @@ const todoSlice = createSlice({
             transferTodo(state, transferTodoId, "todos", "archiveTodos")
             state.selectedTodoId = null;
             state.isPinned = false
-            console.log("object");
         },
         restoreTodoFromArchive: (state, action) => {
             const {transferTodoId}=action.payload
@@ -334,7 +332,7 @@ const todoSlice = createSlice({
         //* Background Colors
         openBgPaletteModal: (state, action) => {
             modalControl(state, action, "bgPaletteModal", "activePaletteTodoId")
-            console.log("çalışıypr mu?");
+
         },
 
         updateTodoBgColor: (state, action) => {

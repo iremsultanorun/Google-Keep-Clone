@@ -68,7 +68,7 @@ function DropdownModal({ todoId, status }) {
       case "Add label":
         dispatch(setLabelModal(true))
     }
-    console.log(status);
+  
   }
 
   return (

@@ -66,34 +66,37 @@ function Slide() {
     dispatch(setLogoNames(NEW_SLIDE_MENU_LINKS))
   }, [dispatch, labels])
 
+
+
   const onMouseOver = () => {
     if (window.innerWidth >= MOBILE_BREAKPOINT) {
       if (isCollapsed) {
         dispatch(setIsCollapsed(false));
       }
     }
+    
   }
 
   const onMouseOut = () => {
     if (window.innerWidth >= MOBILE_BREAKPOINT) {
       dispatch(setIsCollapsed(true));
     }
-
+    
   }
 
   const handleClick = (name) => {
     dispatch(setActiveLogo(name))
     setActive(name)
-    if (window.innerWidth >= 500) {
-      dispatch(setIsCollapsed());
-    }
+    if (window.innerWidth <= MOBILE_BREAKPOINT) {
+      dispatch(setIsCollapsed(true));
+  
   }
-
+  }
   return (
 
     <div
       className=
-      {`slide 
+      {`slide
         ${isCollapsed
           ? "slide__collapsed"
           : "slide__expanded"}
@@ -129,7 +132,9 @@ function Slide() {
                   logoname.path
                     ?
                     <Link
-                      onClick={() => handleClick(logoname.name)}
+                      onClick={() => {
+                        handleClick(logoname.name)
+                      }}
                       to={logoname.path}
                     >
                       <button
@@ -141,7 +146,7 @@ function Slide() {
                           )}
                       >
                         <div
-                          className={`slideItem__icon 
+                          className={`slideItem__icon
                             ${isCollapsed
                               ? "slide__collapsed-item__icon "
                               : "slide__expanded-item__icon"
@@ -151,7 +156,7 @@ function Slide() {
                         </div>
 
                         <h4
-                          className={`slide__title 
+                          className={`slide__title
                             ${isCollapsed
                               ? "slide__collapsed-item__title"
                               : "slide__expanded-item__title"
@@ -177,7 +182,7 @@ function Slide() {
                       }
                     >
                       <div
-                        className={`slideItem__icon 
+                        className={`slideItem__icon
                           ${isCollapsed
                             ? "slide__collapsed-item__icon "
                             : "slide__expanded-item__icon"
@@ -187,7 +192,7 @@ function Slide() {
                       </div>
 
                       <h4
-                        className={`slide__title 
+                        className={`slide__title
                           ${isCollapsed
                             ? "slide__collapsed-item__title"
                             : "slide__expanded-item__title"}
@@ -229,7 +234,7 @@ function Slide() {
                             )}
                         >
                           <div
-                            className={`slideItem__icon 
+                            className={`slideItem__icon
                               ${isCollapsed
                                 ? "slide__collapsed-item__icon "
                                 : "slide__expanded-item__icon"}
@@ -239,7 +244,7 @@ function Slide() {
                           </div>
 
                           <h4
-                            className={`slide__title 
+                            className={`slide__title
                               ${isCollapsed
                                 ? "slide__collapsed-item__title"
                                 : "slide__expanded-item__title"

@@ -18,7 +18,7 @@ function LabelPage() {
   const archiveLabelTodos = archiveTodos.filter(todo =>
     todo.labels?.includes(labelName)
   )
-console.log(labelName)
+
   return (
     <div>
       <div>
